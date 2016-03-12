@@ -15,3 +15,4 @@ Make sure your AVM emulator is configured through Android Studio.
 - jQuery
 - fastclick for speeding up in-app clicks
 - handlebars for custom re-usable semantic templates
+- ionic for easy layouts
