@@ -1,0 +1,17 @@
+{
+  "name": "diapix",
+  "homepage": "https://github.com/parisandmilo/DiapixApp",
+  "authors": [
+    "parisandmilo <di.klhy@gmail.com>"
+  ],
+  "description": "diapix app",
+  "main": "",
+  "moduleType": [ ],
+  "license": "GNU",
+  "private": true,
+  "dependencies": {
+    "jquery": "^2.2.1",
+    "fastclick": "^1.0.6",
+    "handlebars": "^4.0.5"
+  }
+}
