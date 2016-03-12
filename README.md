@@ -1,0 +1,2 @@
+# DiapixApp
+cordova
