@@ -106,11 +106,13 @@
             </label>
           </div>
           <div class="item">
-            <div class="range range-royal">
+            <div class="range range-royal chooseTime">
               Time
               <input type="range" name="time" min="1" max="15" value="10" onchange="updateTextInput(this.value);">
             </div>
-            <input type="text" id="timevalue" valueint="10" value="10 minutes">
+            <div class="showTime">
+                <input type="text" id="timevalue" valueint="10" value="10 minutes">
+            </div>
           </div>
         </center>
       </div>

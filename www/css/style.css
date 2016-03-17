@@ -55,15 +55,26 @@ body, html {
 .screen {
 	background-color: #F3F3F3;
 	height: 100%;
-	
+
 }
 
 .inscreen {
-	
-	height: 100%; 
+
+	height: 100%;
 	width: 100%;
 	background-color: #F3F3F3;
 }
 div.item {
 	overflow: hidden;
+}
+
+.chooseTime {
+    width: 70%;
+    float: left;
+}
+
+.showTime {
+    width: 30%;
+    float: right;
+    padding: 2vh;
 }
