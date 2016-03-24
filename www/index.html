@@ -33,6 +33,9 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+    <!-- dropbox  -->
+    <script src="https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js"></script>
+
     <!-- cordova script (this will be a 404 during development) -->
     <!-- <script src="cordova.js"></script> -->
 
@@ -60,22 +63,25 @@
       <div class="bar bar-header bar-royal">
         <h1 class="title">User details</h1>
       </div>
-
       <div class="list list-inset vcenter inscreen">
-        <center style="width: 60%">
-          <label class="item item-input">
-            <input type="text" placeholder="Subject code">
-          </label>
-          <label class="item item-input">
-            <input type="text" placeholder="Age">
-          </label>
-          <label class="item item-input item-select" style="height:50px">
-            <select style="left: 0%; direction: ltr">
-              <option>Male</option>
-              <option>Female</option>
-            </select>
-          </label>
-        </center>
+        <form class="userDetails" action="index.html" method="post">
+            <center style="width: 80%">
+              <label class="item item-input">
+                <input id="subjectBox" type="text" placeholder="Subject code">
+              </label>
+              <label class="item item-input">
+                <input id="ageBox" type="text" placeholder="Age">
+              </label>
+              <label class="item item-input item-select" style="height:50px">
+                <select id="genderBox" style="left: 0%; direction: ltr">
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </label>
+              <br>
+              <a class="button button-medium button-royal" href="#" class="export">Submit</a>
+            </center>
+            <!-- <button id="writeButton">Click to create <code>hello.txt</code> in Dropbox.</button> -->
       </div>
 
       <a class="button icon-right ion-chevron-right button-small button-royal buttonPosRight" onclick="updateWindow('secondScreen','thirdScreen')">
@@ -84,6 +90,7 @@
       <a class="button icon-left ion-chevron-left button-small button-royal buttonPosLeft" onclick="updateWindow('secondScreen','startScreen')">
         Back
       </a>
+    </form>
     </div>
 
 
@@ -125,10 +132,6 @@
       </a>
     </div>
 
-
-
-
-
-
+    <script src="js/csv.js"></script>
   </body>
 </html>
