@@ -22,3 +22,6 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+var db = new PouchDB('diapix');
+var remoteCouch = false;

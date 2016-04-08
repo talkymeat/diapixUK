@@ -20,9 +20,6 @@
 -->
 # Cordova Hooks
 
-<<<<<<< HEAD
-Cordova Hooks represent special scripts which could be added by application and plugin developers or even by your own build system  to customize cordova commands. See Hooks Guide for more details:  http://cordova.apache.org/docs/en/edge/guide_appdev_hooks_index.md.html#Hooks%20Guide.
-=======
 This directory may contain scripts used to customize cordova commands. This
 directory used to exist at `.cordova/hooks`, but has now been moved to the
 project root. Any scripts you add to these directories will be executed before
@@ -84,4 +81,3 @@ cross-platform. Some good examples are shown here:
 
 [http://devgirl.org/2013/11/12/three-hooks-your-cordovaphonegap-project-needs/](http://devgirl.org/2013/11/12/three-hooks-your-cordovaphonegap-project-needs/)
 
->>>>>>> 851ac562cc60ddcb6d62df40a9ed1ca259d22476
