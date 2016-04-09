@@ -18,10 +18,10 @@
     under the License.
 -->
 <html>
-    <head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <title>Diapix</title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -37,11 +37,19 @@
     <!-- <script src="cordova.js"></script> -->
 
     <!-- your app's js -->
+    
+    <!-- <meta charset="utf-8"> -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/ng-cordova.js"></script>
+    <script src="js/pouchdb-5.3.1.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
 
 
   </head>
 
-  <body ng-app="starter">
+  <body>
 
     <div id="startScreen" class="vcenter screen">
       <center>
@@ -96,28 +104,37 @@
         <center style="width: 60%">
           <div class="item item-toggle">
             <div align="left">
-              Recording
+              Show timer
             </div>
             <label class="toggle toggle-royal">
-              <input id="recorder" name="record" type="checkbox">
+              <input id="showTimer" name="time" checked="checked" type="checkbox">
               <div class="track">
                 <div class="handle"></div>
               </div>
             </label>
           </div>
-          <div class="item">
+          <div class="item item-toggle">
+            <div align="left">
+              Recording
+            </div>
+            <label class="toggle toggle-royal">
+              <input id="recorder" name="record" checked="checked" type="checkbox">
+              <div class="track">
+                <div class="handle"></div>
+              </div>
+            </label>
+          </div>
+          <div class="item block">
             <div class="range range-royal chooseTime">
               Time
               <input type="range" name="time" min="1" max="15" value="10" onchange="updateTextInput(this.value);">
-            </div>
-            <div class="showTime">
-                <input name="time" type="text" id="timer" valueint="10" value="10 minutes">
+              <div class="showTime" id="timevalue">10 minutes</div>
             </div>
           </div>
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('recorder').value,document.getElementById('timer').value); updateWindow('thirdScreen','fourthScreen'); createCanvas(); ">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer(); addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('recorder').value,document.getElementById('timevalue').value); updateWindow('thirdScreen','fourthScreen'); createCanvas();">
         Next
       </a>
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('thirdScreen','secondScreen')">
@@ -127,42 +144,74 @@
 
 
     <div id="fourthScreen" class="screen vcenter" style="display: none">
-
+      <div id="timerDiv" style="display: none">
+        <div id="timer" class="royal"></div>
+        <div>
+        <a class="button button-small button-royal" onclick="pauseTimer()">
+          Pause
+        </a>
+        <a class="button button-small button-royal" onclick="resumeTimer()">
+          Resume
+        </a>
+        </div>
+      </div>
       <div class="list list-inset vcenter inscreen">
         <center style="width: 60%">
-          <canvas id="myCanvas" width="1280" height="960" style="position:relative;" onclick="draw(event)"></canvas>
-    <script>
-      var canvas = document.getElementById('myCanvas');
-      var context = canvas.getContext('2d');
-      var imageObj = new Image();
-      imageObj.onload = function() {
-        context.drawImage(imageObj, 5, 5);
-      };
-      imageObj.src = 'img/Beach1A.jpg';
-    </script>
+          <canvas id="myCanvas" width="1280px" height="960px" style="position:relative;" onclick="draw(event)"></canvas>
+          <script>
+            var canvas = document.getElementById('myCanvas');
+            var context = canvas.getContext('2d');
+            var imageObj = new Image();
+            imageObj.onload = function() {
+              context.drawImage(imageObj, 5, 5);
+            };
+            imageObj.src = 'img/Beach1A.jpg';
+          </script>
         </center>
       </div>
 
 
 
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="updateWindow('fourthScreen','startScreen')">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="updateWindow('fourthScreen','fifthScreen')">
         Next
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fourthScreen','thirdScreen')">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fourthScreen','thirdScreen'); pauseTimer();">
         Back
       </a>
     </div>
 
 
 
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="js/jquery-1.12.1.min.js"></script>
-    <script src="js/ng-cordova.js"></script>
-    <script src="js/pouchdb-5.3.1.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/app.js"></script>
 
+
+
+    <div id="fifthScreen" class="screen vcenter" style="display: none">
+
+      <div class="list list-inset vcenter inscreen">
+        <center style="width: 60%">
+          <label id="lbltipAddedComment">test</label>
+          <a class="button button-royal" onclick="fff()">
+            change
+          </a>
+          <script>
+            function fff(){
+              document.getElementById('lbltipAddedComment').innerHTML = 'changed test';
+            }
+          </script>
+        </center>
+      </div>
+
+
+
+
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="updateWindow('fifthScreen','startScreen')">
+        Next
+      </a>
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fifthScreen','fourthScreen')">
+        Back
+      </a>
+    </div>
 
 
   </body>
