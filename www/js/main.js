@@ -6,6 +6,37 @@ function updateTextInput(val) {
   document.getElementById('timevalue').innerHTML = val + " minutes";
 }
 
+$(function() {
+    $("#picture")
+        .change(function() {
+            var value = this.value +'A.jpg';
+            var src = $("img").attr("src").replace(value, ".jpg");
+            $("img").attr("src", value);
+        });
+});
+// function createCanvas() {
+//     var c=document.getElementById("myCanvas");
+//     var ctx=c.getContext("2d");
+//     ctx.lineWidth=5;
+//     var img=document.getElementById("Beach1A");
+//     ctx.drawImage(img,100,100);
+// };
+//
+// var canvas = document.getElementById("imgCanvas");
+// var context = canvas.getContext("2d");
+//
+// function updatePictureInput(val) {
+//   document.getElementById('picture').innerHTML = val;
+// }
+//
+//
+// function createImageOnCanvas(imageId) {
+//     canvas.style.display = "block";
+//     document.getElementById("images").style.overflowY = "hidden";
+//     var img = new Image(300, 300);
+//     img.src = document.getElementById(imageId).src;
+//     context.drawImage(img, (0), (0)); //onload....
+
 var foundDiff, numDiff, circleRadius;
 
 function canv() {
@@ -14,13 +45,14 @@ function canv() {
   numDiff = 0;
   foundDiff = [];
   circleRadius = document.getElementById("imgCanvas").height / 20;
+
 }
 
 function handleEvent(e) {
   var canvas = document.getElementById("imgCanvas");
   var context = canvas.getContext("2d");
   var pos = getMousePos(canvas, e);
-  
+
   var i;
   for(i=1; i<=numDiff; i++)
     if(dist(foundDiff[i], pos) <= circleRadius){
@@ -33,7 +65,7 @@ function handleEvent(e) {
     alert("You have already spotted 12 differences!");
     return;
   }
-  
+
   addDifference(pos);
   draw(context, canvas);
 }
@@ -71,18 +103,21 @@ function draw(context, canvas){
     context.arc(foundDiff[i].x, foundDiff[i].y, circleRadius, 0, 2*Math.PI);
     context.stroke();
   }
-  
+
 }
 
 
-function addToDo(subjectCode,age,gender,record,time) {
+function addToDo(subjectCode,age,gender,record,time,timer,pictureChoice,condition) {
   var todo = {
     _id: new Date().toISOString(),
     subjectNumber: subjectCode,
     age: age,
     gender:gender,
     recording:record,
-    time:time,
+    countdown:time,
+    timerONOFF:timer,
+    picture: pictureChoice,
+    condition: condition
     //completed: false
   };
   db.put(todo, function callback(err, result) {
@@ -111,7 +146,6 @@ function startTimer(){
   if(minutes < 10)
     document.getElementById('timer').innerHTML += "0";
   document.getElementById('timer').innerHTML += minutes.toString() + ":00";
-
   time = setInterval(updateTimer, 1000);
 }
 
@@ -144,4 +178,5 @@ function updateTimer(){
     if(seconds < 10)
         document.getElementById('timer').innerHTML += "0"
     document.getElementById('timer').innerHTML += seconds.toString();
+
 }
