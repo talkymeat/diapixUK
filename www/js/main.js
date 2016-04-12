@@ -127,7 +127,22 @@ function addToDo(subjectCode,age,gender,record,time,timer,pictureChoice,conditio
   });
 }
 
+function recordAudio() {
+    var src = "myrecording.mp3";
+    var mediaRec = new Media(src,
+        // success callback
+        function() {
+            console.log("recordAudio():Audio Success");
+        },
 
+        // error callback
+        function(err) {
+            console.log("recordAudio():Audio Error: "+ err.code);
+        });
+
+    // Record audio
+    mediaRec.startRecord();
+}
 // Timer
 
 var time;
