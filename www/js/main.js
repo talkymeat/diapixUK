@@ -3,8 +3,7 @@ function updateWindow(prev, next){
   $("#" + next).show();
 }
 function updateTextInput(val) {
-  document.getElementById('timevalue').valueint=val;
-  document.getElementById('timevalue').value=val + " minutes";
+  document.getElementById('timevalue').innerHTML = val + " minutes";
 }
 
 function createCanvas() {
@@ -17,6 +16,11 @@ function createCanvas() {
 
 var canvas = document.getElementById("imgCanvas");
 var context = canvas.getContext("2d");
+
+function updatePictureInput(val) {
+  document.getElementById('picture').innerHTML = val;
+}
+
 
 function createImageOnCanvas(imageId) {
     canvas.style.display = "block";
@@ -45,14 +49,17 @@ function getMousePos(canvas, evt) {
 }
 window.draw = draw;
 
-function addToDo(subjectCode,age,gender,record,time) {
+function addToDo(subjectCode,age,gender,record,time,timer,pictureChoice,condition) {
   var todo = {
     _id: new Date().toISOString(),
     subjectNumber: subjectCode,
     age: age,
     gender:gender,
     recording:record,
-    time:time,
+    countdown:time,
+    timerONOFF:timer,
+    picture: pictureChoice,
+    condition: condition
     //completed: false
   };
   db.put(todo, function callback(err, result) {
@@ -63,15 +70,55 @@ function addToDo(subjectCode,age,gender,record,time) {
 }
 
 
+// Timer
 
-/*var app = angular.module('ionicApp', ['ionic', 'ngCordova'])
+var time;
+var seconds, minutes;
 
-app.run(function($cordovaStatusbar) {
-  alert("aa");
+function startTimer(){
+    if(document.getElementById('showTimer').checked)
+        $("#timerDiv").show();
+    else
+        $("#timerDiv").hide();
 
-  $cordovaStatusbar.overlaysWebView(true)
+  minutes = parseInt(document.getElementById('timevalue').innerHTML);
+  seconds = 0;
 
-  $cordovaStatusBar.style(1) //Light
-  $cordovaStatusBar.style(2) //Black, transulcent
-  $cordovaStatusBar.style(3) //Black, opaque
-});*/
+  document.getElementById('timer').innerHTML = "";
+  if(minutes < 10)
+    document.getElementById('timer').innerHTML += "0";
+  document.getElementById('timer').innerHTML += minutes.toString() + ":00";
+
+  time = setInterval(updateTimer, 1000);
+}
+
+function pauseTimer(){
+    clearInterval(time);
+}
+
+function resumeTimer() {
+    clearInterval(time);
+    time = setInterval(updateTimer, 1000);
+}
+
+function updateTimer(){
+    if(document.getElementById('timer').innerHTML === "00:00"){
+        clearInterval(time);
+        alert("Time is up!");
+        return;
+    }
+
+    seconds--;
+    if(seconds<0){
+        minutes--;
+        seconds+=60;
+    }
+    document.getElementById('timer').innerHTML = ""
+
+    if(minutes < 10)
+        document.getElementById('timer').innerHTML += "0";
+    document.getElementById('timer').innerHTML += minutes.toString() + ":";
+    if(seconds < 10)
+        document.getElementById('timer').innerHTML += "0"
+    document.getElementById('timer').innerHTML += seconds.toString();
+}
