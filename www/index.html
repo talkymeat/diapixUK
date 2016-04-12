@@ -53,9 +53,9 @@
 
     <div id="startScreen" class="vcenter screen">
       <center>
-        <h1 class="textColor">Diapix</h1>
+        <h1 class="royal">Diapix</h1>
         <br>
-        <a id="startButton" class="button button-large button-royal nextButton" onclick="updateWindow('startScreen','secondScreen');">
+        <a class="button button-large button-royal" onclick="updateWindow('startScreen','secondScreen');">
           Start
         </a>
       </center>
@@ -134,7 +134,7 @@
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer(); addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('recorder').value,document.getElementById('timevalue').value); updateWindow('thirdScreen','fourthScreen'); createCanvas();">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('recorder').value,document.getElementById('timevalue').value); updateWindow('thirdScreen','fourthScreen');">
         Next
       </a>
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('thirdScreen','secondScreen')">
@@ -142,76 +142,65 @@
       </a>
     </div>
 
-
-    <div id="fourthScreen" class="screen row" style="display: none">
-      <div id="timerDiv" style="display: none" class="col">
-        <div id="timer" class="royal"></div>
-        <div>
-        <a class="button button-small button-royal" onclick="pauseTimer()" on-tap="pauseTimer()">
-          Pause
-        </a>
-        <a class="button button-small button-royal" onclick="resumeTimer()" on-tap="resumeTimer()">
-          Resume
-        </a>
-        </div>
-      </div>
-      <div class="col col-90 pic">
-        <center>
-        <canvas id="myCanvas" width="100" height="100" style="position:relative;" onclick="draw(event)"></canvas>
-            <script>
-                var cvs, ctx;
-                cvs = document.getElementById('myCanvas');
-                ctx = cvs.getContext("2d");
-                var imageObj = new Image();
-                imageObj.onload = function() {
-                ctx.drawImage(imageObj, 5, 5);
-                };
-                    // imageObj.src = 'img/Beach1A.jpg';
-            </script>
-        </center>
+    <div id="fourthScreen" class="screen vcenter" style="display: none"> 
+      <div class="bar bar-header bar-royal">
+        <h1 class="title">Instructions</h1>
       </div>
 
+      <center class="vcenter royal" style="width: 80%; font-size: 20px">
+        In this game you will need to find 12 differences between the two pictures. When you identify a difference, click on it and it will be displayed on the screen. If you have already spotted 12 differences and you spot another one, one of them must be wrong. Clik on a difference to cancel it. At the end you can check how many you got right.
+      </center>
 
-
-
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="updateWindow('fourthScreen','fifthScreen')">
-        Next
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
+        Start
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fourthScreen','thirdScreen'); pauseTimer();">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fourthScreen','thirdScreen');">
         Back
       </a>
     </div>
 
 
-
-
-
-
-    <div id="fifthScreen" class="screen vcenter" style="display: none">
-
-      <div class="list list-inset vcenter inscreen">
-        <center style="width: 60%">
-          <label id="lbltipAddedComment">test</label>
-          <a class="button button-royal" onclick="fff()">
-            change
-          </a>
-          <script>
-            function fff(){
-              document.getElementById('lbltipAddedComment').innerHTML = 'changed test';
-            }
-          </script>
+    <div id="fifthScreen" class="screen row" style="display: none">
+      <div id="timerDiv" class="rightTimer">
+      	<center>
+	        <div id="timer" class="royal" style="padding-bottom: 10vh"></div>
+	        <div>
+	        <a class="button button-small button-royal" onclick="pauseTimer()" on-tap="pauseTimer()">
+	          Pause
+	        </a>
+	        <a class="button button-small button-royal" onclick="resumeTimer()" on-tap="resumeTimer()">
+	          Resume
+	        </a>
+	        </div>
         </center>
       </div>
+      <div>
+	      <div class="outsideWrapper">
+		    <div class="insideWrapper">
+		        <img src="img/Beach1A.jpg" class="coveredImage">
+		        <canvas id="imgCanvas" class="coveringCanvas" onclick="handleEvent(event);"></canvas>
+		    </div>
+		  </div>
+	  </div>
 
-
-
-
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="updateWindow('fifthScreen','startScreen')">
-        Next
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="updateWindow('fifthScreen','sixthScreen'); pauseTimer();">
+        Finish
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fifthScreen','fourthScreen')">
-        Back
+      <a class="button icon-left ion-chevron-left button-royal buttonQuit" onclick="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
+        Quit
       </a>
+    </div>
+
+
+    <div id="sixthScreen" class="screen vcenter" style="display: none">
+
+      <center>
+        <h1 class="royal">Thanks for playing Diapix!</h1>
+        <br>
+        <a href="index.html" class="button button-large button-royal">
+          Play again
+        </a>
+      </center>
     </div>
 
     <!-- <script src="js/canvas.js"></script> -->
