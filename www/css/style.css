@@ -42,6 +42,11 @@
 	bottom: 6%;
 	left: 5%;
 }
+.buttonQuit {
+    position: absolute;
+    top: 6%;
+    right: 5%;
+}
 
 .textColor {
 	color: #886AEA;
@@ -55,12 +60,12 @@ body, html {
 .screen {
 	background-color: #F3F3F3;
 	height: 100%;
-	
+
 }
 
 .inscreen {
-	
-	height: 100%; 
+
+	height: 100%;
 	width: 100%;
 	background-color: #F3F3F3;
 }
@@ -68,7 +73,49 @@ div.item {
 	overflow: hidden;
 }
 
-canvas {
-    border: 1px solid #000;
+div#timerDiv {
+    padding-left: 2% !important;
+    padding-top: 40vh;
 }
 
+div#fourthScreen {
+    padding: 0;
+}
+
+div.pic {
+    padding-top: 0;
+}
+
+.rightTimer {
+    display: none; 
+    width: 20%; 
+    right: 0px; 
+    font-size: 4em;
+    position: absolute;
+}
+.outsideWrapper {
+  width:80%;
+  height:100%;
+  left:0px;
+  position: absolute;
+}
+.insideWrapper {
+  width:100%;
+  height:100%;
+  position:relative;
+}
+.coveredImage {
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0px;
+  left:0px;
+}
+.coveringCanvas {
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0px;
+  left:0px;
+  /*background-color: rgba(255, 0, 0, .1);*/
+}

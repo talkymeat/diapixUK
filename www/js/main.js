@@ -6,33 +6,36 @@ function updateTextInput(val) {
   document.getElementById('timevalue').innerHTML = val + " minutes";
 }
 
-function createCanvas() {
-    var c=document.getElementById("myCanvas");
-    var ctx=c.getContext("2d");
-    ctx.lineWidth=5;
-    var img=document.getElementById("Beach1A");
-    ctx.drawImage(img,100,100);
-};
+var foundDiff, numDiff, circleRadius;
 
-var canvas = document.getElementById("imgCanvas");
-var context = canvas.getContext("2d");
-
-function createImageOnCanvas(imageId) {
-    canvas.style.display = "block";
-    document.getElementById("images").style.overflowY = "hidden";
-    var img = new Image(300, 300);
-    img.src = document.getElementById(imageId).src;
-    context.drawImage(img, (0), (0)); //onload....
+function canv() {
+  document.getElementById("imgCanvas").width = document.getElementById("imgCanvas").offsetWidth;
+  document.getElementById("imgCanvas").height = document.getElementById("imgCanvas").offsetHeight;
+  numDiff = 0;
+  foundDiff = [];
+  circleRadius = document.getElementById("imgCanvas").height / 20;
 }
 
-function draw(e) {
-    var pos = getMousePos(canvas, e);
-    posx = pos.x;
-    posy = pos.y;
-    context.strokeStyle = "#00FF00";
-    context.beginPath();
-    context.arc(posx, posy, 20, 0, 2*Math.PI);
-    context.stroke();
+function handleEvent(e) {
+  var canvas = document.getElementById("imgCanvas");
+  var context = canvas.getContext("2d");
+  var pos = getMousePos(canvas, e);
+  
+  var i;
+  for(i=1; i<=numDiff; i++)
+    if(dist(foundDiff[i], pos) <= circleRadius){
+      removeDifference(i, context);
+      draw(context, canvas);
+      return;
+    }
+
+  if(numDiff == 12){
+    alert("You have already spotted 12 differences!");
+    return;
+  }
+  
+  addDifference(pos);
+  draw(context, canvas);
 }
 
 function getMousePos(canvas, evt) {
@@ -42,7 +45,35 @@ function getMousePos(canvas, evt) {
       y: evt.clientY - rect.top
     };
 }
-window.draw = draw;
+
+function addDifference(pos) {
+  numDiff++;
+  foundDiff[numDiff] = pos;
+}
+
+function removeDifference(index, context){
+  var p = foundDiff[index];
+  var i;
+  for(i=index; i<numDiff; i++)
+    foundDiff[i] = foundDiff [i+1];
+  numDiff--;
+}
+
+function dist(a, b){
+  return Math.sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
+}
+
+function draw(context, canvas){
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.strokeStyle = "#00FF00";
+  for(i=1; i<=numDiff; i++){
+    context.beginPath();
+    context.arc(foundDiff[i].x, foundDiff[i].y, circleRadius, 0, 2*Math.PI);
+    context.stroke();
+  }
+  
+}
+
 
 function addToDo(subjectCode,age,gender,record,time) {
   var todo = {
