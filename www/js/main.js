@@ -60,6 +60,7 @@ function handleEvent(e) {
     }
 
   if(numDiff == 12){
+    alert("You have already spotted 12 differences!");
     timeLog[totalTaps].action = "exceeded 12 differences";
     timeLog[totalTaps].difference = new Object;
     timeLog[totalTaps].difference.pos = pos;
