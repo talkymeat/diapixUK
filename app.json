@@ -1,0 +1,7 @@
+{
+  "name": "Diapix UK",
+  "description": "A research app",
+  "repository": "https://github.com/parisandmilo/DiapixApp",
+  "logo": "http://ionicframework.com/img/ionic-logo-blog.png",
+  "keywords": ["diapix", "speech sciences", "communications", "research"]
+}
