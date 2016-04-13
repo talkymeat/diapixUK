@@ -11,7 +11,10 @@ function showPause(){
   $("#pauseButton").show();
 }
 function updateTextInput(val) {
-  document.getElementById('timevalue').innerHTML = val + " minutes";
+  if(val == 1)
+  	document.getElementById('timevalue').innerHTML = val + " minute ";
+  else
+  	document.getElementById('timevalue').innerHTML = val + " minutes";
 }
 
 $(function() {
@@ -37,10 +40,12 @@ function canv() {
   timeLog = [];
   totalDiff = 0;
   circleRadius = document.getElementById("imgCanvas").height / 20;
-
 }
 
 function handleEvent(e) {
+	if(paused)
+		return;
+
   var canvas = document.getElementById("imgCanvas");
   var context = canvas.getContext("2d");
   var pos = getMousePos(canvas, e);
@@ -54,8 +59,9 @@ function handleEvent(e) {
     if(dist(foundDiff[i].pos, pos) <= circleRadius){
       timeLog[totalTaps].action = "difference cancelled";
       timeLog[totalTaps].difference = foundDiff[i];
-      removeDifference(i, context);
+      removeDifference(i);
       draw(context, canvas);
+      console.log(timeLog[totalTaps]);
       return;
     }
 
@@ -64,6 +70,7 @@ function handleEvent(e) {
     timeLog[totalTaps].action = "exceeded 12 differences";
     timeLog[totalTaps].difference = new Object;
     timeLog[totalTaps].difference.pos = pos;
+    console.log(timeLog[totalTaps]);
     return;
   }
 
@@ -72,6 +79,8 @@ function handleEvent(e) {
 
   timeLog[totalTaps].action = "difference spotted";
   timeLog[totalTaps].difference = foundDiff[numDiff];
+
+  console.log(timeLog[totalTaps]);
 }
 
 function getMousePos(canvas, evt) {
@@ -89,11 +98,13 @@ function addDifference(pos) {
   foundDiff[numDiff].pos = pos;
 }
 
-function removeDifference(index, context){
-  var p = foundDiff[index];
+function removeDifference(index){
   var i;
-  for(i=index; i<numDiff; i++)
-    foundDiff[i] = foundDiff [i+1];
+  for(i=index; i<numDiff; i++){
+  	foundDiff[i].no = foundDiff[i+1].no;
+  	foundDiff[i].pos.x = foundDiff[i+1].pos.x;
+  	foundDiff[i].pos.y = foundDiff[i+1].pos.y;
+  }
   numDiff--;
 }
 
@@ -136,6 +147,7 @@ function addToDo(subjectCode,age,gender,record,time,timer,pictureChoice,conditio
 
 var time;
 var seconds, minutes;
+var paused = true;
 
 function startTimer(){
     if(document.getElementById('showTimer').checked)
@@ -150,20 +162,25 @@ function startTimer(){
   if(minutes < 10)
     document.getElementById('timer').innerHTML += "0";
   document.getElementById('timer').innerHTML += minutes.toString() + ":00";
+
+  paused = false;
   time = setInterval(updateTimer, 1000);
 }
 
 function pauseTimer(){
+	paused = true;
     clearInterval(time);
 }
 
 function resumeTimer() {
+	paused = false;
     clearInterval(time);
     time = setInterval(updateTimer, 1000);
 }
 
 function updateTimer(){
     if(document.getElementById('timer').innerHTML === "00:00"){
+    	paused = true;
         clearInterval(time);
         alert("Time is up!");
         return;

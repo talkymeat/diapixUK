@@ -165,7 +165,7 @@
       </center>
 
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv(); window.plugins.insomnia.keepAwake();">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
         Start
       </a>
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fourthScreen','thirdScreen');">
@@ -178,7 +178,7 @@
       <div>
           <div class="outsideWrapper">
           <div class="insideWrapper">
-              <img src="img/Beach1A.jpg" class="coveredImage">
+              <img src="" class="coveredImage">
               <canvas id="imgCanvas" class="coveringCanvas" onclick="handleEvent(event);"></canvas>
           </div>
       </div>
@@ -194,10 +194,10 @@
           </a>
         </center>
       </div>
-      <a class="button icon-left ion-chevron-left button-royal buttonQuit" onclick="updateWindow('fifthScreen','fourthScreen'); pauseTimer(); window.plugins.insomnia.allowSleepAgain();">
+      <a class="button icon-left ion-chevron-left button-royal buttonQuit" onclick="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
             Quit
         </a>
-        <a class="button icon-right ion-chevron-right button-royal buttonFinish" onclick="updateWindow('fifthScreen','sixthScreen'); pauseTimer(); window.plugins.insomnia.allowSleepAgain();">
+        <a class="button icon-right ion-chevron-right button-royal buttonFinish" onclick="updateWindow('fifthScreen','sixthScreen'); pauseTimer();">
             Finish
         </a>  
     </div>

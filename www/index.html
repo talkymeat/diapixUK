@@ -127,8 +127,8 @@
           <div class="item block" style="padding: 0">
             <div class="range range-royal chooseTime" style="padding-left: 16px">
               Time
-              <input type="range" name="time" min="1" max="15" value="10" onchange="updateTextInput(this.value);">
-              <div class="showTime" id="timevalue" style="-webkit-filter: blur(0.000001px)">10 minutes</div>
+              <input type="range" name="time" min="1" max="15" value="10" oninput="updateTextInput(this.value);">
+              <div class="showTime" id="timevalue">10 minutes</div>
             </div>
           </div>
           <label class="item item-input item-select" style="height:50px">

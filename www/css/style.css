@@ -67,6 +67,10 @@ div.item {
   height: 50px;
 	overflow: hidden;
 }
+.showTime {
+  -webkit-filter: blur(0.000001px);
+  width: 70px;
+}
 
 .rightTimer {
     position: absolute; 
