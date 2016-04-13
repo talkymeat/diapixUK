@@ -1,11 +1,13 @@
 # DiapixApp
-cordova
+The diapixUK is a dialogue elicitation technique and set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
 
-# Install cordova via npm
+It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants. For more information, [see our website](http://www.phon.ucl.ac.uk/project/kidLUCID/diapix.php)!
+
+# Install ionic via npm
 ```
-npm install -g cordova
+npm install -g ionic
 cd DiapixApp
-cordova emulate android
+ionic emulate android
 ```
 Make sure your AVM emulator is configured through Android Studio.
 
@@ -15,4 +17,3 @@ Make sure your AVM emulator is configured through Android Studio.
 - jQuery
 - fastclick for speeding up in-app clicks
 - handlebars for custom re-usable semantic templates
-- ionic for easy layouts

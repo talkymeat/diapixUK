@@ -8,7 +8,8 @@
     "gulp-clean-css": "^2.0.6",
     "gulp-concat": "^2.6.0",
     "gulp-sass": "^2.2.0",
-    "ng-cordova": "^0.1.26-alpha"
+    "ng-cordova": "^0.1.26-alpha",
+    "pouchdb": "^5.3.1"
   },
   "devDependencies": {
     "bower": "^1.7.9",
