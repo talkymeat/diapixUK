@@ -139,7 +139,7 @@ function recordAudio() {
         function(err) {
             console.log("recordAudio():Audio Error: "+ err.code);
         });
-
+    // mediaRec.play();
     // Record audio
     mediaRec.startRecord();
 }

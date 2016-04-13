@@ -13,6 +13,9 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.first803007"
         },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "com.ionicframework.first803007"
+        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.ionicframework.first803007"
         },
@@ -20,5 +23,9 @@
             "PACKAGE_NAME": "com.ionicframework.first803007"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.first803007"
+        }
+    }
 }
