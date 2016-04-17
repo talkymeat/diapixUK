@@ -2,8 +2,19 @@ function updateWindow(prev, next){
   $("#" + prev).hide();
   $("#" + next).show();
 }
+function showResume(){
+  $("#pauseButton").hide();
+  $("#resumeButton").show();
+}
+function showPause(){
+  $("#resumeButton").hide();
+  $("#pauseButton").show();
+}
 function updateTextInput(val) {
-  document.getElementById('timevalue').innerHTML = val + " minutes";
+  if(val == 1)
+  	document.getElementById('timevalue').innerHTML = val + " minute ";
+  else
+  	document.getElementById('timevalue').innerHTML = val + " minutes";
 }
 
 $(function() {
@@ -14,60 +25,62 @@ $(function() {
             $("img").attr("src", value);
         });
 });
-// function createCanvas() {
-//     var c=document.getElementById("myCanvas");
-//     var ctx=c.getContext("2d");
-//     ctx.lineWidth=5;
-//     var img=document.getElementById("Beach1A");
-//     ctx.drawImage(img,100,100);
-// };
-//
-// var canvas = document.getElementById("imgCanvas");
-// var context = canvas.getContext("2d");
-//
-// function updatePictureInput(val) {
-//   document.getElementById('picture').innerHTML = val;
-// }
-//
-//
-// function createImageOnCanvas(imageId) {
-//     canvas.style.display = "block";
-//     document.getElementById("images").style.overflowY = "hidden";
-//     var img = new Image(300, 300);
-//     img.src = document.getElementById(imageId).src;
-//     context.drawImage(img, (0), (0)); //onload....
 
-var foundDiff, numDiff, circleRadius;
+var foundDiff, numDiff, circleRadius, totalTaps, timeLog, totalDiff;
 
 function canv() {
   document.getElementById("imgCanvas").width = document.getElementById("imgCanvas").offsetWidth;
   document.getElementById("imgCanvas").height = document.getElementById("imgCanvas").offsetHeight;
   numDiff = 0;
   foundDiff = [];
+  var i;
+  for(i=1; i<=12; i++)
+    foundDiff[i] = new Object;
+  totalTaps = 0;
+  timeLog = [];
+  totalDiff = 0;
   circleRadius = document.getElementById("imgCanvas").height / 20;
-
 }
 
 function handleEvent(e) {
+	if(paused)
+		return;
+
   var canvas = document.getElementById("imgCanvas");
   var context = canvas.getContext("2d");
   var pos = getMousePos(canvas, e);
 
+  totalTaps++;
+  timeLog[totalTaps] = new Object;
+  timeLog[totalTaps].time = document.getElementById("timer").innerHTML;
+
   var i;
   for(i=1; i<=numDiff; i++)
-    if(dist(foundDiff[i], pos) <= circleRadius){
-      removeDifference(i, context);
+    if(dist(foundDiff[i].pos, pos) <= circleRadius){
+      timeLog[totalTaps].action = "difference cancelled";
+      timeLog[totalTaps].difference = foundDiff[i];
+      removeDifference(i);
       draw(context, canvas);
+      console.log(timeLog[totalTaps]);
       return;
     }
 
   if(numDiff == 12){
     alert("You have already spotted 12 differences!");
+    timeLog[totalTaps].action = "exceeded 12 differences";
+    timeLog[totalTaps].difference = new Object;
+    timeLog[totalTaps].difference.pos = pos;
+    console.log(timeLog[totalTaps]);
     return;
   }
 
   addDifference(pos);
   draw(context, canvas);
+
+  timeLog[totalTaps].action = "difference spotted";
+  timeLog[totalTaps].difference = foundDiff[numDiff];
+
+  console.log(timeLog[totalTaps]);
 }
 
 function getMousePos(canvas, evt) {
@@ -79,15 +92,19 @@ function getMousePos(canvas, evt) {
 }
 
 function addDifference(pos) {
+  totalDiff++;
   numDiff++;
-  foundDiff[numDiff] = pos;
+  foundDiff[numDiff].no = totalDiff;
+  foundDiff[numDiff].pos = pos;
 }
 
-function removeDifference(index, context){
-  var p = foundDiff[index];
+function removeDifference(index){
   var i;
-  for(i=index; i<numDiff; i++)
-    foundDiff[i] = foundDiff [i+1];
+  for(i=index; i<numDiff; i++){
+  	foundDiff[i].no = foundDiff[i+1].no;
+  	foundDiff[i].pos.x = foundDiff[i+1].pos.x;
+  	foundDiff[i].pos.y = foundDiff[i+1].pos.y;
+  }
   numDiff--;
 }
 
@@ -100,12 +117,10 @@ function draw(context, canvas){
   context.strokeStyle = "#00FF00";
   for(i=1; i<=numDiff; i++){
     context.beginPath();
-    context.arc(foundDiff[i].x, foundDiff[i].y, circleRadius, 0, 2*Math.PI);
+    context.arc(foundDiff[i].pos.x, foundDiff[i].pos.y, circleRadius, 0, 2*Math.PI);
     context.stroke();
   }
-
 }
-
 
 function addToDo(subjectCode,age,gender,record,time,timer,pictureChoice,condition) {
   var todo = {
@@ -147,12 +162,13 @@ function recordAudio() {
 
 var time;
 var seconds, minutes;
+var paused = true;
 
 function startTimer(){
     if(document.getElementById('showTimer').checked)
-        $("#timerDiv").show();
+        $("#timer").show();
     else
-        $("#timerDiv").hide();
+        $("#timer").hide();
 
   minutes = parseInt(document.getElementById('timevalue').innerHTML);
   seconds = 0;
@@ -161,20 +177,25 @@ function startTimer(){
   if(minutes < 10)
     document.getElementById('timer').innerHTML += "0";
   document.getElementById('timer').innerHTML += minutes.toString() + ":00";
+
+  paused = false;
   time = setInterval(updateTimer, 1000);
 }
 
 function pauseTimer(){
+	paused = true;
     clearInterval(time);
 }
 
 function resumeTimer() {
+	paused = false;
     clearInterval(time);
     time = setInterval(updateTimer, 1000);
 }
 
 function updateTimer(){
     if(document.getElementById('timer').innerHTML === "00:00"){
+    	paused = true;
         clearInterval(time);
         alert("Time is up!");
         return;
