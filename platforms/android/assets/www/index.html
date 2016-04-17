@@ -47,7 +47,9 @@
     <script src="js/app.js"></script>
   </head>
 
-  <body>
+  </head>
+
+  <body class="platform-android platform-cordova platform-webview">
 
     <div id="startScreen" class="screen">
       <center class="startVCenter">
@@ -127,8 +129,8 @@
           <div class="item block" style="padding: 0">
             <div class="range range-royal chooseTime" style="padding-left: 16px">
               Time
-              <input type="range" name="time" min="1" max="15" value="10" onchange="updateTextInput(this.value);">
-              <div class="showTime" id="timevalue" style="-webkit-filter: blur(0.000001px)">10 minutes</div>
+              <input type="range" name="time" min="1" max="15" value="10" oninput="updateTextInput(this.value);">
+              <div class="showTime" id="timevalue">10 minutes</div>
             </div>
           </div>
           <label class="item item-input item-select" style="height:50px">
@@ -157,15 +159,20 @@
 
     <div id="fourthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Instructions</h1>
+        <h1 class="title">Instructions: Spot the difference!</h1>
       </div>
 
-      <center class="vcenter royal" style="width: 80%; font-size: 20px">
-        In this game you will need to find 12 differences between the two pictures. When you identify a difference, click on it and it will be displayed on the screen. If you have already spotted 12 differences and you spot another one, one of them must be wrong. Click on a difference to cancel it. At the end you can check how many you got right.
-      </center>
-
+        <center class="vcenter royal" style="width: 80%; font-size: 20px">
+            <ul>
+                <li>Find the 12 differences between the two pictures.</li>
+                <li>Each time you spot a difference, just tap on the screen.</li>
+                <li>Try to find all 12 differences before your time is up.</li>
+                <li>Start your picture description from the top left-hand corner and carry on clockwise.</li>
+            </ul>
+        </center>
 
       <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
+      <!-- <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer();recordAudio(); updateWindow('fourthScreen','fifthScreen'); canv();"> -->
         Start
       </a>
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fourthScreen','thirdScreen');">
