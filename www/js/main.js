@@ -115,6 +115,7 @@ function dist(a, b){
 function draw(context, canvas){
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.strokeStyle = "#00FF00";
+  context.lineWidth = 7;
   for(i=1; i<=numDiff; i++){
     context.beginPath();
     context.arc(foundDiff[i].pos.x, foundDiff[i].pos.y, circleRadius, 0, 2*Math.PI);

@@ -14,8 +14,15 @@ ionic emulate android
 ```
 Make sure your AVM emulator is configured through Android Studio.
 
+## we usin SASS
+it's in `scss/style.scss`, and run `gulp` or `gulp sass` to get it into minified version, linked from `index.html`
+
+## we usin jQuery
+it's in `main.js`
+
 ## Dependencies
 - [Bower](http://bower.io/) for managing front-end packages
+- gulp
 - npm / node obvs
 - jQuery
 - fastclick for speeding up in-app clicks
