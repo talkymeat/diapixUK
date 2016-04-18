@@ -17,8 +17,8 @@ Make sure your AVM emulator is configured through Android Studio.
 ## we usin SASS
 it's in `scss/style.scss`, and run `gulp` or `gulp sass` to get it into minified version, linked from `index.html`
 
-## we usin jQuery
-it's in `main.js`
+## we usin jQuery, Node & Vanilla JS
+it's in `www/js/main.js`. Server stuff is `server.js`, `www/js/app.js`
 
 ## Dependencies
 - [Bower](http://bower.io/) for managing front-end packages
