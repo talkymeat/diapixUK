@@ -1,13 +1,43 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:700);
-
+@import url(https://fonts.googleapis.com/css?family=Raleway:700|Karla);
 $title-font: 'Raleway';
-
-h1, .h1 {
-    font-family: $title-font, sans-serif;
-}
-
+$body-font: 'Karla';
 body, html {
 	height: 100%;
+    font-family: $body-font, sans-serif;
+
+    h1, .h1 {
+        font-family: $title-font, fantasy, cursive, sans-serif;
+        font-size: 1.3em;
+    }
+
+    h1.special {
+        font-size: 20vh;
+    }
+
+    p {
+        font-size: 1.2em;
+        line-height: 1.5em;
+    }
+
+    input, label, select, option, textarea {
+        font-family: inherit;
+        font-size: 1em;
+    }
+
+    .item {
+        input[type=search], input[type=text], input[type=password], input[type=datetime], input[type=datetime-local], input[type=date], input[type=month], input[type=time], input[type=week], input[type=number], input[type=email], input[type=url], input[type=tel], input[type=color], textarea {
+            font-size: 1em;
+        }
+    }
+
+    label {
+      height: 50px;
+      // font-size: 14px;
+    }
+
+    ul li {
+        padding: 1em 0;
+    }
 }
 
 .vcenter {
@@ -55,14 +85,6 @@ body, html {
 
 }
 
-label {
-  height: 50px;
-  font-size: 14px;
-}
-div {
-  font-size: 14px;
-}
-
 .inscreen {
   padding: 0px;
   margin: auto;
@@ -77,6 +99,7 @@ div.item {
 .showTime {
   -webkit-filter: blur(0.000001px);
   width: 70px;
+  margin-right: 1%;
 }
 
 .rightTimer {

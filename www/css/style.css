@@ -1,9 +1,24 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:700);
-h1, .h1 {
-  font-family: "Raleway", sans-serif; }
-
+@import url(https://fonts.googleapis.com/css?family=Raleway:700|Karla);
 body, html {
-  height: 100%; }
+  height: 100%;
+  font-family: "Karla", sans-serif; }
+  body h1, body .h1, html h1, html .h1 {
+    font-family: "Raleway", fantasy, cursive, sans-serif;
+    font-size: 1.3em; }
+  body h1.special, html h1.special {
+    font-size: 20vh; }
+  body p, html p {
+    font-size: 1.2em;
+    line-height: 1.5em; }
+  body input, body label, body select, body option, body textarea, html input, html label, html select, html option, html textarea {
+    font-family: inherit;
+    font-size: 1em; }
+  body .item input[type=search], body .item input[type=text], body .item input[type=password], body .item input[type=datetime], body .item input[type=datetime-local], body .item input[type=date], body .item input[type=month], body .item input[type=time], body .item input[type=week], body .item input[type=number], body .item input[type=email], body .item input[type=url], body .item input[type=tel], body .item input[type=color], body .item textarea, html .item input[type=search], html .item input[type=text], html .item input[type=password], html .item input[type=datetime], html .item input[type=datetime-local], html .item input[type=date], html .item input[type=month], html .item input[type=time], html .item input[type=week], html .item input[type=number], html .item input[type=email], html .item input[type=url], html .item input[type=tel], html .item input[type=color], html .item textarea {
+    font-size: 1em; }
+  body label, html label {
+    height: 50px; }
+  body ul li, html ul li {
+    padding: 1em 0; }
 
 .vcenter {
   position: absolute;
@@ -45,13 +60,6 @@ body, html {
   background-color: #F3F3F3;
   height: 100%; }
 
-label {
-  height: 50px;
-  font-size: 14px; }
-
-div {
-  font-size: 14px; }
-
 .inscreen {
   padding: 0px;
   margin: auto;
@@ -65,7 +73,8 @@ div.item {
 
 .showTime {
   -webkit-filter: blur(0.0px);
-  width: 70px; }
+  width: 70px;
+  margin-right: 1%; }
 
 .rightTimer {
   position: absolute;
