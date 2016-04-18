@@ -5,14 +5,12 @@
     right: 50%;
     top: 50%;
     transform: translateX(50%) translateY(calc(-50% - 10px));
-    -webkit-filter: blur(0.000001px);
 }
 .startVCenter {
   position: absolute;
   right: 50%;
   top: 50%;
   transform: translateX(50%) translateY(-50%);
-  -webkit-filter: blur(0.000001px);
 }
 
 .buttonPosRight {
@@ -45,7 +43,9 @@ body, html {
 .screen {
 	background-color: #F3F3F3;
 	height: 100%;
-
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 
 label {
@@ -62,6 +62,9 @@ div {
 	height: 100%;
 	width: 100%;
 	background-color: #F3F3F3;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 div.item {
   height: 50px;
@@ -89,6 +92,9 @@ div.item {
   width:100%;
   height:100%;
   position:relative;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 .coveredImage {
   width:100%;
@@ -103,4 +109,11 @@ div.item {
   position:absolute;
   top:0px;
   left:0px;
+}
+.blur-filter {
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
 }

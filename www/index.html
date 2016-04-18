@@ -175,14 +175,12 @@
 
 
     <div id="fifthScreen" class="screen row" style="display: none; padding: 0px; setKeepScreenOn(true)">
-      <div>
-          <div class="outsideWrapper">
-          <div class="insideWrapper">
-              <img src="" class="coveredImage">
-              <canvas id="imgCanvas" class="coveringCanvas" onclick="handleEvent(event);"></canvas>
-          </div>
+      <div class="outsideWrapper">
+        <div class="insideWrapper">
+            <img id="img" src="" class="coveredImage">
+            <canvas id="imgCanvas" class="coveringCanvas" onclick="handleEvent(event);"></canvas>
+        </div>
       </div>
-    </div>
       <div id="timerDiv" class="rightTimer">
         <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
           <center>
