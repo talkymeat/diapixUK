@@ -119,6 +119,7 @@ function dist(a, b){
 function draw(context, canvas){
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.strokeStyle = "#00FF00";
+  context.lineWidth = 7;
   for(i=1; i<=numDiff; i++){
     context.beginPath();
     context.arc(foundDiff[i].pos.x, foundDiff[i].pos.y, circleRadius, 0, 2*Math.PI);
@@ -147,7 +148,22 @@ function addToDo(subjectCode,age,gender,record,time,timer,pictureChoice,conditio
   });
 }
 
+function recordAudio() {
+    var src = "myrecording.mp3";
+    var mediaRec = new Media(src,
+        // success callback
+        function() {
+            console.log("recordAudio():Audio Success");
+        },
 
+        // error callback
+        function(err) {
+            console.log("recordAudio():Audio Error: "+ err.code);
+        });
+    // mediaRec.play();
+    // Record audio
+    mediaRec.startRecord();
+}
 // Timer
 
 var time;

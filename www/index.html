@@ -21,10 +21,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>Diapix</title>
+    <title>diapixUK</title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -47,22 +47,31 @@
     <script src="js/app.js"></script>
   </head>
 
+  </head>
+
   <body>
 
     <div id="startScreen" class="screen">
       <center class="startVCenter">
-        <h1 class="royal">Diapix</h1>
+        <h1 class="royal special">diapixUK</h1>
+        <p>
+            The diapixUK is a dialogue elicitation technique and set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
+            <br>
+            It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants.</p>
         <br>
         <a class="button button-large button-royal" onclick="updateWindow('startScreen','secondScreen');">
-          Start
+          start
         </a>
+        <br>
+        <h1>test websocket</h1>
+        <ul id='pings'></ul>
       </center>
     </div>
 
 
     <div id="secondScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">User details</h1>
+        <h1 class="title">player details</h1>
       </div>
 
       <div class="list list-inset inscreen">
@@ -157,15 +166,20 @@
 
     <div id="fourthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Instructions</h1>
+        <h1 class="title">Instructions: Spot the difference!</h1>
       </div>
 
-      <center class="vcenter royal" style="width: 80%; font-size: 20px">
-        In this game you will need to find 12 differences between the two pictures. When you identify a difference, click on it and it will be displayed on the screen. If you have already spotted 12 differences and you spot another one, one of them must be wrong. Click on a difference to cancel it. At the end you can check how many you got right.
-      </center>
-
+        <center class="vcenter royal" style="width: 80%; font-size: 20px">
+            <ul>
+                <li>Find the 12 differences between the two pictures.</li>
+                <li>Each time you spot a difference, just tap on the screen.</li>
+                <li>Try to find all 12 differences before your time is up.</li>
+                <li>Start your picture description from the top left-hand corner and carry on clockwise.</li>
+            </ul>
+        </center>
 
       <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
+      <!-- <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer();recordAudio(); updateWindow('fourthScreen','fifthScreen'); canv();"> -->
         Start
       </a>
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fourthScreen','thirdScreen');">
@@ -197,14 +211,14 @@
         </a>
         <a class="button icon-right ion-chevron-right button-royal buttonFinish" onclick="updateWindow('fifthScreen','sixthScreen'); pauseTimer();">
             Finish
-        </a>  
+        </a>
     </div>
 
 
     <div id="sixthScreen" class="screen" style="display: none">
 
       <center class="startVCenter">
-        <h1 class="royal">Thanks for playing Diapix!</h1>
+        <h1 class="royal special">Thanks for playing Diapix!</h1>
         <br>
         <a href="index.html" class="button button-large button-royal">
           Play again

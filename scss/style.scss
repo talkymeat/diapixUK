@@ -1,0 +1,136 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:700|Karla);
+$title-font: 'Raleway';
+$body-font: 'Karla';
+body, html {
+	height: 100%;
+    font-family: $body-font, sans-serif;
+
+    h1, .h1 {
+        font-family: $title-font, fantasy, cursive, sans-serif;
+        font-size: 1.3em;
+    }
+
+    h1.special {
+        font-size: 20vh;
+    }
+
+    p {
+        font-size: 1.2em;
+        line-height: 1.5em;
+    }
+
+    input, label, select, option, textarea {
+        font-family: inherit;
+        font-size: 1em;
+    }
+
+    .item {
+        input[type=search], input[type=text], input[type=password], input[type=datetime], input[type=datetime-local], input[type=date], input[type=month], input[type=time], input[type=week], input[type=number], input[type=email], input[type=url], input[type=tel], input[type=color], textarea {
+            font-size: 1em;
+        }
+    }
+
+    label {
+      height: 50px;
+      // font-size: 14px;
+    }
+
+    ul li {
+        padding: 1em 0;
+    }
+}
+
+.vcenter {
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    transform: translateX(50%) translateY(calc(-50% - 10px));
+    -webkit-filter: blur(0.000001px);
+}
+
+.startVCenter {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  transform: translateX(50%) translateY(-50%);
+  -webkit-filter: blur(0.000001px);
+}
+
+.buttonPosRight {
+	position: absolute;
+	bottom: 6%;
+	right: 5%;
+}
+.buttonPosLeft {
+	position: absolute;
+	bottom: 6%;
+	left: 5%;
+}
+.buttonQuit {
+    position: absolute;
+    top: 6vh;
+    right: 10vw;
+    transform: translateX(50%);
+}
+.buttonFinish {
+    position: absolute;
+    bottom: 6vh;
+    right: 10vw;
+    transform: translateX(50%);
+}
+
+.screen {
+	background-color: #F3F3F3;
+	height: 100%;
+
+}
+
+.inscreen {
+  padding: 0px;
+  margin: auto;
+	height: 100%;
+	width: 100%;
+	background-color: #F3F3F3;
+}
+div.item {
+  height: 50px;
+	overflow: hidden;
+}
+.showTime {
+  -webkit-filter: blur(0.000001px);
+  width: 70px;
+  margin-right: 1%;
+}
+
+.rightTimer {
+    position: absolute;
+    font-size: 5vw;
+    top: 50%;
+    right: 10vw;
+    transform: translateX(50%) translateY(-50%);
+}
+.outsideWrapper {
+  width:80%;
+  height:100%;
+  left:0px;
+  position: absolute;
+}
+.insideWrapper {
+  width:100%;
+  height:100%;
+  position:relative;
+}
+.coveredImage {
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0px;
+  left:0px;
+}
+.coveringCanvas {
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0px;
+  left:0px;
+}
