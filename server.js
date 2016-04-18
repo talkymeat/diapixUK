@@ -1,21 +1,43 @@
-var express = require('express');
+var WebSocketServer = require('ws').Server
+var http = require('http')
+var express = require('express')
 // var pg = require('pg');
-var app = express();
-
-app.set('port', (process.env.PORT || 5000));
+var app = express()
+var port = process.env.PORT || 5000
 
 app.use(express.static('www'));
 
 // views is directory for all template files
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views')
+app.set('view engine', 'ejs')
 
 // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
 app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "X-Requested-With")
+    next()
 });
+
+var server = http.createServer(app)
+server.listen(port)
+
+console.log("http server listening on %d", port)
+
+var wss = new WebSocketServer({server: server})
+console.log("websocket server created")
+
+wss.on("connection", function(ws) {
+  var id = setInterval(function() {
+    ws.send(JSON.stringify(new Date()), function() {  })
+}, 1000)
+
+  console.log("websocket connection open")
+
+  ws.on("close", function() {
+    console.log("websocket connection close")
+    clearInterval(id)
+  })
+})
 
 // app.get('/', function(request, response) {
 //   response.render('pages/index')
@@ -44,6 +66,6 @@ app.all('*', function(req, res, next) {
 //   });
 // })
 
-app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ', app.get('port'));
-});
+// app.listen(app.get('port'), function() {
+//   console.log('Express server listening on port ', app.get('port'));
+// });
