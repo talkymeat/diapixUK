@@ -9,7 +9,8 @@
     "gulp-concat": "^2.6.0",
     "gulp-sass": "^2.2.0",
     "ng-cordova": "^0.1.26-alpha",
-    "pouchdb": "^5.3.1"
+    "pouchdb": "^5.3.1",
+    "ws": "^1.1.0"
   },
   "devDependencies": {
     "bower": "^1.7.9",
