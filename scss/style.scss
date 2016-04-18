@@ -6,6 +6,10 @@ h1, .h1 {
     font-family: $title-font, sans-serif;
 }
 
+body, html {
+	height: 100%;
+}
+
 .vcenter {
     position: absolute;
     right: 50%;
@@ -13,6 +17,7 @@ h1, .h1 {
     transform: translateX(50%) translateY(calc(-50% - 10px));
     -webkit-filter: blur(0.000001px);
 }
+
 .startVCenter {
   position: absolute;
   right: 50%;
@@ -42,10 +47,6 @@ h1, .h1 {
     bottom: 6vh;
     right: 10vw;
     transform: translateX(50%);
-}
-
-body, html {
-	height: 100%;
 }
 
 .screen {
