@@ -82,55 +82,71 @@ body, html {
 .screen {
 	background-color: #F3F3F3;
 	height: 100%;
+	-webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
 
-}
+  .inscreen {
+    padding: 0px;
+    margin: auto;
+  	height: 100%;
+  	width: 100%;
+  	background-color: #F3F3F3;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
 
-.inscreen {
-  padding: 0px;
-  margin: auto;
-	height: 100%;
-	width: 100%;
-	background-color: #F3F3F3;
-}
-div.item {
-  height: 50px;
-	overflow: hidden;
-}
-.showTime {
-  -webkit-filter: blur(0.000001px);
-  width: 70px;
-  margin-right: 1%;
-}
+  div.item {
+    height: 50px;
+    overflow: hidden; }
 
-.rightTimer {
+  .showTime {
+    -webkit-filter: blur(0.0px);
+    width: 70px;
+    margin-right: 1%; }
+
+  .rightTimer {
     position: absolute;
     font-size: 5vw;
     top: 50%;
     right: 10vw;
-    transform: translateX(50%) translateY(-50%);
-}
-.outsideWrapper {
-  width:80%;
-  height:100%;
-  left:0px;
-  position: absolute;
-}
-.insideWrapper {
-  width:100%;
-  height:100%;
-  position:relative;
-}
-.coveredImage {
-  width:100%;
-  height:100%;
-  position:absolute;
-  top:0px;
-  left:0px;
-}
-.coveringCanvas {
-  width:100%;
-  height:100%;
-  position:absolute;
-  top:0px;
-  left:0px;
-}
+    transform: translateX(50%) translateY(-50%); }
+
+  .outsideWrapper {
+    width: 80%;
+    height: 100%;
+    left: 0px;
+    position: absolute; }
+
+  .insideWrapper {
+    width:100%;
+    height:100%;
+    position:relative;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+
+  .coveredImage {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px; }
+
+  .coveringCanvas {
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0px;
+    left:0px;
+  }
+  .blur-filter {
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+  }

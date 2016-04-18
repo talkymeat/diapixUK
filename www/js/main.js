@@ -5,10 +5,14 @@ function updateWindow(prev, next){
 function showResume(){
   $("#pauseButton").hide();
   $("#resumeButton").show();
+  document.getElementById("img").classList.add("blur-filter");
+  document.getElementById("imgCanvas").classList.add("blur-filter");
 }
 function showPause(){
   $("#resumeButton").hide();
   $("#pauseButton").show();
+  document.getElementById("img").classList.remove("blur-filter");
+  document.getElementById("imgCanvas").classList.remove("blur-filter");
 }
 function updateTextInput(val) {
   if(val == 1)
@@ -39,7 +43,7 @@ function canv() {
   totalTaps = 0;
   timeLog = [];
   totalDiff = 0;
-  circleRadius = document.getElementById("imgCanvas").height / 20;
+  circleRadius = document.getElementById("imgCanvas").height / 18;
 }
 
 function handleEvent(e) {
@@ -119,6 +123,7 @@ function draw(context, canvas){
   for(i=1; i<=numDiff; i++){
     context.beginPath();
     context.arc(foundDiff[i].pos.x, foundDiff[i].pos.y, circleRadius, 0, 2*Math.PI);
+    context.lineWidth = 4;
     context.stroke();
   }
 }
