@@ -24,7 +24,7 @@ app.all('*', function(req, res, next) {
 });
 
 var server = http.createServer(app)
-
+server.listen(port)
 console.log("http server listening on %d", port)
 
 io.sockets.on('connection', function (socket) {
@@ -38,7 +38,6 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
-server.listen(port)
 
 app.get('/db', function (request, response) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
@@ -51,6 +50,54 @@ app.get('/db', function (request, response) {
     });
   });
 })
+
+var server2 = http.createServer(function(req, res) {
+
+  // get a pg client from the connection pool
+  pg.connect(conString, function(err, client, done) {
+
+    var handleError = function(err) {
+      // no error occurred, continue with the request
+      if(!err) return false;
+
+      // An error occurred, remove the client from the connection pool.
+      // A truthy value passed to done will remove the connection from the pool
+      // instead of simply returning it to be reused.
+      // In this case, if we have successfully received a client (truthy)
+      // then it will be removed from the pool.
+      if(client){
+        done(client);
+      }
+      res.writeHead(500, {'content-type': 'text/plain'});
+      res.end('An error occurred');
+      return true;
+    };
+
+    // handle an error from the connection
+    if(handleError(err)) return;
+
+    // record the visit
+    client.query('INSERT INTO visit (date) VALUES ($1)', [new Date()], function(err, result) {
+
+      // handle an error from the query
+      if(handleError(err)) return;
+
+      // get the total number of visits today (including the current visit)
+      client.query('SELECT COUNT(date) AS count FROM visit', function(err, result) {
+
+        // handle an error from the query
+        if(handleError(err)) return;
+
+        // return the client to the connection pool for other requests to reuse
+        done();
+        res.writeHead(200, {'content-type': 'text/plain'});
+        res.end('You are visitor number ' + result.rows[0].count);
+      });
+    });
+  });
+})
+
+server2.listen(3001)
 
 //
 // var wss = new WebSocketServer({server: server})
