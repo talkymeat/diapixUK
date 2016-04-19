@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var pg = require('pg');
-var port = process.env.PORT || 5000
+var port = process.env.PORT || 9000
 var conString = "process.env.DATABASE_URL";
 var pg_client = new pg.Client(conString);
 pg_client.connect();
@@ -24,11 +24,11 @@ app.all('*', function(req, res, next) {
 });
 
 var server = http.createServer(app)
-server.listen(port)
 
 console.log("http server listening on %d", port)
 
 io.sockets.on('connection', function (socket) {
+    console.log('a user connected');
     socket.emit('connected', { connected: true });
 
     socket.on('ready for data', function (data) {
@@ -37,6 +37,8 @@ io.sockets.on('connection', function (socket) {
         });
     });
 });
+
+server.listen(port)
 
 app.get('/db', function (request, response) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
