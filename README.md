@@ -20,6 +20,9 @@ it's in `scss/style.scss`, and run `gulp` or `gulp sass` to get it into minified
 ## we usin jQuery, Node & Vanilla JS
 it's in `www/js/main.js`. Server stuff is `server.js`, `www/js/app.js`
 
+## Heroku
+will handle the db stuff and env config vars
+
 ## Dependencies
 - [Bower](http://bower.io/) for managing front-end packages
 - gulp

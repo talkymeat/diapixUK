@@ -1,9 +1,14 @@
-var WebSocketServer = require('ws').Server
-var http = require('http')
-var express = require('express')
-// var pg = require('pg');
-var app = express()
+// var WebSocketServer = require('ws').Server;
+var express = require('express');
+var app = express();
+var http = require('http');
+var pg = require('pg');
 var port = process.env.PORT || 5000
+var conString = "process.env.DATABASE_URL";
+var pg_client = new pg.Client(conString);
+pg_client.connect();
+var query = pg_client.query('LISTEN addedrecord');
+var io = require('socket.io').listen(port);
 
 app.use(express.static('www'));
 
@@ -23,21 +28,44 @@ server.listen(port)
 
 console.log("http server listening on %d", port)
 
-var wss = new WebSocketServer({server: server})
-console.log("websocket server created")
+io.sockets.on('connection', function (socket) {
+    socket.emit('connected', { connected: true });
 
-wss.on("connection", function(ws) {
-  var id = setInterval(function() {
-    ws.send(JSON.stringify(new Date()), function() {  })
-}, 1000)
+    socket.on('ready for data', function (data) {
+        pg_client.on('notification', function(title) {
+            socket.emit('update', { message: title });
+        });
+    });
+});
 
-  console.log("websocket connection open")
-
-  ws.on("close", function() {
-    console.log("websocket connection close")
-    clearInterval(id)
-  })
+app.get('/db', function (request, response) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROM test_table', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.render('pages/db', {results: result.rows} ); }
+    });
+  });
 })
+
+//
+// var wss = new WebSocketServer({server: server})
+// console.log("websocket server created")
+//
+// wss.on("connection", function(ws) {
+//   var id = setInterval(function() {
+//     ws.send(JSON.stringify(new Date()), function() {  })
+// }, 1000)
+//
+//   console.log("websocket connection open")
+//
+//   ws.on("close", function() {
+//     console.log("websocket connection close")
+//     clearInterval(id)
+//   })
+// })
 
 // app.get('/', function(request, response) {
 //   response.render('pages/index')

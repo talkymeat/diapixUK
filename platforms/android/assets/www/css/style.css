@@ -1,106 +1,125 @@
-/* Empty. Add your own CSS if you like */
+@import url(https://fonts.googleapis.com/css?family=Raleway:700|Karla);
+body, html {
+  height: 100%;
+  font-family: "Karla", sans-serif; }
+  body h1, body .h1, html h1, html .h1 {
+    font-family: "Raleway", fantasy, cursive, sans-serif;
+    font-size: 1.3em; }
+  body h1.special, html h1.special {
+    font-size: 20vh; }
+  body p, html p {
+    font-size: 1.2em;
+    line-height: 1.5em; }
+  body input, body label, body select, body option, body textarea, html input, html label, html select, html option, html textarea {
+    font-family: inherit;
+    font-size: 1em; }
+  body .item input[type=search], body .item input[type=text], body .item input[type=password], body .item input[type=datetime], body .item input[type=datetime-local], body .item input[type=date], body .item input[type=month], body .item input[type=time], body .item input[type=week], body .item input[type=number], body .item input[type=email], body .item input[type=url], body .item input[type=tel], body .item input[type=color], body .item textarea, html .item input[type=search], html .item input[type=text], html .item input[type=password], html .item input[type=datetime], html .item input[type=datetime-local], html .item input[type=date], html .item input[type=month], html .item input[type=time], html .item input[type=week], html .item input[type=number], html .item input[type=email], html .item input[type=url], html .item input[type=tel], html .item input[type=color], html .item textarea {
+    font-size: 1em; }
+  body label, html label {
+    height: 50px; }
+  body ul li, html ul li {
+    padding: 1em 0; }
 
 .vcenter {
-    position: absolute;
-    right: 50%;
-    top: 50%;
-    transform: translateX(50%) translateY(calc(-50% - 10px));
-    -webkit-filter: blur(0.000001px);
-}
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  transform: translateX(50%) translateY(calc(-50% - 10px));
+  -webkit-filter: blur(0.0px); }
+
 .startVCenter {
   position: absolute;
   right: 50%;
   top: 50%;
   transform: translateX(50%) translateY(-50%);
-  -webkit-filter: blur(0.000001px);
-}
+  -webkit-filter: blur(0.0px); }
 
 .buttonPosRight {
-	position: absolute;
-	bottom: 6%;
-	right: 5%;
-}
-.buttonPosLeft {
-	position: absolute;
-	bottom: 6%;
-	left: 5%;
-}
-.buttonQuit {
-    position: absolute;
-    top: 6vh;
-    right: 10vw;
-    transform: translateX(50%);
-}
-.buttonFinish {
-    position: absolute;
-    bottom: 6vh;
-    right: 10vw;
-    transform: translateX(50%);
-}
+  position: absolute;
+  bottom: 6%;
+  right: 5%; }
 
-body, html {
-	height: 100%;
-}
+.buttonPosLeft {
+  position: absolute;
+  bottom: 6%;
+  left: 5%; }
+
+.buttonQuit {
+  position: absolute;
+  top: 6vh;
+  right: 10vw;
+  transform: translateX(50%); }
+
+.buttonFinish {
+  position: absolute;
+  bottom: 6vh;
+  right: 10vw;
+  transform: translateX(50%); }
 
 .screen {
-	background-color: #F3F3F3;
-	height: 100%;
-
-}
-
-label {
-  height: 50px;
-  font-size: 14px;
-}
-div {
-  font-size: 14px;
-}
+  background-color: #F3F3F3;
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d; }
 
 .inscreen {
   padding: 0px;
   margin: auto;
-	height: 100%;
-	width: 100%;
-	background-color: #F3F3F3;
-}
+  height: 100%;
+  width: 100%;
+  background-color: #F3F3F3;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d; }
+
 div.item {
   height: 50px;
-	overflow: hidden;
-}
+  overflow: hidden; }
+
 .showTime {
-  -webkit-filter: blur(0.000001px);
+  -webkit-filter: blur(0px);
   width: 70px;
-}
+  margin-right: 1%; }
 
 .rightTimer {
-    position: absolute; 
-    font-size: 5vw;
-    top: 50%;
-    right: 10vw;
-    transform: translateX(50%) translateY(-50%);
-}
-.outsideWrapper {
-  width:80%;
-  height:100%;
-  left:0px;
   position: absolute;
-}
+  font-size: 5vw;
+  top: 50%;
+  right: 10vw;
+  transform: translateX(50%) translateY(-50%); }
+
+.outsideWrapper {
+  width: 80%;
+  height: 100%;
+  left: 0px;
+  position: absolute; }
+
 .insideWrapper {
-  width:100%;
-  height:100%;
-  position:relative;
-}
+  width: 100%;
+  height: 100%;
+  position: relative;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d; }
+
 .coveredImage {
-  width:100%;
-  height:100%;
-  position:absolute;
-  top:0px;
-  left:0px;
-}
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px; }
+
 .coveringCanvas {
-  width:100%;
-  height:100%;
-  position:absolute;
-  top:0px;
-  left:0px;
-}
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px; }
+
+.blur-filter {
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px); }

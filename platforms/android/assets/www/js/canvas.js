@@ -1,6 +1,6 @@
 $(document).ready(
     function() {
-    
+
         var canvas = document.getElementById("imgCanvas");
         var context = canvas.getContext("2d");
 
@@ -17,6 +17,7 @@ $(document).ready(
             posx = pos.x;
             posy = pos.y;
             context.strokeStyle = "#00FF00";
+            context.lineWidth = 30;
             context.beginPath();
             context.arc(posx, posy, 20, 0, 2*Math.PI);
             context.stroke();

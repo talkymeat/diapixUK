@@ -21,10 +21,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>Diapix</title>
+    <title>diapixUK</title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -53,18 +53,25 @@
 
     <div id="startScreen" class="screen">
       <center class="startVCenter">
-        <h1 class="royal">Diapix</h1>
+        <h1 class="royal special">diapixUK</h1>
+        <p>
+            The diapixUK is a dialogue elicitation technique and set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
+            <br>
+            It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants.</p>
         <br>
         <a class="button button-large button-royal" onclick="updateWindow('startScreen','secondScreen');">
-          Start
+          start
         </a>
+        <br>
+        <h1>test websocket</h1>
+        <ul id='pings'></ul>
       </center>
     </div>
 
 
     <div id="secondScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">User details</h1>
+        <h1 class="title">player details</h1>
       </div>
 
       <div class="list list-inset inscreen">
@@ -182,14 +189,12 @@
 
 
     <div id="fifthScreen" class="screen row" style="display: none; padding: 0px; setKeepScreenOn(true)">
-      <div>
-          <div class="outsideWrapper">
-          <div class="insideWrapper">
-              <img src="" class="coveredImage">
-              <canvas id="imgCanvas" class="coveringCanvas" onclick="handleEvent(event);"></canvas>
-          </div>
+      <div class="outsideWrapper">
+        <div class="insideWrapper">
+            <img id="img" src="" class="coveredImage">
+            <canvas id="imgCanvas" class="coveringCanvas" onclick="handleEvent(event);"></canvas>
+        </div>
       </div>
-    </div>
       <div id="timerDiv" class="rightTimer">
         <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
           <center>
@@ -206,14 +211,14 @@
         </a>
         <a class="button icon-right ion-chevron-right button-royal buttonFinish" onclick="updateWindow('fifthScreen','sixthScreen'); pauseTimer();">
             Finish
-        </a>  
+        </a>
     </div>
 
 
     <div id="sixthScreen" class="screen" style="display: none">
 
       <center class="startVCenter">
-        <h1 class="royal">Thanks for playing Diapix!</h1>
+        <h1 class="royal special">Thanks for playing Diapix!</h1>
         <br>
         <a href="index.html" class="button button-large button-royal">
           Play again
