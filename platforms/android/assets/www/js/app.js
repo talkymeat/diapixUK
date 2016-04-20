@@ -24,6 +24,7 @@ angular.module('starter', ['ionic'])
 })
 
 var db = new PouchDB('diapix');
+<<<<<<< HEAD
 var remoteCouch = false;
 
 var host = location.origin.replace(/^http/, 'ws')
@@ -33,3 +34,14 @@ ws.onmessage = function (event) {
     li.innerHTML = JSON.parse(event.data);
     document.querySelector('#pings').appendChild(li);
 };
+=======
+// var remoteCouch = new PouchDB('http://localhost:5984/diapix');
+
+// var host = location.origin.replace(/^http/, 'ws')
+// var ws = new WebSocket(host);
+// ws.onmessage = function (event) {
+//     var li = document.createElement('li');
+//     li.innerHTML = JSON.parse(event.data);
+//     document.querySelector('#pings').appendChild(li);
+// };
+>>>>>>> master

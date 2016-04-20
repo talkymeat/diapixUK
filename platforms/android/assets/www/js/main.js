@@ -208,6 +208,10 @@ function draw(){
   var context = canvas.getContext("2d");
 
   context.clearRect(0, 0, canvas.width, canvas.height);
+<<<<<<< HEAD
+=======
+  context.strokeStyle = "#00FF00";
+>>>>>>> master
   context.lineWidth = 7;
   for(i=1; i<=numDiff; i++){
     if(i == popupCloseEvent)

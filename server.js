@@ -1,9 +1,12 @@
-var WebSocketServer = require('ws').Server
-var http = require('http')
-var express = require('express')
-// var pg = require('pg');
-var app = express()
-var port = process.env.PORT || 5000
+var express = require('express');
+var app = express();
+var http = require('http');
+var pg = require('pg');
+var port = process.env.PORT || 9000
+var conString = process.env.DATABASE_URL;
+var pg_client = new pg.Client(conString);
+pg_client.connect();
+var query = pg_client.query('LISTEN addedrecord');
 
 app.use(express.static('www'));
 
@@ -18,26 +21,100 @@ app.all('*', function(req, res, next) {
     next()
 });
 
-var server = http.createServer(app)
-server.listen(port)
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+server.listen(port);
+console.log("http server listening on %d", port);
 
-console.log("http server listening on %d", port)
+io.sockets.on('connection', function (socket) {
+    socket.emit('connected', { connected: true });
+    console.log('a user connected');
 
-var wss = new WebSocketServer({server: server})
-console.log("websocket server created")
+    socket.on('ready for data', function (data) {
+        console.log(data);
+        pg_client.on('notification', function(title) {
+            socket.emit('update', { message: title });
+        });
+    });
+});
 
-wss.on("connection", function(ws) {
-  var id = setInterval(function() {
-    ws.send(JSON.stringify(new Date()), function() {  })
-}, 1000)
 
-  console.log("websocket connection open")
-
-  ws.on("close", function() {
-    console.log("websocket connection close")
-    clearInterval(id)
-  })
+app.get('/db', function (request, response) {
+  pg.connect(conString, function(err, client, done) {
+    client.query('SELECT * FROM test_table', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.render('pages/db', {results: result.rows} ); }
+    });
+  });
 })
+
+var server2 = http.createServer(function(req, res) {
+
+  // get a pg client from the connection pool
+  pg.connect(conString, function(err, client, done) {
+
+    var handleError = function(err) {
+      // no error occurred, continue with the request
+      if(!err) return false;
+
+      // An error occurred, remove the client from the connection pool.
+      // A truthy value passed to done will remove the connection from the pool
+      // instead of simply returning it to be reused.
+      // In this case, if we have successfully received a client (truthy)
+      // then it will be removed from the pool.
+      if(client){
+        done(client);
+      }
+      res.writeHead(500, {'content-type': 'text/plain'});
+      res.end('An error occurred');
+      return true;
+    };
+
+    // handle an error from the connection
+    if(handleError(err)) return;
+
+    // record the visit
+    client.query('INSERT INTO visit (date) VALUES ($1)', [new Date()], function(err, result) {
+
+      // handle an error from the query
+      if(handleError(err)) return;
+
+      // get the total number of visits today (including the current visit)
+      client.query('SELECT COUNT(date) AS count FROM visit', function(err, result) {
+
+        // handle an error from the query
+        if(handleError(err)) return;
+
+        // return the client to the connection pool for other requests to reuse
+        done();
+        res.writeHead(200, {'content-type': 'text/plain'});
+        res.end('You are visitor number ' + result.rows[0].count);
+      });
+    });
+  });
+})
+
+server2.listen(3001)
+
+//
+// var wss = new WebSocketServer({server: server})
+// console.log("websocket server created")
+//
+// wss.on("connection", function(ws) {
+//   var id = setInterval(function() {
+//     ws.send(JSON.stringify(new Date()), function() {  })
+// }, 1000)
+//
+//   console.log("websocket connection open")
+//
+//   ws.on("close", function() {
+//     console.log("websocket connection close")
+//     clearInterval(id)
+//   })
+// })
 
 // app.get('/', function(request, response) {
 //   response.render('pages/index')

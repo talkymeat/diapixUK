@@ -3,7 +3,7 @@ The diapixUK is a dialogue elicitation technique and set of materials developed 
 
 It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants. For more information, [see our website](http://www.phon.ucl.ac.uk/project/kidLUCID/diapix.php)!
 
-To be [transferred to diapixUK](https://help.github.com/articles/transferring-a-repository/)
+To do: basic app security
 
 # Development
 ## Install ionic via npm
@@ -19,6 +19,9 @@ it's in `scss/style.scss`, and run `gulp` or `gulp sass` to get it into minified
 
 ## we usin jQuery, Node & Vanilla JS
 it's in `www/js/main.js`. Server stuff is `server.js`, `www/js/app.js`
+
+## Heroku
+will handle the db stuff and env config vars
 
 ## Dependencies
 - [Bower](http://bower.io/) for managing front-end packages
