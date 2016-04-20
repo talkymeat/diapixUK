@@ -133,7 +133,6 @@ function handleEvent(e) {
       timeLog[totalTaps].action = "difference cancelled";
       timeLog[totalTaps].difference = foundDiff[i];
       confirmRemoval(i);
-      //removeDifference(i);
       draw();
       console.log(timeLog[totalTaps]);
       return;
@@ -142,7 +141,6 @@ function handleEvent(e) {
   if(numDiff == 12){
     document.getElementById('err').innerHTML = "You have already spotted 12 differences!";
     showAlertPopup();
-    //alert("You have already spotted 12 differences!");
     timeLog[totalTaps].action = "exceeded 12 differences";
     timeLog[totalTaps].difference = new Object;
     timeLog[totalTaps].difference.pos = pos;
@@ -183,18 +181,18 @@ function removeDifference(index){
   }
   numDiff--;
 }
-alert(screen.height);
+
 function confirmRemoval(index) {
-  //document.getElementById('err').innerHTML = "Remove this difference?";
   if(foundDiff[index].pos.x > document.getElementById("imgCanvas").width/2)
     document.getElementById('popupContainer').style.left = (foundDiff[index].pos.x - circleRadius - 10 - $('#popupContainer').width()).toString() + "px";
   else
     document.getElementById('popupContainer').style.left = (foundDiff[index].pos.x + circleRadius + 10).toString() + "px";
   document.getElementById('popupContainer').style.top = (foundDiff[index].pos.y - $('#popupContainer').height()/2).toString() + "px";
+  
   if(foundDiff[index].pos.y - $('#popupContainer').height()/2 < 10)
     document.getElementById('popupContainer').style.top = "10px";
-  if(foundDiff[index].pos.y - $('#popupContainer').height()/2 > screen.height - $('#popupContainer').height() - 10)
-    document.getElementById('popupContainer').style.top = screen.height - $('#popupContainer').height() - 10;
+  if(foundDiff[index].pos.y + $('#popupContainer').height()/2 > $('#imgCanvas').height() - 10)
+    document.getElementById('popupContainer').style.top = ($('#imgCanvas').height() - $('#popupContainer').height() - 20).toString() + "px";
   popupCloseEvent = index;
   $("#popup2").show();
 }
@@ -208,10 +206,6 @@ function draw(){
   var context = canvas.getContext("2d");
 
   context.clearRect(0, 0, canvas.width, canvas.height);
-<<<<<<< HEAD
-=======
-  context.strokeStyle = "#00FF00";
->>>>>>> master
   context.lineWidth = 7;
   for(i=1; i<=numDiff; i++){
     if(i == popupCloseEvent)
@@ -341,8 +335,16 @@ function closeModal() {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  var modal = document.getElementById('popup');
-  if (event.target == modal) {
-      modal.style.display = "none";
+  var popup = document.getElementById('popup');
+  if (event.target == popup) {
+      popup.style.display = "none";
+      return;
+  }
+  var popup2 = document.getElementById('popup2')
+  if (event.target == popup2) {
+      popup2.style.display = "none";
+      popupCloseEvent = 0; 
+      draw();
+      return;
   }
 }
