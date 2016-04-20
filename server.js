@@ -1,14 +1,12 @@
-// var WebSocketServer = require('ws').Server;
 var express = require('express');
 var app = express();
 var http = require('http');
 var pg = require('pg');
 var port = process.env.PORT || 9000
-var conString = "process.env.DATABASE_URL";
+var conString = process.env.DATABASE_URL;
 var pg_client = new pg.Client(conString);
 pg_client.connect();
 var query = pg_client.query('LISTEN addedrecord');
-var io = require('socket.io').listen(port);
 
 app.use(express.static('www'));
 
@@ -23,9 +21,10 @@ app.all('*', function(req, res, next) {
     next()
 });
 
-var server = http.createServer(app)
-server.listen(port)
-console.log("http server listening on %d", port)
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+server.listen(port);
+console.log("http server listening on %d", port);
 
 io.sockets.on('connection', function (socket) {
     console.log('a user connected');
