@@ -136,8 +136,10 @@
           <div class="item block" style="padding: 0">
             <div class="range range-royal chooseTime" style="padding-left: 16px">
               Time
-              <input type="range" name="time" min="1" max="15" value="10" oninput="updateTextInput(this.value);">
-              <div class="showTime" id="timevalue">10 minutes</div>
+              <input type="range" name="time" min="1" max="15" value="10" oninput="updateSlideText(this.value);">
+              <div style="width: 80px">
+              	<center id="timevalue">10 minutes</center>
+              </div>
             </div>
           </div>
           <label class="item item-input item-select" style="height:50px">
@@ -196,21 +198,27 @@
         </div>
       </div>
       <div id="timerDiv" class="rightTimer">
-        <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
+          <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
           <center>
-          <a id="pauseButton" class="button button-small button-royal" onclick="pauseTimer(); showResume();" on-tap="pauseTimer()">
-              Pause
-          </a>
-          <a id="resumeButton" class="button button-small button-royal" style="display: none" onclick="resumeTimer(); showPause();" on-tap="resumeTimer()">
-              Resume
-          </a>
-        </center>
+		      <a id="pauseButton" class="button button-small button-royal" onclick="pauseTimer(); showResume();" on-tap="pauseTimer()">
+		          Pause
+		      </a>
+		      <a id="resumeButton" class="button button-small button-royal" style="display: none" onclick="resumeTimer(); showPause();" on-tap="resumeTimer()">
+		          Resume
+		      </a>
+          </center>
+      </div>
+      <div id="resultDiv" class="rightTimer" style="display: none">
+      	<center id="result" class="royal" style="font-size: 2vw; font-weight: bold; width: 20vw"></center>
       </div>
       <a class="button icon-left ion-chevron-left button-royal buttonQuit" onclick="updateWindow('fifthScreen','fourthScreen')">
             Quit
         </a>
-        <a class="button icon-right ion-chevron-right button-royal buttonFinish" onclick="updateWindow('fifthScreen','sixthScreen'); pauseTimer();">
+        <a id="finishButton" class="button icon-right ion-chevron-right button-royal buttonFinish" onclick="confirmFinish();">
             Finish
+        </a>
+        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" onclick="updateWindow('fifthScreen', 'sixthScreen');">
+            Submit
         </a>
     </div>
 

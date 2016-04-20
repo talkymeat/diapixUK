@@ -232,14 +232,11 @@ div.item{
   height:50px;
   overflow:hidden}
 
-.showTime{
-  width:70px;
-  margin-right:1%}
-
 .rightTimer{
   font-size:5vw;
   top:50%;
-  transform:translateX(50%) translateY(-50%)}
+  transform:translateX(50%) translateY(-50%);
+  -webkit-font-smoothing: antialiased;}
 
 .outsideWrapper{
   width:80%;
