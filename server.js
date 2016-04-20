@@ -27,10 +27,11 @@ server.listen(port);
 console.log("http server listening on %d", port);
 
 io.sockets.on('connection', function (socket) {
-    console.log('a user connected');
     socket.emit('connected', { connected: true });
+    console.log('a user connected');
 
     socket.on('ready for data', function (data) {
+        console.log(data);
         pg_client.on('notification', function(title) {
             socket.emit('update', { message: title });
         });

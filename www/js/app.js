@@ -26,15 +26,6 @@ angular.module('starter', ['ionic'])
 var db = new PouchDB('diapix');
 // var remoteCouch = new PouchDB('http://localhost:5984/diapix');
 
-WEB_SOCKET_SWF_LOCATION = 'inc/WebSocketMain.swf';
-var socket = io.connect('http://localhost:9000');
-socket.on('connected', function (data) {
-    socket.emit('ready for data', {});
-});
-socket.on('update', function (data) {
-    console.log(data.message.payload);
-});
-
 // var host = location.origin.replace(/^http/, 'ws')
 // var ws = new WebSocket(host);
 // ws.onmessage = function (event) {

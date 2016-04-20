@@ -226,7 +226,17 @@
         </a>
       </center>
     </div>
-
+    <script>
+        WEB_SOCKET_SWF_LOCATION = 'inc/WebSocketMain.swf';
+        var socket = io.connect('http://localhost:5000');
+        socket.on('connected', function (data) {
+            socket.emit('ready for data', {data});
+            console.log(data);
+        });
+        socket.on('update', function (data) {
+            console.log(data.message.payload);
+        });
+    </script>
     <!-- <script src="js/canvas.js"></script> -->
   </body>
 </html>
