@@ -1,7 +1,75 @@
 function updateWindow(prev, next){
-  $("#" + prev).hide();
-  $("#" + next).show();
+  if(correctData(prev, next)) {
+    $("#" + prev).hide();
+    $("#" + next).show();
+  }
 }
+function correctData(screen, next){
+  if(screen === "secondScreen" && next === "thirdScreen"){
+    if(document.getElementById("subjCode").value === "")
+    {
+      document.getElementById('err').innerHTML = "Please insert your subject code";
+      showAlertPopup();
+      return false;
+    }
+    if(document.getElementById("gender").value === "0")
+    {
+      document.getElementById('err').innerHTML = "Please select your gender";
+      showAlertPopup();
+      return false;
+    }
+  }
+  if(screen === "thirdScreen" && next === "fourthScreen"){
+    if(document.getElementById("picture").value === "empty")
+    {
+      document.getElementById('err').innerHTML = "Please select a picture";
+      showAlertPopup();
+      return false;
+    }
+  }
+  if(screen === "fifthScreen" && next === "fourthScreen" && popupCloseEvent != -1){
+    document.getElementById('err').innerHTML = "Are you sure you want to exit the game?\n Your progress will be lost.";
+    showConfirmPopup();
+    popupCloseEvent = -1;
+    return false;
+  }
+  return true;
+}
+
+function showAlertPopup() {
+  $("#" + "closeModal").show();
+  $("#" + "popup").show();
+  $("#" + "confirmButtons").hide();
+}
+function showConfirmPopup(){
+  $("#" + "closeModal").hide();
+  $("#" + "popup").show();
+  $("#" + "confirmButtons").show();
+}
+
+function confirmPopup(){
+  if(popupCloseEvent === -1)
+  {
+    updateWindow("fifthSCreen", "fourthScreen");
+    pauseTimer();
+  }
+  if(popupCloseEvent > 0)
+  {
+    removeDifference(popupCloseEvent);
+    popupCloseEvent = 0;
+    draw();
+  }
+  popupCloseEvent = 0;
+  closeModal();
+}
+
+function genderColor(){
+  if(document.getElementById("gender").value === "0") 
+    document.getElementById("gender").style.color = "#aaaaaa";
+  else 
+    document.getElementById("gender").style.color = "#111111";
+}
+
 function showResume(){
   $("#pauseButton").hide();
   $("#resumeButton").show();
@@ -46,12 +114,13 @@ function canv() {
   circleRadius = document.getElementById("imgCanvas").height / 18;
 }
 
+var popupCloseEvent=0;
+
 function handleEvent(e) {
 	if(paused)
 		return;
 
   var canvas = document.getElementById("imgCanvas");
-  var context = canvas.getContext("2d");
   var pos = getMousePos(canvas, e);
 
   totalTaps++;
@@ -63,14 +132,15 @@ function handleEvent(e) {
     if(dist(foundDiff[i].pos, pos) <= circleRadius){
       timeLog[totalTaps].action = "difference cancelled";
       timeLog[totalTaps].difference = foundDiff[i];
-      removeDifference(i);
-      draw(context, canvas);
+      confirmRemoval(i);
+      draw();
       console.log(timeLog[totalTaps]);
       return;
     }
 
   if(numDiff == 12){
-    alert("You have already spotted 12 differences!");
+    document.getElementById('err').innerHTML = "You have already spotted 12 differences!";
+    showAlertPopup();
     timeLog[totalTaps].action = "exceeded 12 differences";
     timeLog[totalTaps].difference = new Object;
     timeLog[totalTaps].difference.pos = pos;
@@ -79,7 +149,7 @@ function handleEvent(e) {
   }
 
   addDifference(pos);
-  draw(context, canvas);
+  draw();
 
   timeLog[totalTaps].action = "difference spotted";
   timeLog[totalTaps].difference = foundDiff[numDiff];
@@ -112,15 +182,36 @@ function removeDifference(index){
   numDiff--;
 }
 
+function confirmRemoval(index) {
+  if(foundDiff[index].pos.x > document.getElementById("imgCanvas").width/2)
+    document.getElementById('popupContainer').style.left = (foundDiff[index].pos.x - circleRadius - 10 - $('#popupContainer').width()).toString() + "px";
+  else
+    document.getElementById('popupContainer').style.left = (foundDiff[index].pos.x + circleRadius + 10).toString() + "px";
+  document.getElementById('popupContainer').style.top = (foundDiff[index].pos.y - $('#popupContainer').height()/2).toString() + "px";
+  
+  if(foundDiff[index].pos.y - $('#popupContainer').height()/2 < 10)
+    document.getElementById('popupContainer').style.top = "10px";
+  if(foundDiff[index].pos.y + $('#popupContainer').height()/2 > $('#imgCanvas').height() - 10)
+    document.getElementById('popupContainer').style.top = ($('#imgCanvas').height() - $('#popupContainer').height() - 20).toString() + "px";
+  popupCloseEvent = index;
+  $("#popup2").show();
+}
+
 function dist(a, b){
   return Math.sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
 }
 
-function draw(context, canvas){
+function draw(){
+  var canvas = document.getElementById("imgCanvas");
+  var context = canvas.getContext("2d");
+
   context.clearRect(0, 0, canvas.width, canvas.height);
-  context.strokeStyle = "#00FF00";
   context.lineWidth = 7;
   for(i=1; i<=numDiff; i++){
+    if(i == popupCloseEvent)
+      context.strokeStyle = "#FF8000"
+    else
+      context.strokeStyle = "#00FF00";
     context.beginPath();
     context.arc(foundDiff[i].pos.x, foundDiff[i].pos.y, circleRadius, 0, 2*Math.PI);
     context.lineWidth = 4;
@@ -195,15 +286,17 @@ function pauseTimer(){
 
 function resumeTimer() {
 	paused = false;
-    clearInterval(time);
-    time = setInterval(updateTimer, 1000);
+  clearInterval(time);
+  time = setInterval(updateTimer, 1000);
 }
 
 function updateTimer(){
     if(document.getElementById('timer').innerHTML === "00:00"){
     	paused = true;
         clearInterval(time);
-        alert("Time is up!");
+        document.getElementById('err').innerHTML = "Time is up!";
+        showAlertPopup();
+        //alert("Time is up!");
         return;
     }
 
@@ -221,4 +314,37 @@ function updateTimer(){
         document.getElementById('timer').innerHTML += "0"
     document.getElementById('timer').innerHTML += seconds.toString();
 
+}
+
+
+
+
+
+
+
+// Get the <span> element that closes the modal
+
+// When the user clicks the button, open the modal 
+// When the user clicks on <span> (x), close the modal
+function closeModal() {
+  
+  document.getElementById('popup').style.display = "none";
+  $("#" + "popup").hide();
+  $("#" + "popup2").hide();
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  var popup = document.getElementById('popup');
+  if (event.target == popup) {
+      popup.style.display = "none";
+      return;
+  }
+  var popup2 = document.getElementById('popup2')
+  if (event.target == popup2) {
+      popup2.style.display = "none";
+      popupCloseEvent = 0; 
+      draw();
+      return;
+  }
 }

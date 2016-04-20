@@ -24,7 +24,7 @@
     <title>diapixUK</title>
 
     <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
-    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -41,7 +41,7 @@
     <!-- <meta charset="utf-8"> -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="js/jquery-1.12.1.min.js"></script>
-    <script src="js/ng-cordova.js"></script>
+    <!-- <script src="js/ng-cordova.js"></script> -->
     <script src="js/pouchdb-5.3.1.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
@@ -54,7 +54,7 @@
     <div id="startScreen" class="screen">
       <center class="startVCenter">
         <h1 class="royal special">diapixUK</h1>
-        <p>
+        <p class="royal">
             The diapixUK is a dialogue elicitation technique and set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
             <br>
             It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants.</p>
@@ -71,7 +71,7 @@
 
     <div id="secondScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">player details</h1>
+        <h1 class="title">Player details</h1>
       </div>
 
       <div class="list list-inset inscreen">
@@ -80,17 +80,17 @@
             <input id="subjCode" type="text" placeholder="Subject code">
           </label>
           <label class="item item-input">
-            <input id="age" type="text" placeholder="Age">
+            <input id="age" type="text" placeholder="Age (optional)">
           </label>
           <label class="item item-input item-select">
-            <select id="gender" style="left: 0%; direction: ltr">
-              <option value="empty">Gender</option>
-              <option>Male</option>
-              <option>Female</option>
+            <select id="gender" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="genderColor()">
+              <option value="0">Gender</option>
+              <option value="1">Male</option>
+              <option value="2">Female</option>
             </select>
           </label>
           <label class="item item-input">
-            <input id="conditions" type="text" placeholder="Conditions">
+            <input id="conditions" type="text" placeholder="Conditions (optional)">
           </label>
         </center>
       </div>
@@ -141,7 +141,7 @@
             </div>
           </div>
           <label class="item item-input item-select" style="height:50px">
-            <select id="picture" style="left: 0%; direction: ltr">
+            <select id="picture" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
               <option value="empty">Select a picture</option>
               <option value="img/beach1">Beach 1</option>
               <option value="img/beach2">Beach 2</option>
@@ -206,7 +206,7 @@
           </a>
         </center>
       </div>
-      <a class="button icon-left ion-chevron-left button-royal buttonQuit" onclick="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
+      <a class="button icon-left ion-chevron-left button-royal buttonQuit" onclick="updateWindow('fifthScreen','fourthScreen')">
             Quit
         </a>
         <a class="button icon-right ion-chevron-right button-royal buttonFinish" onclick="updateWindow('fifthScreen','sixthScreen'); pauseTimer();">
@@ -218,13 +218,65 @@
     <div id="sixthScreen" class="screen" style="display: none">
 
       <center class="startVCenter">
-        <h1 class="royal special">Thanks for playing Diapix!</h1>
+        <h1 class="royal special" style="font-size: 5vw">Thanks for playing Diapix!</h1>
         <br>
         <a href="index.html" class="button button-large button-royal">
           Play again
         </a>
       </center>
     </div>
+
+
+	<div id="popup" class="modal">
+	  <div class="modal-content vcenter">
+	 	<center>
+	    	<p id="err" class="royal"></p>
+	    	<a id="closeModal" class="button button-royal" onclick="closeModal();">
+	    		Close
+	    	</a>
+	    	<div id="confirmButtons" class="row" style="width: 70%; display: none">
+			   	<div style="width: 50%">
+			   		<center>
+						<a class="button button-royal" onclick="confirmPopup();">
+							Confirm
+						</a>
+					</center>
+				</div>
+				<div style="width: 50%">
+					<center>
+						<a class="button button-royal" onclick="closeModal(); popupCloseEvent = 0;">
+							Cancel
+						</a>
+					</center>
+				</div>
+			</div>
+	    </center>
+	  </div>
+	</div>
+
+	<div id="popup2" class="modal" style="background-color: transparent;">
+	  <div id="popupContainer" class="modal-content" style="position: absolute; height: 20vh; width: 32vw; padding: 0; padding-top: 2vh">
+	 	<center>
+	    	<p class="royal">Remove this difference?</p>
+		    <div class="row" style="width: 80%">
+			   	<div style="width: 50%">
+			   		<center>
+						<a class="button button-royal" onclick="confirmPopup();">
+							Confirm
+						</a>
+					</center>
+				</div>
+				<div style="width: 50%">
+					<center>
+						<a class="button button-royal" onclick="closeModal(); popupCloseEvent = 0; draw()">
+							Cancel
+						</a>
+					</center>
+				</div>
+			</div>
+		</center>
+	  </div>
+	</div>
 
     <!-- <script src="js/canvas.js"></script> -->
   </body>
