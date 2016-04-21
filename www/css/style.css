@@ -1,4 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:700|Karla);
+@font-face {
+  font-family: Karla;
+  font-style: normal;
+  font-weight: 400;
+  src: local("Karla"), local("Karla-Regular"), url(https://fonts.gstatic.com/s/karla/v5/Vu9Dx8oyiuqEkuIyR3OPDQ.ttf) format("truetype"); }
+
+@font-face {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: 700;
+  src: local("Raleway Bold"), local("Raleway-Bold"), url(https://fonts.gstatic.com/s/raleway/v10/JbtMzqLaYbbbCL9X6EvaIy3USBnSvpkopQaUR-2r7iU.ttf) format("truetype"); }
+
 body, html {
   height: 100%;
   font-family: "Karla", sans-serif; }
@@ -84,14 +96,15 @@ div.item {
   height: 50px;
   overflow: hidden; }
 
-.showTime {
-  width: 70px;
-  margin-right: 1%; }
-
 .rightTimer {
   font-size: 5vw;
   top: 50%;
-  transform: translateX(50%) translateY(-50%); }
+  transform: translateX(50%) translateY(-50%);
+  -webkit-font-smoothing: antialiased; }
+
+.showTime {
+  width: 70px;
+  margin-right: 1%; }
 
 .outsideWrapper {
   width: 80%;
