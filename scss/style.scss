@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:700|Karla);
-
 @font-face{
   font-family:Karla;
   font-style:normal;
@@ -53,7 +52,7 @@ body, html {
     }
 }
 
-startVCenter,.vcenter{
+.startVCenter,.vcenter{
   right:50%;
   top:50%;
   position:absolute;}
@@ -123,6 +122,10 @@ div.item{
   top:50%;
   transform:translateX(50%) translateY(-50%);
   -webkit-font-smoothing: antialiased;}
+
+.showTime{
+  width:70px;
+  margin-right:1%}
 
 .outsideWrapper{
   width:80%;

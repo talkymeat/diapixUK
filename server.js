@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var pg = require('pg');
+pg.defaults.ssl = true;
 var port = process.env.PORT || 9000
 var conString = process.env.DATABASE_URL;
 var pg_client = new pg.Client(conString);
@@ -22,34 +23,6 @@ app.all('*', function(req, res, next) {
 });
 
 var server = http.createServer(app);
-var io = require('socket.io').listen(server);
-server.listen(port);
-console.log("http server listening on %d", port);
-
-io.sockets.on('connection', function (socket) {
-    socket.emit('connected', { connected: true });
-    console.log('a user connected');
-
-    socket.on('ready for data', function (data) {
-        console.log(data);
-        pg_client.on('notification', function(title) {
-            socket.emit('update', { message: title });
-        });
-    });
-});
-
-
-app.get('/db', function (request, response) {
-  pg.connect(conString, function(err, client, done) {
-    client.query('SELECT * FROM test_table', function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       { response.render('pages/db', {results: result.rows} ); }
-    });
-  });
-})
 
 var server2 = http.createServer(function(req, res) {
 
@@ -97,7 +70,39 @@ var server2 = http.createServer(function(req, res) {
   });
 })
 
-server2.listen(3001)
+var io = require('socket.io').listen(server);
+server.listen(port);
+console.log("http server listening on %d", port);
+
+io.sockets.on('connection', function (socket) {
+    socket.emit('connected', { connected: true });
+    socket.broadcast.emit('user connected');
+    // console.log('a user connected');
+
+    socket.on('ready for data', function (data) {
+        console.log(data);
+
+        pg_client.on('notification', function(title) {
+            console.log(title);
+            socket.emit('update', { message: title });
+        });
+    });
+});
+
+
+app.get('/db', function (request, response) {
+  pg.connect(conString, function(err, client, done) {
+    client.query('SELECT * FROM visit', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.render('pages/db', {results: result.rows} ); }
+    });
+  });
+})
+
+// server2.listen(3001)
 
 //
 // var wss = new WebSocketServer({server: server})
