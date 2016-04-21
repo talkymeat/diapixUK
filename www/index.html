@@ -20,7 +20,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="minimal-ui, initial-scale=1, user-scalable=no, maximum-scale=1, width=device-width">
+    <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
     <title>diapixUK</title>
 
     <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
@@ -127,10 +127,10 @@
           </div>
           <div class="item item-toggle">
             <div align="left">
-              Recording
+              Recording (N/A)
             </div>
             <label class="toggle toggle-royal">
-              <input id="recorder" name="record" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
+              <input id="recorder" name="record" type="checkbox" style="-webkit-filter: blur(0.000001px)">
               <div class="track">
                 <div class="handle"></div>
               </div>
@@ -280,7 +280,7 @@
 				</div>
 				<div style="width: 50%">
 					<center>
-						<a class="button button-royal"" on-tap="closeModal(); popupCloseEvent = 0; draw()" onclick="closeModal(); popupCloseEvent = 0; draw()>
+						<a class="button button-royal"" on-tap="closeModal(); popupCloseEvent = 0; draw();" onclick="closeModal(); popupCloseEvent = 0; draw();">
 							Cancel
 						</a>
 					</center>

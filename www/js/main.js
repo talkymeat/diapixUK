@@ -2,6 +2,8 @@
 //     FastClick.attach(document.body);
 // });
 
+window.scrollTo(0,1);
+
 function updateWindow(prev, next){
   if(correctData(prev, next)) {
     $("#" + prev).hide();
