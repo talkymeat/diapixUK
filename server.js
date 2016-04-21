@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var pg = require('pg');
+pg.defaults.ssl = true;
 var port = process.env.PORT || 9000
 var conString = process.env.DATABASE_URL;
 var pg_client = new pg.Client(conString);
@@ -69,13 +70,14 @@ var server2 = http.createServer(function(req, res) {
   });
 })
 
-var io = require('socket.io').listen(server2);
-server2.listen(port);
+var io = require('socket.io').listen(server);
+server.listen(port);
 console.log("http server listening on %d", port);
 
 io.sockets.on('connection', function (socket) {
     socket.emit('connected', { connected: true });
-    console.log('a user connected');
+    socket.broadcast.emit('user connected');
+    // console.log('a user connected');
 
     socket.on('ready for data', function (data) {
         console.log(data);
