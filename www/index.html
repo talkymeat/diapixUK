@@ -157,7 +157,7 @@
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('recorder').value,document.getElementById('timevalue').value); updateWindow('thirdScreen','fourthScreen');">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="addToStore(); updateWindow('thirdScreen','fourthScreen');">
         Next
       </a>
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('thirdScreen','secondScreen')">
@@ -279,17 +279,7 @@
 	  </div>
 	</div>
 
-    <script>
-        WEB_SOCKET_SWF_LOCATION = 'inc/WebSocketMain.swf';
-        var socket = io.connect('http://localhost:5000');
-        socket.on('connected', function (data) {
-            socket.emit('ready for data', {data});
-            console.log(data);
-        });
-        socket.on('update', function (data) {
-            console.log(data.message.payload);
-        });
-    </script>
+    <script src="js/socket.js"></script>
     <!-- <script src="js/canvas.js"></script> -->
   </body>
 </html>
