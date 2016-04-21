@@ -2,9 +2,11 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var pg = require('pg');
-pg.defaults.ssl = true;
+// pg.defaults.ssl = true;
 var port = process.env.PORT || 9000
 var conString = process.env.DATABASE_URL;
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize(conString);
 var pg_client = new pg.Client(conString);
 pg_client.connect();
 var query = pg_client.query('LISTEN addedrecord');
@@ -22,53 +24,26 @@ app.all('*', function(req, res, next) {
     next()
 });
 
+var Pairs = sequelize.define('pairs', {
+  subject1: {
+    type: Sequelize.STRING,
+  },
+  subject2: {
+    type: Sequelize.STRING
+  }
+}, {
+  freezeTableName: true // Model tableName will be the same as the model name
+});
+
+// Pairs.sync({force: true}).then(function () {
+//   // Table created
+//   return User.create({
+//     subject1: '0000a',
+//     subject2: '0000b'
+//   });
+// });
+
 var server = http.createServer(app);
-
-var server2 = http.createServer(function(req, res) {
-
-  // get a pg client from the connection pool
-  pg.connect(conString, function(err, client, done) {
-
-    var handleError = function(err) {
-      // no error occurred, continue with the request
-      if(!err) return false;
-
-      // An error occurred, remove the client from the connection pool.
-      // A truthy value passed to done will remove the connection from the pool
-      // instead of simply returning it to be reused.
-      // In this case, if we have successfully received a client (truthy)
-      // then it will be removed from the pool.
-      if(client){
-        done(client);
-      }
-      res.writeHead(500, {'content-type': 'text/plain'});
-      res.end('An error occurred');
-      return true;
-    };
-
-    // handle an error from the connection
-    if(handleError(err)) return;
-
-    // record the visit
-    client.query('INSERT INTO visit (date) VALUES ($1)', [new Date()], function(err, result) {
-
-      // handle an error from the query
-      if(handleError(err)) return;
-
-      // get the total number of visits today (including the current visit)
-      client.query('SELECT COUNT(date) AS count FROM visit', function(err, result) {
-
-        // handle an error from the query
-        if(handleError(err)) return;
-
-        // return the client to the connection pool for other requests to reuse
-        done();
-        res.writeHead(200, {'content-type': 'text/plain'});
-        res.end('You are visitor number ' + result.rows[0].count);
-      });
-    });
-  });
-})
 
 var io = require('socket.io').listen(server);
 server.listen(port);
@@ -89,18 +64,64 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
+// app.get('/db', function (request, response) {
+//   pg.connect(conString, function(err, client, done) {
+//     client.query('SELECT * FROM visit', function(err, result) {
+//       done();
+//       if (err)
+//        { console.error(err); response.send("Error " + err); }
+//       else
+//        { response.render('pages/db', {results: result.rows} ); }
+//     });
+//   });
+// })
+//
+// var server2 = http.createServer(function(req, res) {
+//
+//   // get a pg client from the connection pool
+//   pg.connect(conString, function(err, client, done) {
+//
+//     var handleError = function(err) {
+//       // no error occurred, continue with the request
+//       if(!err) return false;
+//
+//       // An error occurred, remove the client from the connection pool.
+//       // A truthy value passed to done will remove the connection from the pool
+//       // instead of simply returning it to be reused.
+//       // In this case, if we have successfully received a client (truthy)
+//       // then it will be removed from the pool.
+//       if(client){
+//         done(client);
+//       }
+//       res.writeHead(500, {'content-type': 'text/plain'});
+//       res.end('An error occurred');
+//       return true;
+//     };
+//
+//     // handle an error from the connection
+//     if(handleError(err)) return;
+//
+//     // record the visit
+//     client.query('INSERT INTO visit (date) VALUES ($1)', [new Date()], function(err, result) {
+//
+//       // handle an error from the query
+//       if(handleError(err)) return;
+//
+//       // get the total number of visits today (including the current visit)
+//       client.query('SELECT COUNT(date) AS count FROM visit', function(err, result) {
+//
+//         // handle an error from the query
+//         if(handleError(err)) return;
+//
+//         // return the client to the connection pool for other requests to reuse
+//         done();
+//         res.writeHead(200, {'content-type': 'text/plain'});
+//         res.end('You are visitor number ' + result.rows[0].count);
+//       });
+//     });
+//   });
+// })
 
-app.get('/db', function (request, response) {
-  pg.connect(conString, function(err, client, done) {
-    client.query('SELECT * FROM visit', function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       { response.render('pages/db', {results: result.rows} ); }
-    });
-  });
-})
 
 // server2.listen(3001)
 
