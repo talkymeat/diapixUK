@@ -40,7 +40,7 @@
 
     <!-- <meta charset="utf-8"> -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="lib/fastclick.js"></script>
+    <!-- <script src="lib/fastclick.js"></script> -->
     <script src="js/jquery-1.12.1.min.js"></script>
     <!-- <script src="js/ng-cordova.js"></script> -->
     <script src="js/pouchdb-5.3.1.min.js"></script>
@@ -61,7 +61,7 @@
             <br>
             It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants.</p>
         <br>
-        <a class="button button-large button-royal" style="width:500px;height:50px;" onclick="updateWindow('startScreen','secondScreen');">
+        <a class="button button-large button-royal" style="width:500px;height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
           start
         </a>
         <!-- <br>
@@ -97,10 +97,10 @@
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="updateWindow('secondScreen','thirdScreen')">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen')" onclick="updateWindow('secondScreen','thirdScreen')">
         Next
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('secondScreen','startScreen')">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('secondScreen','startScreen')" onclick="updateWindow('secondScreen','startScreen')">
         Back
       </a>
     </div>
@@ -160,10 +160,10 @@
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onClick="addToStore(); updateWindow('thirdScreen','fourthScreen');">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="addToStore(); updateWindow('thirdScreen','fourthScreen');" onclick="addToStore(); updateWindow('thirdScreen','fourthScreen');">
         Next
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onClick="updateWindow('thirdScreen','secondScreen')">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('thirdScreen','secondScreen')" onclick="updateWindow('thirdScreen','secondScreen')">
         Back
       </a>
     </div>
@@ -182,11 +182,11 @@
             </ul>
         </center>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onClick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();" onclick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
       <!-- <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer();recordAudio(); updateWindow('fourthScreen','fifthScreen'); canv();"> -->
         Start
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onClick="updateWindow('fourthScreen','thirdScreen');">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fourthScreen','thirdScreen');" onclick="updateWindow('fourthScreen','thirdScreen');">
         Back
       </a>
     </div>
@@ -196,16 +196,16 @@
       <div class="outsideWrapper">
         <div class="insideWrapper">
             <img id="img" src="" class="coveredImage">
-            <canvas id="imgCanvas" class="coveringCanvas" onclick="handleEvent(event);"></canvas>
+            <canvas id="imgCanvas" class="coveringCanvas" on-click="handleEvent(event);" onclick="handleEvent(event);"></canvas>
         </div>
       </div>
       <div id="timerDiv" class="rightTimer">
           <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
           <center>
-          <a id="pauseButton" class="button button-large button-energized" onclick="pauseTimer(); showResume();" onClick="pauseTimer(); showResume();">
+          <a id="pauseButton" class="button button-large button-energized" on-tap="pauseTimer(); showResume();" onclick="pauseTimer(); showResume();">
               Pause
           </a>
-          <a id="resumeButton" class="button button-large button-energized" style="display: none" onclick="resumeTimer(); showPause();" onClick="resumeTimer(); showPause();">
+          <a id="resumeButton" class="button button-large button-energized" style="display: none" on-tap="resumeTimer(); showPause();" onclick="resumeTimer(); showPause();">
               Resume
           </a>
         </center>
@@ -213,14 +213,14 @@
       <div id="resultDiv" class="rightTimer" style="display: none">
       	<center id="result" class="royal" style="font-size: 2vw; font-weight: bold; width: 20vw"></center>
       </div>
-      <a class="button icon-left ion-chevron-left button-assertive buttonQuit" onClick="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
+      <a class="button icon-left ion-chevron-left button-assertive buttonQuit" on-tap="updateWindow('fifthScreen','fourthScreen'); pauseTimer();" onclick="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
             Quit
         </a>
-        <a id="finishButton" class="button icon-right ion-chevron-right button-royal buttonFinish" onClick="confirmFinish();">
+        <a id="finishButton" class="button icon-right ion-chevron-right button-royal buttonFinish" on-tap="confirmFinish();" onclick="confirmFinish();">
 <!-- addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('conditions').value,document.getElementById('recorder').value,document.getElementById('timeValue').value,document.getElementById('showTimer').value,document.getElementById('picture').value) -->
             Finish
         </a>
-        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" onClick="updateWindow('fifthScreen', 'sixthScreen');">
+        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" on-tap="updateWindow('fifthScreen', 'sixthScreen');" onclick="updateWindow('fifthScreen', 'sixthScreen');">
             Submit
         </a>
     </div>
@@ -242,20 +242,20 @@
 	  <div class="modal-content modcenter">
 	 	<center>
 	    	<p id="err" class="royal"></p>
-	    	<a id="closeModal" class="button button-royal" onclick="closeModal();">
+	    	<a id="closeModal" class="button button-royal" on-tap="closeModal();" onclick="closeModal();">
 	    		Close
 	    	</a>
 	    	<div id="confirmButtons" class="row" style="width: 70%; display: none">
 			   	<div style="width: 50%">
 			   		<center>
-						<a class="button button-royal" onclick="confirmPopup();">
+						<a class="button button-royal" on-tap="confirmPopup();" onclick="confirmPopup();">
 							Confirm
 						</a>
 					</center>
 				</div>
 				<div style="width: 50%">
 					<center>
-						<a class="button button-royal" onclick="closeModal(); popupCloseEvent = 0;">
+						<a class="button button-royal" on-tap="closeModal(); popupCloseEvent = 0;" onclick="closeModal(); popupCloseEvent = 0;">
 							Cancel
 						</a>
 					</center>
@@ -272,14 +272,14 @@
 		    <div class="row" style="width: 80%">
 			   	<div style="width: 50%">
 			   		<center>
-						<a class="button button-royal" onclick="confirmPopup();">
+						<a class="button button-royal" on-tap="confirmPopup();" onclick="confirmPopup();">
 							Confirm
 						</a>
 					</center>
 				</div>
 				<div style="width: 50%">
 					<center>
-						<a class="button button-royal" onclick="closeModal(); popupCloseEvent = 0; draw()">
+						<a class="button button-royal"" on-tap="closeModal(); popupCloseEvent = 0; draw()" onclick="closeModal(); popupCloseEvent = 0; draw()>
 							Cancel
 						</a>
 					</center>

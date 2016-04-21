@@ -1,6 +1,6 @@
-$(function() {
-    FastClick.attach(document.body);
-});
+// $(function() {
+//     FastClick.attach(document.body);
+// });
 
 function updateWindow(prev, next){
   if(correctData(prev, next)) {
