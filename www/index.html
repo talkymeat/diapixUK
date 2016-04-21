@@ -43,7 +43,7 @@
     <script src="js/jquery-1.12.1.min.js"></script>
     <!-- <script src="js/ng-cordova.js"></script> -->
     <script src="js/pouchdb-5.3.1.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="js/socket.io.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
   </head>
@@ -76,7 +76,7 @@
       </div>
 
       <div class="list list-inset inscreen">
-        <center style="width:60%;" class="vcenter">
+        <center class="vcenter">
           <label class="item item-input">
             <input id="subjCode" type="text" placeholder="Subject code">
           </label>
@@ -111,7 +111,7 @@
       </div>
 
       <div class="list list-inset inscreen">
-        <center style="width: 60%" class="vcenter">
+        <center class="vcenter">
           <div class="item item-toggle">
             <div align="left">
               Show timer
@@ -159,10 +159,10 @@
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="addToStore(); updateWindow('thirdScreen','fourthScreen');">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onClick="addToStore(); updateWindow('thirdScreen','fourthScreen');">
         Next
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('thirdScreen','secondScreen')">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onClick="updateWindow('thirdScreen','secondScreen')">
         Back
       </a>
     </div>
@@ -172,7 +172,7 @@
         <h1 class="title">Instructions: Spot the difference!</h1>
       </div>
 
-        <center class="vcenter royal" align="justify" style="width: 80%; font-size: 20px">
+        <center class="vcenter royal" align="justify" style="font-size: 20px">
             <ul>
                 <li>Find the 12 differences between the two pictures.</li>
                 <li>Each time you spot a difference, just tap on the screen.</li>
@@ -181,11 +181,11 @@
             </ul>
         </center>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onClick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
       <!-- <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer();recordAudio(); updateWindow('fourthScreen','fifthScreen'); canv();"> -->
         Start
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fourthScreen','thirdScreen');">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onClick="updateWindow('fourthScreen','thirdScreen');">
         Back
       </a>
     </div>
@@ -201,10 +201,10 @@
       <div id="timerDiv" class="rightTimer">
           <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
           <center>
-          <a id="pauseButton" class="button button-large button-energized" onclick="pauseTimer(); showResume();" on-tap="pauseTimer()">
+          <a id="pauseButton" class="button button-large button-energized" onclick="pauseTimer(); showResume();" onClick="pauseTimer(); showResume();">
               Pause
           </a>
-          <a id="resumeButton" class="button button-large button-energized" style="display: none" onclick="resumeTimer(); showPause();" on-tap="resumeTimer()">
+          <a id="resumeButton" class="button button-large button-energized" style="display: none" onclick="resumeTimer(); showPause();" onClick="resumeTimer(); showPause();">
               Resume
           </a>
         </center>
@@ -212,14 +212,14 @@
       <div id="resultDiv" class="rightTimer" style="display: none">
       	<center id="result" class="royal" style="font-size: 2vw; font-weight: bold; width: 20vw"></center>
       </div>
-      <a class="button icon-left ion-chevron-left button-assertive buttonQuit" onclick="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
+      <a class="button icon-left ion-chevron-left button-assertive buttonQuit" onClick="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
             Quit
         </a>
-        <a id="finishButton" class="button icon-right ion-chevron-right button-royal buttonFinish" onclick="confirmFinish();">
+        <a id="finishButton" class="button icon-right ion-chevron-right button-royal buttonFinish" onClick="confirmFinish();">
 <!-- addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('conditions').value,document.getElementById('recorder').value,document.getElementById('timeValue').value,document.getElementById('showTimer').value,document.getElementById('picture').value) -->
             Finish
         </a>
-        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" onclick="updateWindow('fifthScreen', 'sixthScreen');">
+        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" onClick="updateWindow('fifthScreen', 'sixthScreen');">
             Submit
         </a>
     </div>
@@ -238,7 +238,7 @@
 
 
 	<div id="popup" class="modal">
-	  <div class="modal-content vcenter">
+	  <div class="modal-content modcenter">
 	 	<center>
 	    	<p id="err" class="royal"></p>
 	    	<a id="closeModal" class="button button-royal" onclick="closeModal();">

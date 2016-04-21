@@ -11,10 +11,12 @@
   font-weight:700;
   src:local('Raleway Bold'),local('Raleway-Bold'),url(https://fonts.gstatic.com/s/raleway/v10/JbtMzqLaYbbbCL9X6EvaIy3USBnSvpkopQaUR-2r7iU.ttf) format('truetype')}
 
+
 $title-font: 'Raleway';
 $body-font: 'Karla';
 body, html {
 	height: 100%;
+	width: 100%;
     font-family: $body-font, sans-serif;
 
     h1, .h1 {
@@ -53,9 +55,47 @@ body, html {
 }
 
 .startVCenter,.vcenter{
-  right:50%;
-  top:50%;
-  position:absolute;}
+	/* right: 25vw; */
+   top: 20vh;
+   position: absolute;
+   width: 100%;
+   margin: auto;
+   padding: 0 17.5%;
+}
+
+.vcenter {
+	top: 30vh;
+}
+
+@media screen
+   and (min-device-width: 601px)
+   and (max-device-width: 800px)
+   and (device-height: 906px)
+   and (-webkit-min-device-pixel-ratio: 1.331)
+   and (-webkit-max-device-pixel-ratio: 1.332) {
+	   .startVCenter, .vcenter{
+	   	/* right: 25vw; */
+	      top: 12vh;
+	      position: absolute;
+	      width: 100%;
+	      margin: auto;
+	      padding: 0 17.5%;
+	   }
+	   .vcenter {
+	   	top: 10vh;
+	   }
+		.modcenter {
+			right: 50vh;
+	    	top: 20vw;
+			position: absolute;
+		}
+ }
+
+.modcenter {
+	right: 32.5%;
+    top: 37%;
+	position: absolute;
+}
 
 /*.showTime,.startVCenter,.vcenter{
   -webkit-filter:blur(0)}*/
@@ -64,13 +104,13 @@ body, html {
   height:100%;
   background-color:#F3F3F3}
 
-.vcenter{
-  transform: translate(50%, calc(-50% - 10.5px));
-  -webkit-font-smoothing: antialiased;}
-
-.startVCenter{
-  transform:translateX(50%) translateY(-50%);
-  -webkit-font-smoothing: antialiased;}
+// .vcenter{
+//   transform: translate(50%, calc(-50% - 10.5px));
+//   -webkit-font-smoothing: antialiased;}
+//
+// .startVCenter{
+//   transform:translateX(50%) translateY(-50%);
+//   -webkit-font-smoothing: antialiased;}
 
 .buttonFinish,.buttonQuit{
   transform:translateX(50%)}

@@ -24,7 +24,7 @@
     <title>diapixUK</title>
 
     <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -76,7 +76,7 @@
       </div>
 
       <div class="list list-inset inscreen">
-        <center style="width: 60%" class="vcenter">
+        <center style="width:60%;" class="vcenter">
           <label class="item item-input">
             <input id="subjCode" type="text" placeholder="Subject code">
           </label>
@@ -137,8 +137,10 @@
           <div class="item block" style="padding: 0">
             <div class="range range-royal chooseTime" style="padding-left: 16px">
               Time
-              <input type="range" name="time" min="1" max="15" value="10" oninput="updateTextInput(this.value);">
-              <div class="showTime" id="timevalue">10 minutes</div>
+              <input type="range" name="time" min="1" max="15" value="10" oninput="updateSlideText(this.value);">
+              <div style="width: 80px">
+              	<center id="timevalue">10 minutes</center>
+              </div>
             </div>
           </div>
           <label class="item item-input item-select" style="height:50px">
@@ -157,10 +159,10 @@
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('recorder').value,document.getElementById('timevalue').value); updateWindow('thirdScreen','fourthScreen');">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="addToStore(); updateWindow('thirdScreen','fourthScreen');">
         Next
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('thirdScreen','secondScreen')">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('thirdScreen','secondScreen')">
         Back
       </a>
     </div>
@@ -179,11 +181,11 @@
             </ul>
         </center>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
       <!-- <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer();recordAudio(); updateWindow('fourthScreen','fifthScreen'); canv();"> -->
         Start
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('fourthScreen','thirdScreen');">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fourthScreen','thirdScreen');">
         Back
       </a>
     </div>
@@ -197,21 +199,28 @@
         </div>
       </div>
       <div id="timerDiv" class="rightTimer">
-        <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
+          <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
           <center>
-          <a id="pauseButton" class="button button-large button-energized" onclick="pauseTimer(); showResume();" on-tap="pauseTimer()">
+          <a id="pauseButton" class="button button-large button-energized" onclick="pauseTimer(); showResume();" on-tap="pauseTimer(); showResume();">
               Pause
           </a>
-          <a id="resumeButton" class="button button-large button-energized" style="display: none" onclick="resumeTimer(); showPause();" on-tap="resumeTimer()">
+          <a id="resumeButton" class="button button-large button-energized" style="display: none" onclick="resumeTimer(); showPause();" on-tap="resumeTimer(); showPause();">
               Resume
           </a>
         </center>
       </div>
-      <a class="button icon-left ion-chevron-left button-assertive buttonQuit" onclick="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
+      <div id="resultDiv" class="rightTimer" style="display: none">
+      	<center id="result" class="royal" style="font-size: 2vw; font-weight: bold; width: 20vw"></center>
+      </div>
+      <a class="button icon-left ion-chevron-left button-assertive buttonQuit" on-tap="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
             Quit
         </a>
-        <a class="button icon-right ion-chevron-right button-calm buttonFinish" onclick="updateWindow('fifthScreen','sixthScreen'); pauseTimer();addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('conditions').value,document.getElementById('recorder').value,document.getElementById('timeValue').value,document.getElementById('showTimer').value,document.getElementById('picture').value)">
+        <a id="finishButton" class="button icon-right ion-chevron-right button-royal buttonFinish" on-tap="confirmFinish();">
+<!-- addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('conditions').value,document.getElementById('recorder').value,document.getElementById('timeValue').value,document.getElementById('showTimer').value,document.getElementById('picture').value) -->
             Finish
+        </a>
+        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" on-tap="updateWindow('fifthScreen', 'sixthScreen');">
+            Submit
         </a>
     </div>
 
@@ -219,7 +228,7 @@
     <div id="sixthScreen" class="screen" style="display: none">
 
       <center class="startVCenter">
-        <h1 class="royal special" style="font-size: 5vw">Thanks for playing Diapix!</h1>
+        <h1 class="royal" style="font-size: 5vw;">Thanks for playing Diapix!</h1>
         <br>
         <a href="index.html" class="button button-large button-royal">
           Play again
@@ -279,17 +288,7 @@
 	  </div>
 	</div>
 
-    <script>
-        WEB_SOCKET_SWF_LOCATION = 'inc/WebSocketMain.swf';
-        var socket = io.connect('http://localhost:5000');
-        socket.on('connected', function (data) {
-            socket.emit('ready for data', {data});
-            console.log(data);
-        });
-        socket.on('update', function (data) {
-            console.log(data.message.payload);
-        });
-    </script>
+    <script src="js/socket.js"></script>
     <!-- <script src="js/canvas.js"></script> -->
   </body>
 </html>
