@@ -10,7 +10,8 @@ To do: basic app security
 ```
 npm install -g ionic
 cd DiapixApp
-ionic emulate android
+npm install
+ionic emulate android (or npm start)
 ```
 Make sure your AVM emulator is configured through Android Studio.
 
@@ -18,19 +19,20 @@ Make sure your AVM emulator is configured through Android Studio.
 it's in `scss/style.scss`, and run `gulp` or `gulp sass` to get it into minified version, linked from `index.html`
 
 ## we usin jQuery, Node & Vanilla JS
-it's in `www/js/main.js`. Server stuff is `server.js`, `www/js/app.js`
+it's in `www/js/main.js`. Server stuff is `server.js`, `www/js/socket.js`
 
 ## Heroku
 will handle the db stuff and env config vars
 
 ## Dependencies
-- [Bower](http://bower.io/) for managing front-end packages
 - gulp
+- ionic UI components
 - npm / node obvs
 - jQuery
-- fastclick for speeding up in-app clicks
 - handlebars for custom re-usable semantic templates
-- PouchDB
+- sequelize
+- express
+just read `package.json` man i cba
 
 ### Help with node + homebrew + ionic
 [1](http://stackoverflow.com/questions/28017374/what-is-the-suggested-way-to-install-brew-node-js-io-js-nvm-npm-on-os-x)
