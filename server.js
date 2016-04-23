@@ -47,16 +47,16 @@ var Pairs = sequelize.define('pairs', {
     freezeTableName: true // Model tableName will be the same as the model name
 });
 
-Pairs.sync({force: true}).then(function () {
-    // Table created if it doesn't already exist
-    var pairData = {
-        subject1: '0000a',
-        subject2: '0000b'
-    }
-    return Pairs.create(pairData). then(function(pairs){
-        console.dir(pairs.get())
-    })
-});
+// Pairs.sync({force: true}).then(function () {
+//     // Table created if it doesn't already exist
+//     var pairData = {
+//         subject1: '0000a',
+//         subject2: '0000b'
+//     }
+//     return Pairs.create(pairData). then(function(pairs){
+//         console.dir(pairs.get())
+//     })
+// });
 
 var SubjectInfo = sequelize.define('report', {
     subjectNumber: {
@@ -113,7 +113,7 @@ console.log("http server listening on %d", port);
 io.sockets.on('connection', function (socket) {
     socket.emit('connected', { connected: true });
     socket.broadcast.emit('user connected');
-    console.log('a user connected');
+    console.log('a user connected: '+socket.id);
     socket.on('disconnect', function(){
         console.log('user disconnected');
     });
