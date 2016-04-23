@@ -7,6 +7,7 @@ var port = process.env.PORT || 9000
 var conString = process.env.DATABASE_URL;
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(conString);
+var validator = require('validator');
 var pg_client = new pg.Client(conString);
 pg_client.connect();
 var query = pg_client.query('LISTEN addedrecord');
@@ -31,10 +32,16 @@ var Pairs = sequelize.define('pairs', {
         autoIncrement: true
     },
     subject1: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+            isAlphanumeric: true
+        }
     },
     subject2: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+            isAlphanumeric: true
+        }
     }
 }, {
     freezeTableName: true // Model tableName will be the same as the model name
@@ -51,6 +58,52 @@ Pairs.sync({force: true}).then(function () {
     })
 });
 
+var SubjectInfo = sequelize.define('report', {
+    subjectNumber: {
+        type: Sequelize.STRING,
+        primaryKey: true,
+        validate: {
+            isAlphanumeric: true
+        }
+    },
+    timestamp: {
+        type: Sequelize.STRING
+    },
+    age: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null
+    },
+    gender: {
+        type: Sequelize.STRING,
+        validate: {
+            isNumeric: true
+        }
+    },
+    // recording: {
+    //     type: Sequelize.STRING,
+    //     validate: {
+    //         isAlpha: true
+    //     }
+    // },
+    time: {
+        type: Sequelize.INTEGER
+    },
+    timerONOFF: {
+        type: Sequelize.STRING
+    },
+    picture: {
+        type: Sequelize.STRING
+    },
+    conditions: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null
+    }
+}, {
+    freezeTableName: true // Model tableName will be the same as the model name
+});
+
 var server = http.createServer(app);
 
 var io = require('socket.io').listen(server);
@@ -60,14 +113,20 @@ console.log("http server listening on %d", port);
 io.sockets.on('connection', function (socket) {
     socket.emit('connected', { connected: true });
     socket.broadcast.emit('user connected');
-    // console.log('a user connected');
+    console.log('a user connected');
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
 
     socket.on('ready for data', function (data) {
         console.log(data);
-
-        pg_client.on('notification', function(title) {
-            console.log(title);
-            socket.emit('update', { message: title });
+    });
+    socket.on('new user info', function(data){
+        SubjectInfo.sync().then(function () {
+            // Table created if it doesn't already exist
+            return SubjectInfo.create(data). then(function(subject){
+                console.dir(subject.get())
+            })
         });
     });
 });

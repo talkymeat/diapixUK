@@ -45,6 +45,7 @@
     <!-- <script src="js/ng-cordova.js"></script> -->
     <script src="js/pouchdb-5.3.1.min.js"></script>
     <script src="js/socket.io.js"></script>
+    <script type="text/javascript" src="js/validator.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
     <script src="js/socket.js"></script>
@@ -98,7 +99,7 @@
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen')" onclick="updateWindow('secondScreen','thirdScreen')">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');" onclick="updateWindow('secondScreen','thirdScreen');">
         Next
       </a>
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('secondScreen','startScreen')" onclick="updateWindow('secondScreen','startScreen')">
@@ -139,7 +140,7 @@
           <div class="item block" style="padding: 0">
             <div class="range range-royal chooseTime" style="padding-left: 16px">
               Time
-              <input type="range" name="time" min="1" max="15" value="10" oninput="updateSlideText(this.value);">
+              <input id="timeVal" type="range" name="time" min="1" max="15" value="10" oninput="updateSlideText(this.value);">
               <div style="width: 80px">
               	<center id="timevalue">10 minutes</center>
               </div>
@@ -289,6 +290,5 @@
 		</center>
 	  </div>
 	</div>
-    <!-- <script src="js/canvas.js"></script> -->
   </body>
 </html>
