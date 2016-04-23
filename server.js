@@ -8,9 +8,9 @@ var conString = process.env.DATABASE_URL;
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(conString);
 var validator = require('validator');
-var pg_client = new pg.Client(conString);
-pg_client.connect();
-var query = pg_client.query('LISTEN addedrecord');
+// var pg_client = new pg.Client(conString);
+// pg_client.connect();
+// var query = pg_client.query('LISTEN addedrecord');
 
 app.use(express.static('www'));
 
