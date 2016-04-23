@@ -25,23 +25,31 @@ app.all('*', function(req, res, next) {
 });
 
 var Pairs = sequelize.define('pairs', {
-  subject1: {
-    type: Sequelize.STRING,
-  },
-  subject2: {
-    type: Sequelize.STRING
-  }
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    }
+    subject1: {
+        type: Sequelize.STRING
+    },
+    subject2: {
+        type: Sequelize.STRING
+    }
 }, {
   freezeTableName: true // Model tableName will be the same as the model name
 });
 
-// Pairs.sync({force: true}).then(function () {
-//   // Table created
-//   return User.create({
-//     subject1: '0000a',
-//     subject2: '0000b'
-//   });
-// });
+Pairs.sync({force: true}).then(function () {
+    // Table created if it doesn't already exist
+    var pairData = {
+        subject1: '0000a',
+        subject2: '0000b'
+    }
+    return Pairs.create(pairData). then(function(pairs){
+        console.dir(post.get())
+    })
+});
 
 var server = http.createServer(app);
 
