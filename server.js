@@ -29,7 +29,7 @@ var Pairs = sequelize.define('pairs', {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
-    }
+    },
     subject1: {
         type: Sequelize.STRING
     },
@@ -37,7 +37,7 @@ var Pairs = sequelize.define('pairs', {
         type: Sequelize.STRING
     }
 }, {
-  freezeTableName: true // Model tableName will be the same as the model name
+    freezeTableName: true // Model tableName will be the same as the model name
 });
 
 Pairs.sync({force: true}).then(function () {
@@ -47,7 +47,7 @@ Pairs.sync({force: true}).then(function () {
         subject2: '0000b'
     }
     return Pairs.create(pairData). then(function(pairs){
-        console.dir(post.get())
+        console.dir(pairs.get())
     })
 });
 
