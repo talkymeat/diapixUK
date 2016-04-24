@@ -20,6 +20,25 @@ function sortPairing() {
     }
 }
 
+function keep() {
+    if(document.getElementById('host').value === "on"){
+      var subj1 = $('#subjCode1').val();
+      var subj2 = $('#subjCode2').val();
+      $('#reflect1').text(subj1);
+      $('#reflect1').val(subj1);
+      $('#reflect2').text(subj2);
+      $('#reflect2').val(subj2);
+    //   return subj1,subj2;
+      console.log(subj1, "+", subj2);
+      console.log($('#reflect2').val());
+    } else {
+      var chosenRoom = $('#rooms').val();
+    //   return chosenRoom;
+      console.log(chosenRoom);
+    }
+}
+
+
 function updateWindow(prev, next){
   if(correctData(prev, next)) {
     $("#" + prev).hide();
@@ -29,8 +48,8 @@ function updateWindow(prev, next){
 
 function correctData(screen, next){
   if(screen === "thirdScreen" && next === "fourthScreen"){
-    if(document.getElementById("subjCode").value === ""){
-      document.getElementById('err').innerHTML = "Please insert your subject code";
+    if(document.getElementById("subjCode").value === "0"){
+      document.getElementById('err').innerHTML = "Please select your subject code";
       showAlertPopup();
       return false;
     }
@@ -117,6 +136,13 @@ function genderColor(){
     document.getElementById("gender").style.color = "#aaaaaa";
   else
     document.getElementById("gender").style.color = "#111111";
+}
+
+function subColor(){
+  if(document.getElementById("subjCode").value === "0")
+    document.getElementById("subjCode").style.color = "#aaaaaa";
+  else
+    document.getElementById("subjCode").style.color = "#111111";
 }
 
 function showResume(){

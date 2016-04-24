@@ -8,6 +8,7 @@ socket.on('update', function (data) {
     console.log(data.message.payload);
 });
 
+
 function addToStore() {
     var str =document.getElementById('picture').value;
     var clean = str.replace('img/', '');

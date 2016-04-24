@@ -100,13 +100,13 @@
           <label class="item item-input item-select chooseRoom" style="height:50px">
             <select id="rooms" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
               <option value="empty">Available Rooms</option>
-              <option value="null">Loading Available Rooms</option>
+              <option value="null">Loading Available Rooms. Please hold...</option>
             </select>
           </label>
         </center>
       </div>
 
-          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');" onclick="updateWindow('secondScreen','thirdScreen');">
+          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');keep();" onclick="updateWindow('secondScreen','thirdScreen');keep();">
             Next
           </a>
           <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('secondScreen','startScreen')" onclick="updateWindow('secondScreen','startScreen')">
@@ -121,8 +121,12 @@
 
       <div class="list list-inset inscreen">
         <center class="vcenter">
-          <label class="item item-input">
-            <input id="subjCode" type="text" placeholder="Subject code">
+          <label class="item item-select">
+              <select id="subjCode" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="subColor()">
+                <option value="0">Subject Code</option>
+                <option id="reflect1">test</option>
+                <option id="reflect2">test</option>
+              </select>
           </label>
           <label class="item item-input">
             <input id="age" type="text" placeholder="Age (optional)">
@@ -151,7 +155,7 @@
 
     <div id="fourthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Game settings</h1>
+        <h1 class="title">Game Settings</h1>
       </div>
 
       <div class="list list-inset inscreen">
