@@ -9,23 +9,20 @@ socket.on('update', function (data) {
 });
 
 function addToStore() {
-  var todo = {
-    timestamp: new Date().toISOString(),
-    subjectNumber: document.getElementById('subjCode').value,
-    age: document.getElementById('age').value,
-    gender:document.getElementById('gender').value,
-    // recording:document.getElementById('recorder').value,
-    time:document.getElementById('timeVal').value,
-    timerONOFF:document.getElementById('showTimer').value,
-    picture: document.getElementById('picture').value,
-    conditions: document.getElementById('conditions').value
+    var str =document.getElementById('picture').value;
+    var clean = str.replace('img/', '');
+    var todo = {
+        timestamp: new Date().toISOString(),
+        subjectNumber: document.getElementById('subjCode').value,
+        age: document.getElementById('age').value,
+        gender:document.getElementById('gender').value,
+        // recording:document.getElementById('recorder').value,
+        time:document.getElementById('timeVal').value,
+        timerONOFF:document.getElementById('showTimer').value,
+        picture: clean,
+        conditions: document.getElementById('conditions').value
     //completed: false
-  };
-  socket.emit('new user info', todo);
-  console.log(todo);
-  // db.put(todo, function callback(err, result) {
-  //   if (!err) {
-  //     console.log('Successfully created a new Experiment!');
-  //   }
-  // });
+    };
+    socket.emit('new user info', todo);
+    console.log(todo);
 }

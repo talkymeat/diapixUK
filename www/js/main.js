@@ -4,6 +4,22 @@
 
 window.scrollTo(0,1);
 
+$(document).ready(function(){
+    $(".pairCodes").hide();
+})
+function sortPairing() {
+    if(document.getElementById('host').checked){
+        document.getElementById('host').value="on";
+        $(".pairCodes").show();
+        $(".chooseRoom").hide();
+    } else {
+        document.getElementById('host').value="off";
+        console.log("works");
+        $(".pairCodes").hide();
+        $(".chooseRoom").show();
+    }
+}
+
 function updateWindow(prev, next){
   if(correctData(prev, next)) {
     $("#" + prev).hide();
@@ -12,7 +28,7 @@ function updateWindow(prev, next){
 }
 
 function correctData(screen, next){
-  if(screen === "secondScreen" && next === "thirdScreen"){
+  if(screen === "thirdScreen" && next === "fourthScreen"){
     if(document.getElementById("subjCode").value === ""){
       document.getElementById('err').innerHTML = "Please insert your subject code";
       showAlertPopup();
@@ -24,14 +40,20 @@ function correctData(screen, next){
       return false;
     }
   }
-  if(screen === "thirdScreen" && next === "fourthScreen"){
+  if(screen === "fourthScreen" && next === "fifthScreen"){
+    if(document.getElementById('showTimer').checked){
+        document.getElementById('showTimer').value="on";
+    } else {
+        document.getElementById('showTimer').value="off";
+        // console.log("works");
+    }
     if(document.getElementById("picture").value === "empty"){
       document.getElementById('err').innerHTML = "Please select a picture";
       showAlertPopup();
       return false;
     }
   }
-  if(screen === "fifthScreen" && next === "fourthScreen" && popupCloseEvent != -1){
+  if(screen === "sixthScreen" && next === "fifthScreen" && popupCloseEvent != -1){
     document.getElementById('err').innerHTML = "Are you sure you want to exit the game?\n Your progress will be lost.";
     showConfirmPopup();
     popupCloseEvent = -1;
