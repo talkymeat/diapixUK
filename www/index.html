@@ -61,27 +61,71 @@
         <p class="royal" align="justify">
             The diapixUK is a dialogue elicitation technique and set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
             <br>
-            It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants.</p>
-        <br>
-        <a class="button button-large button-royal" style="width:500px;height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
-          start
-        </a>
-        <!-- <br>
-        <h1>test websocket</h1>
-        <ul id='pings'></ul> -->
-      </center>
+            It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants.
+            <br>
+            For more information, please visit <a href="https://github.com/diapixUK/diapixUK" target="_blank">github.com/diapixUK</a>.
+        </p>
+            <br>
+            <a class="button button-large button-royal" style="width:500px;height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
+              start
+            </a>
+        </center>
     </div>
 
+    <div id="secondScreen" class="screen" style="display: none;">
+      <div class="bar bar-header bar-royal">
+        <h1 class="title">Pair Details</h1>
+      </div>
+      <div class="list list-inset inscreen">
+        <center class="vcenter">
+          <div class="item item-toggle">
+                <div align="left">
+                  Is this the host tablet?
+                </div>
+                <label class="toggle toggle-royal" onclick="sortPairing();">
+                  <input id="host" name="host" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
+                  <div class="track">
+                    <div class="handle"></div>
+                  </div>
+                </label>
+            </div>
+        <div class="pairCodes">
+          <label class="item item-input">
+            <input id="subjCode1" type="text" placeholder="Subject 1">
+          </label>
+          <label class="item item-input">
+            <input id="subjCode2" type="text" placeholder="Subject 2">
+          </label>
+        </div>
+          <label class="item item-input item-select chooseRoom" style="height:50px">
+            <select id="rooms" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
+              <option id="testOption" value="null">Loading Available Rooms. Please hold...</option>
+            </select>
+          </label>
+        </center>
+      </div>
 
-    <div id="secondScreen" class="screen" style="display: none">
+          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');keep();" onclick="updateWindow('secondScreen','thirdScreen');keep();">
+            Next
+          </a>
+          <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('secondScreen','startScreen')" onclick="updateWindow('secondScreen','startScreen')">
+            Back
+          </a>
+    </div>
+
+    <div id="thirdScreen" class="screen" style="display: none;">
       <div class="bar bar-header bar-royal">
         <h1 class="title">Player Details</h1>
       </div>
 
       <div class="list list-inset inscreen">
         <center class="vcenter">
-          <label class="item item-input">
-            <input id="subjCode" type="text" placeholder="Subject code">
+          <label class="item item-select">
+              <select id="subjCode" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="subColor()">
+                <option value="0">Subject Code</option>
+                <option id="reflect1">Subject 1</option>
+                <option id="reflect2">Subject 2</option>
+              </select>
           </label>
           <label class="item item-input">
             <input id="age" type="text" placeholder="Age (optional)">
@@ -89,8 +133,8 @@
           <label class="item item-input item-select">
             <select id="gender" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="genderColor()">
               <option value="0">Gender</option>
-              <option value="1">Male</option>
-              <option value="2">Female</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
           </label>
           <label class="item item-input">
@@ -99,18 +143,18 @@
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');" onclick="updateWindow('secondScreen','thirdScreen');">
-        Next
-      </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('secondScreen','startScreen')" onclick="updateWindow('secondScreen','startScreen')">
-        Back
-      </a>
+          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('thirdScreen','fourthScreen');" onclick="updateWindow('thirdScreen','fourthScreen');">
+            Next
+          </a>
+          <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('thirdScreen','secondScreen')" onclick="updateWindow('thirdScreen','secondScreen')">
+            Back
+          </a>
     </div>
 
 
-    <div id="thirdScreen" class="screen" style="display: none">
+    <div id="fourthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Game settings</h1>
+        <h1 class="title">Game Settings</h1>
       </div>
 
       <div class="list list-inset inscreen">
@@ -126,7 +170,7 @@
               </div>
             </label>
           </div>
-          <div class="item item-toggle">
+          <!-- <div class="item item-toggle">
             <div align="left">
               Recording (N/A)
             </div>
@@ -136,7 +180,7 @@
                 <div class="handle"></div>
               </div>
             </label>
-          </div>
+          </div> -->
           <div class="item block" style="padding: 0">
             <div class="range range-royal chooseTime" style="padding-left: 16px">
               Time
@@ -162,15 +206,15 @@
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="addToStore(); updateWindow('thirdScreen','fourthScreen');" onclick="addToStore(); updateWindow('thirdScreen','fourthScreen');">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('fourthScreen','fifthScreen');addToStore();" onclick="updateWindow('fourthScreen','fifthScreen');addToStore();">
         Next
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('thirdScreen','secondScreen');" onclick="updateWindow('thirdScreen','secondScreen');">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fourthScreen','thirdScreen');" onclick="updateWindow('fourthScreen','thirdScreen');">
         Back
       </a>
     </div>
 
-    <div id="fourthScreen" class="screen" style="display: none">
+    <div id="fifthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
         <h1 class="title">Instructions: Spot the difference!</h1>
       </div>
@@ -184,17 +228,17 @@
             </ul>
         </center>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();" onclick="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();" onclick="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();">
       <!-- <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer();recordAudio(); updateWindow('fourthScreen','fifthScreen'); canv();"> -->
         Start
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fourthScreen','thirdScreen');" onclick="updateWindow('fourthScreen','thirdScreen');">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fifthScreen','fourthScreen');" onclick="updateWindow('fifthScreen','fourthScreen');">
         Back
       </a>
     </div>
 
 
-    <div id="fifthScreen" class="screen row" style="display: none; padding: 0px; setKeepScreenOn(true)">
+    <div id="sixthScreen" class="screen row" style="display: none; padding: 0px; setKeepScreenOn(true)">
       <div class="outsideWrapper">
         <div class="insideWrapper">
             <img id="img" src="" class="coveredImage">
@@ -215,20 +259,20 @@
       <div id="resultDiv" class="rightTimer" style="display: none">
       	<center id="result" class="royal" style="font-size: 2vw; font-weight: bold; width: 20vw"></center>
       </div>
-      <a class="button icon-left ion-chevron-left button-assertive buttonQuit" on-tap="updateWindow('fifthScreen','fourthScreen'); pauseTimer();" onclick="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
+      <a class="button icon-left ion-chevron-left button-assertive buttonQuit" on-tap="updateWindow('sixthScreen','fifthScreen'); pauseTimer();" onclick="updateWindow('sixthScreen','fifthScreen'); pauseTimer();">
             Quit
         </a>
         <a id="finishButton" class="button icon-right ion-chevron-right button-royal buttonFinish" on-tap="confirmFinish();" onclick="confirmFinish();">
 <!-- addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('conditions').value,document.getElementById('recorder').value,document.getElementById('timeValue').value,document.getElementById('showTimer').value,document.getElementById('picture').value) -->
             Finish
         </a>
-        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" on-tap="updateWindow('fifthScreen', 'sixthScreen');" onclick="updateWindow('fifthScreen', 'sixthScreen');">
+        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" on-tap="updateWindow('sixthScreen', 'seventhScreen');" onclick="updateWindow('sixthScreen', 'seventhScreen');">
             Submit
         </a>
     </div>
 
 
-    <div id="sixthScreen" class="screen" style="display: none">
+    <div id="seventhScreen" class="screen" style="display: none">
 
       <center class="startVCenter">
         <h1 class="royal" style="font-size: 5vw;">Thanks for playing Diapix!</h1>
