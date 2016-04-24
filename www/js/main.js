@@ -5,7 +5,7 @@
 window.scrollTo(0,1);
 
 $(document).ready(function(){
-    $(".pairCodes").hide();
+    $(".chooseRoom").hide();
 })
 function sortPairing() {
     if(document.getElementById('host').checked){
@@ -16,25 +16,8 @@ function sortPairing() {
         document.getElementById('host').value="off";
         console.log("works");
         $(".pairCodes").hide();
+        socket.emit('get rooms');
         $(".chooseRoom").show();
-    }
-}
-
-function keep() {
-    if(document.getElementById('host').value === "on"){
-      var subj1 = $('#subjCode1').val();
-      var subj2 = $('#subjCode2').val();
-      $('#reflect1').text(subj1);
-      $('#reflect1').val(subj1);
-      $('#reflect2').text(subj2);
-      $('#reflect2').val(subj2);
-    //   return subj1,subj2;
-      console.log(subj1, "+", subj2);
-      console.log($('#reflect2').val());
-    } else {
-      var chosenRoom = $('#rooms').val();
-    //   return chosenRoom;
-      console.log(chosenRoom);
     }
 }
 

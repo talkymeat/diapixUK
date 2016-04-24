@@ -83,7 +83,7 @@
                   Is this the host tablet?
                 </div>
                 <label class="toggle toggle-royal" onclick="sortPairing();">
-                  <input id="host" name="host" type="checkbox" style="-webkit-filter: blur(0.000001px)">
+                  <input id="host" name="host" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
                   <div class="track">
                     <div class="handle"></div>
                   </div>
@@ -99,8 +99,7 @@
         </div>
           <label class="item item-input item-select chooseRoom" style="height:50px">
             <select id="rooms" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
-              <option value="empty">Available Rooms</option>
-              <option value="null">Loading Available Rooms. Please hold...</option>
+              <option id="testOption" value="null">Loading Available Rooms. Please hold...</option>
             </select>
           </label>
         </center>
@@ -124,8 +123,8 @@
           <label class="item item-select">
               <select id="subjCode" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="subColor()">
                 <option value="0">Subject Code</option>
-                <option id="reflect1">test</option>
-                <option id="reflect2">test</option>
+                <option id="reflect1">Subject 1</option>
+                <option id="reflect2">Subject 2</option>
               </select>
           </label>
           <label class="item item-input">

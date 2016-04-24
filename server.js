@@ -25,12 +25,7 @@ app.all('*', function(req, res, next) {
     next()
 });
 
-var Pairs = sequelize.define('pairs', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+var Pairs = sequelize.define('subject_pairs', {
     subject1: {
         type: Sequelize.STRING,
         validate: {
@@ -42,16 +37,21 @@ var Pairs = sequelize.define('pairs', {
         validate: {
             isAlphanumeric: true
         }
+    },
+    inuse: {
+        type: Sequelize.INTEGER
     }
 }, {
     freezeTableName: true // Model tableName will be the same as the model name
 });
 
+Pairs.sync();
 // Pairs.sync({force: true}).then(function () {
 //     // Table created if it doesn't already exist
 //     var pairData = {
 //         subject1: '0000a',
-//         subject2: '0000b'
+//         subject2: '0000b',
+//         inuse: 0
 //     }
 //     return Pairs.create(pairData). then(function(pairs){
 //         console.dir(pairs.get())
@@ -66,6 +66,18 @@ var SubjectInfo = sequelize.define('report', {
             isAlphanumeric: true
         }
     },
+    subjectPairId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: null,
+        references: {
+             // This is a reference to another model
+            model: Pairs,
+
+             // This is the column name of the referenced model
+            key: 'id'
+        }
+    },
     timestamp: {
         type: Sequelize.STRING
     },
@@ -77,7 +89,7 @@ var SubjectInfo = sequelize.define('report', {
     gender: {
         type: Sequelize.STRING,
         validate: {
-            isNumeric: true
+            isAlpha: true
         }
     },
     // recording: {
@@ -104,6 +116,9 @@ var SubjectInfo = sequelize.define('report', {
     freezeTableName: true // Model tableName will be the same as the model name
 });
 
+SubjectInfo.sync();
+
+SubjectInfo.belongsTo(Pairs);
 var server = http.createServer(app);
 
 var io = require('socket.io').listen(server);
@@ -121,121 +136,83 @@ io.sockets.on('connection', function (socket) {
     socket.on('ready for data', function (data) {
         console.log(data);
     });
-    socket.on('new user info', function(data){
-        SubjectInfo.sync().then(function () {
+
+    socket.on('get rooms', function() {
+        console.log("get rooms");
+        Pairs.findAll({
+            where: {
+                inuse: 0
+            }
+        }).then(function(pairs) {
+            socket.emit('load pairs', pairs);
+            console.log("sent");
+        });
+    })
+    socket.on('new pair', function(data){
+        Pairs.sync().then(function () {
             // Table created if it doesn't already exist
-            return SubjectInfo.create(data). then(function(subject){
-                console.dir(subject.get())
+            return Pairs.create(data). then(function(pair){
+                console.dir(pair.get())
             })
         });
     });
+    socket.on('pair taken',function(data) {
+        console.log(data);
+        Pairs.findById(data).then(function(pair) {
+            // update value of inuse to 1
+            pair.update({inuse: '1'})
+            console.log("changed: \n", pair);
+            console.dir(pair.get())
+        })
+    })
+    socket.on('new user', function(data){
+        // console.log('inserting: ',data.subjectNumber);
+        subjID = data.subjectNumber;
+        console.log(subjID);
+        SubjectInfo.sync().then(function () {
+        //     console.log(data);
+        //     // Table created if it doesn't already exist
+            return SubjectInfo.create(data). then(function(subject){
+            console.dir(subject.get())
+            })
+        }, SubjectInfo.findById(subjID).then(function(subject) {
+                if (subject) { // if the record exists in the db
+                    return subject.update(data);
+                    console.dir(subject.get())
+                }
+            })
+    );
+        // var insertNew = data;
+        // SubjectInfo.sync().then(function (insertNew) {
+        // //     console.log(data);
+        // //     // Table created if it doesn't already exist
+        //     SubjectInfo.create(insertNew). then(function(subject){
+        //     console.dir(subject.get())
+        //     })
+        // }, function(insertNew) {
+        //     SubjectInfo.find({ where: {subjectNumber: data.subjectNumber} }).then(function(subject) {
+        //         if (subject) { // if the record exists in the db
+        //             subject.updateAttributes(insertNew).success(function() {});
+        //             console.dir(subject.get())
+        //         }
+        //     })
+        // })
+        // console.log(data,function(key,values){
+        //     console.log(values.subjectNumber);
+        // });
+        // SubjectInfo.find({where})
+        // SubjectInfo.sync().then(function (data) {
+        //     console.log(data);
+        //     // Table created if it doesn't already exist
+        //     try {
+        //         return SubjectInfo.create(data). then(function(subject){
+        //             console.dir(subject.get())
+        //         })
+        //     } catch (e) {
+        //         console.log("PROBLEM!!!!!!");
+        //         console.log(data);
+        //         console.log(e);
+        //     }
+        // });
+    });
 });
-
-// app.get('/db', function (request, response) {
-//   pg.connect(conString, function(err, client, done) {
-//     client.query('SELECT * FROM visit', function(err, result) {
-//       done();
-//       if (err)
-//        { console.error(err); response.send("Error " + err); }
-//       else
-//        { response.render('pages/db', {results: result.rows} ); }
-//     });
-//   });
-// })
-//
-// var server2 = http.createServer(function(req, res) {
-//
-//   // get a pg client from the connection pool
-//   pg.connect(conString, function(err, client, done) {
-//
-//     var handleError = function(err) {
-//       // no error occurred, continue with the request
-//       if(!err) return false;
-//
-//       // An error occurred, remove the client from the connection pool.
-//       // A truthy value passed to done will remove the connection from the pool
-//       // instead of simply returning it to be reused.
-//       // In this case, if we have successfully received a client (truthy)
-//       // then it will be removed from the pool.
-//       if(client){
-//         done(client);
-//       }
-//       res.writeHead(500, {'content-type': 'text/plain'});
-//       res.end('An error occurred');
-//       return true;
-//     };
-//
-//     // handle an error from the connection
-//     if(handleError(err)) return;
-//
-//     // record the visit
-//     client.query('INSERT INTO visit (date) VALUES ($1)', [new Date()], function(err, result) {
-//
-//       // handle an error from the query
-//       if(handleError(err)) return;
-//
-//       // get the total number of visits today (including the current visit)
-//       client.query('SELECT COUNT(date) AS count FROM visit', function(err, result) {
-//
-//         // handle an error from the query
-//         if(handleError(err)) return;
-//
-//         // return the client to the connection pool for other requests to reuse
-//         done();
-//         res.writeHead(200, {'content-type': 'text/plain'});
-//         res.end('You are visitor number ' + result.rows[0].count);
-//       });
-//     });
-//   });
-// })
-
-
-// server2.listen(3001)
-
-//
-// var wss = new WebSocketServer({server: server})
-// console.log("websocket server created")
-//
-// wss.on("connection", function(ws) {
-//   var id = setInterval(function() {
-//     ws.send(JSON.stringify(new Date()), function() {  })
-// }, 1000)
-//
-//   console.log("websocket connection open")
-//
-//   ws.on("close", function() {
-//     console.log("websocket connection close")
-//     clearInterval(id)
-//   })
-// })
-
-// app.get('/', function(request, response) {
-//   response.render('pages/index')
-// });
-// app.get('/', function(request, response) {
-//   var result = ''
-//   var times = process.env.TIMES || 5
-//   for (i=0; i < times; i++)
-//     result += cool();
-//   response.send(result);
-// });
-
-// app.get('/cool', function(request, response) {
-//   response.send(cool());
-// });
-
-// app.get('/db', function (request, response) {
-//   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-//     client.query('SELECT * FROM test_table', function(err, result) {
-//       done();
-//       if (err)
-//        { console.error(err); response.send("Error " + err); }
-//       else
-//        { response.render('pages/db', {results: result.rows} ); }
-//     });
-//   });
-// })
-
-// app.listen(app.get('port'), function() {
-//   console.log('Express server listening on port ', app.get('port'));
-// });
