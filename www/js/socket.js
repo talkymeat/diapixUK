@@ -1,5 +1,7 @@
 WEB_SOCKET_SWF_LOCATION = 'inc/WebSocketMain.swf';
-var socket = io.connect('https://localhost:5000');
+var socket = io.connect();
+// for local development
+// var socket = io.connect('http://localhost:5000');
 socket.on('connected', function (data) {
     socket.emit('ready for data', {data});
     console.log(data);
