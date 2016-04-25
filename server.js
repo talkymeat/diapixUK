@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var pg = require('pg');
-// pg.defaults.ssl = true;
+pg.defaults.ssl = true;
 var port = process.env.PORT || 9000
 var conString = process.env.DATABASE_URL;
 var Sequelize = require('sequelize');
@@ -29,13 +29,17 @@ var Pairs = sequelize.define('subject_pairs', {
     subject1: {
         type: Sequelize.STRING,
         validate: {
-            isAlphanumeric: true
+            isAlphanumeric: true,
+            not: [";"],
+            notContains: 'DROP TABLE'
         }
     },
     subject2: {
         type: Sequelize.STRING,
         validate: {
-            isAlphanumeric: true
+            isAlphanumeric: true,
+            not: [";"],
+            notContains: 'DROP TABLE'
         }
     },
     inuse: {
@@ -84,7 +88,11 @@ var SubjectInfo = sequelize.define('report', {
     age: {
         type: Sequelize.STRING,
         allowNull: true,
-        defaultValue: null
+        defaultValue: null,
+        validate: {
+            not: [";"],
+            notContains: 'DROP TABLE'
+        }
     },
     gender: {
         type: Sequelize.STRING,
@@ -110,7 +118,11 @@ var SubjectInfo = sequelize.define('report', {
     conditions: {
         type: Sequelize.STRING,
         allowNull: true,
-        defaultValue: null
+        defaultValue: null,
+        validate: {
+            not: [";"],
+            notContains: 'DROP TABLE'
+        }
     }
 }, {
     freezeTableName: true // Model tableName will be the same as the model name
@@ -153,6 +165,7 @@ io.sockets.on('connection', function (socket) {
             // Table created if it doesn't already exist
             return Pairs.create(data). then(function(pair){
                 console.dir(pair.get())
+                socket.emit('return created pair',pair);
             })
         });
     });

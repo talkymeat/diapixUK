@@ -32,6 +32,13 @@ function keep() {
           inuse: '0'
       };
       socket.emit('new pair', pair);
+      socket.on('return created pair',function(data) {
+        console.log('created: ',data);
+        var pairID = data.id;
+        console.log(pairID);
+        $('#rooms #testOption').attr('value',pairID);
+        console.log($('#rooms').val());
+      });
     //   console.log(pair);
     //   console.log(subj1, "+", subj2);
     //   console.log($('#reflect2').val());
@@ -68,8 +75,12 @@ function addToStore() {
     var str =document.getElementById('picture').value;
     var clean = str.replace('img/', '');
     var chosenRoom = $('#rooms').val();
-    var arrayRoom = chosenRoom.split(',');
-    var pair = arrayRoom[0];
+    if (chosenRoom.indexOf(',') > -1) {
+        var arrayRoom = chosenRoom.split(',');
+        var pair = arrayRoom[0];
+    } else {
+        var pair = chosenRoom;
+    }
     var user = {
         timestamp: new Date().toISOString(),
         subjectNumber: document.getElementById('subjCode').value,
