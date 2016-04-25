@@ -1,10 +1,16 @@
+var styles = {
+  hurt: "color: #336699",
+  baby: "color: #336699; font-weight: bold"
+};
+
 WEB_SOCKET_SWF_LOCATION = 'inc/WebSocketMain.swf';
 var socket = io.connect();
 // for local development
 // var socket = io.connect('http://localhost:5000');
 socket.on('connected', function (data) {
     socket.emit('ready for data', {data});
-    console.log(data);
+    console.log("Why hello there! 😄 Nice to meet you. baby don't hurt me, no more~");
+    // console.log(data);
 });
 socket.on('update', function (data) {
     console.log(data.message.payload);
@@ -35,11 +41,11 @@ function keep() {
       };
       socket.emit('new pair', pair);
       socket.on('return created pair',function(data) {
-        console.log('created: ',data);
+        // console.log('created: ',data);
         var pairID = data.id;
-        console.log(pairID);
+        // console.log(pairID);
         $('#rooms #testOption').attr('value',pairID);
-        console.log($('#rooms').val());
+        // console.log($('#rooms').val());
       });
     //   console.log(pair);
     //   console.log(subj1, "+", subj2);
@@ -47,7 +53,7 @@ function keep() {
     } else {
       var chosenRoom = $('#rooms').val();
       var arrayRoom = chosenRoom.split(',');
-      console.log(arrayRoom);
+    //   console.log(arrayRoom);
       $('#reflect1').text(arrayRoom[1]);
       $('#reflect1').val(arrayRoom[1]);
       $('#reflect2').text(arrayRoom[2]);
@@ -57,14 +63,14 @@ function keep() {
 }
 
 socket.on('load pairs', function (pairs) {
-    console.log("received");
-    console.log(pairs);
+    // console.log("received");
+    // console.log(pairs);
     $("#rooms #testOption").remove();
     // http://stackoverflow.com/questions/22652860/how-to-display-jquery-array-key-value-pair
     $.each(pairs,function(key,vals) {
         var serveOne="Room: "+vals.id+", Subject 1: "+vals.subject1+", Subject 2: "+vals.subject2;
         var pairInfo = [vals.id, vals.subject1, vals.subject2];
-        console.log(serveOne);
+        // console.log(serveOne);
         // http://stackoverflow.com/a/171007
         $('#rooms')
             .append($('<option></option>')
@@ -96,5 +102,5 @@ function addToStore() {
         conditions: document.getElementById('conditions').value
     }
     socket.emit('new user', user);
-    console.log(user);
+    // console.log(user);
 }

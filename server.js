@@ -146,7 +146,8 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('ready for data', function (data) {
-        console.log(data);
+        console.log("Waiting for something to happen");
+        // console.log(data);
     });
 
     socket.on('get rooms', function() {
