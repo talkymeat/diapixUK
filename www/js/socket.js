@@ -115,7 +115,7 @@ function addResults() {
     resultData = $('#result').data();
     var data = {
         subjectNumber: document.getElementById('subjCode').value,
-        correctDifferences: resultData.result,
+        correctdifferences: resultData.result,
         results: resultData
     }
     socket.emit('results', data);

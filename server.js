@@ -124,7 +124,7 @@ var SubjectInfo = sequelize.define('report', {
             notContains: 'DROP TABLE'
         }
     },
-    correctDifferences: {
+    correctdifferences: {
         type: Sequelize.INTEGER,
         allowNull: true,
         defaultValue: null
