@@ -76,7 +76,7 @@ socket.on('load pairs', function (pairs) {
     $("#rooms #testOption").remove();
     // http://stackoverflow.com/questions/22652860/how-to-display-jquery-array-key-value-pair
     $.each(pairs,function(key,vals) {
-        var serveOne="Room: "+vals.id+", Subject 1: "+vals.subject1+", Subject 2: "+vals.subject2+", Time allotted: "+vals.time+", Picture: "+vals.picture;
+        var serveOne="Room: "+vals.id+", Subject 1: "+vals.subject1+", Subject 2: "+vals.subject2+", Picture: "+vals.picture;
         var pairInfo = [vals.id, vals.subject1, vals.subject2, vals.time, vals.timerONOFF, vals.picture];
         // console.log(serveOne);
         // http://stackoverflow.com/a/171007
