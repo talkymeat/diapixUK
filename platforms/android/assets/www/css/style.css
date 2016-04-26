@@ -15,12 +15,16 @@ body, html {
   height: 100%;
   width: 100%;
   font-family: "Karla", sans-serif; }
+  body .screen, html .screen {
+    height: 100vh; }
   body h1, body .h1, html h1, html .h1 {
     font-family: "Raleway", fantasy, cursive, sans-serif;
     font-size: 1.3em; }
   body h1.special, html h1.special {
     font-size: 20vh; }
-  body p, html p {
+  body h2, body h3, body h4, body h5, body h6, html h2, html h3, html h4, html h5, html h6 {
+    font-family: "Raleway", fantasy, cursive, sans-serif; }
+  body .instructions, html .instructions {
     font-size: 1.2em;
     line-height: 1.5em; }
   body input, body label, body select, body option, body textarea, html input, html label, html select, html option, html textarea {
@@ -31,11 +35,45 @@ body, html {
   body label, html label {
     height: 50px; }
   body ul li, html ul li {
-    padding: 1em 0; }
+    padding: 0.5em 0; }
+  body .examples img, html .examples img {
+    height: 28vh; }
+  body #pauseButton, body #resumeButton, html #pauseButton, html #resumeButton {
+    width: 100%; }
 
 .startVCenter, .vcenter {
-  right: 50%;
-  top: 50%;
+  /* right: 25vw; */
+  top: 20vh;
+  position: absolute;
+  width: 100%;
+  margin: auto;
+  padding: 0 17.5%; }
+
+.vcenter {
+  top: 20vh; }
+
+@media screen and (min-device-width: 601px) and (max-device-width: 800px) and (device-height: 906px) and (-webkit-min-device-pixel-ratio: 1.331) and (-webkit-max-device-pixel-ratio: 1.332) {
+  h1.special {
+    font-size: 12vh; }
+  .instructions {
+    line-height: 1.2em; }
+  .startVCenter, .vcenter {
+    /* right: 25vw; */
+    top: 12vh;
+    position: absolute;
+    width: 100%;
+    margin: auto;
+    padding: 0 17.5%; }
+  .vcenter {
+    top: 10vh; }
+  .modcenter {
+    right: 50vh;
+    top: 20vw;
+    position: absolute; } }
+
+.modcenter {
+  right: 32.5%;
+  top: 37%;
   position: absolute; }
 
 /*.showTime,.startVCenter,.vcenter{

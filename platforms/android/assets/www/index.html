@@ -20,7 +20,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
     <title>diapixUK</title>
 
     <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
@@ -40,12 +40,15 @@
 
     <!-- <meta charset="utf-8"> -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <!-- <script src="lib/fastclick.js"></script> -->
     <script src="js/jquery-1.12.1.min.js"></script>
     <!-- <script src="js/ng-cordova.js"></script> -->
     <script src="js/pouchdb-5.3.1.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="js/socket.io.js"></script>
+    <script type="text/javascript" src="js/validator.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/socket.js"></script>
   </head>
 
   </head>
@@ -55,39 +58,138 @@
     <div id="startScreen" class="screen">
       <center class="startVCenter">
         <h1 class="royal special">diapixUK</h1>
-        <p class="royal" align="justify">
-            The diapixUK is a dialogue elicitation technique and set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
+        <p class="royal instructions" align="justify">
+            The diapixUK is a dialogue elicitation technique for research, and a set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
+            <span class="readLess royal">
+                <br>
+                It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants who are not able to see each other.
+                <br>
+                For more information, please visit <a href="https://github.com/diapixUK/diapixUK" target="_blank">github.com/diapixUK</a>.
+                <p class="readLess royal"><strong>Hide this text.</strong></p>
+            </span>
+            <p id="readMore" class="royal"><strong>Read More</strong></p>
+        </p>
             <br>
-            It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants.</p>
-        <br>
-        <a class="button button-large button-royal" style="width:500px;height:50px;" onclick="updateWindow('startScreen','secondScreen');">
-          start
-        </a>
-        <!-- <br>
-        <h1>test websocket</h1>
-        <ul id='pings'></ul> -->
-      </center>
+            <a class="button button-full button-royal" style="height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
+              start
+            </a>
+        </center>
     </div>
 
-
-    <div id="secondScreen" class="screen" style="display: none">
+    <div id="secondScreen" class="screen" style="display: none;">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Player Details</h1>
+        <h1 class="title">Researchers: Pair Details</h1>
+      </div>
+      <div class="list list-inset inscreen">
+        <center class="vcenter">
+            <h5 class="royal" align="justify">For researchers, set up the leader tablet below, then pair another tablet to the same room.</h5>
+          <div class="item item-toggle">
+                <div align="left">
+                  Is this the host (leader) tablet?
+                </div>
+                <label class="toggle toggle-royal" on-tap="sortPairing();" onclick="sortPairing();">
+                  <input id="host" name="host" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
+                  <div class="track">
+                    <div class="handle"></div>
+                  </div>
+                </label>
+            </div>
+        <div class="pairCodes option1">
+          <label class="item item-input">
+            <input id="subjCode1" type="text" placeholder="Please input subject 1 code">
+          </label>
+          <label class="item item-input">
+            <input id="subjCode2" type="text" placeholder="Please input subject 2 code">
+          </label>
+        </div>
+        <div class="item item-toggle option1">
+          <div align="left">
+            Show timer?
+          </div>
+          <label class="toggle toggle-royal">
+            <input id="showTimer" name="time" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </div>
+        <!-- <div class="item item-toggle">
+          <div align="left">
+            Recording (N/A)
+          </div>
+          <label class="toggle toggle-royal">
+            <input id="recorder" name="record" type="checkbox" style="-webkit-filter: blur(0.000001px)">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </div> -->
+        <div class="item block option1" style="padding: 0">
+          <div class="range range-royal chooseTime" style="padding-left: 16px">
+            Time
+            <input id="timeVal" type="range" name="time" min="1" max="15" value="10" oninput="updateSlideText(this.value);">
+            <div style="width: 80px">
+              <center id="timevalue">10 minutes</center>
+            </div>
+          </div>
+        </div>
+        <label class="item item-input item-select option1" style="height:50px">
+          <select id="picture" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
+            <option value="empty">Select a picture</option>
+            <option value="img/beach1">Beach 1</option>
+            <option value="img/beach2">Beach 2</option>
+            <option value="img/beach3">Beach 3</option>
+            <option value="img/beach4">Beach 4</option>
+            <option value="img/farm1">Farm 1</option>
+            <option value="img/farm2">Farm 2</option>
+            <option value="img/farm3">Farm 3</option>
+            <option value="img/farm4">Farm 4</option>
+            <option value="img/park">Park</option>
+            <option value="img/street1">Street 1</option>
+            <option value="img/street2">Street 2</option>
+            <option value="img/street3">Street 3</option>
+            <option value="img/street4">Street 4</option>
+          </select>
+        </label>
+        <label class="item item-input item-select chooseRoom" style="height:50px">
+            <select id="rooms" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68); max-width:100%;">
+                <option id="testOption" value="null">Loading Available Rooms. Please hold...</option>
+            </select>
+        </label>
+        </center>
+      </div>
+
+          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');" onclick="updateWindow('secondScreen','thirdScreen')">
+            Next
+          </a>
+          <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('secondScreen','startScreen')" onclick="updateWindow('secondScreen','startScreen')">
+            Back
+          </a>
+    </div>
+
+    <div id="thirdScreen" class="screen" style="display: none;">
+      <div class="bar bar-header bar-royal">
+        <h1 class="title">Researchers: Player Details</h1>
       </div>
 
       <div class="list list-inset inscreen">
-        <center style="width:60%;" class="vcenter">
-          <label class="item item-input">
-            <input id="subjCode" type="text" placeholder="Subject code">
+        <center class="vcenter">
+            <h5 class="royal" align="justify">Input subject details and pass tablet to player after clicking 'Next'.</h5>
+          <label class="item item-select">
+              <select id="subjCode" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="subColor()">
+                <option value="0">Choose the Subject Code for this tablet</option>
+                <option id="reflect1">Subject 1</option>
+                <option id="reflect2">Subject 2</option>
+              </select>
           </label>
           <label class="item item-input">
             <input id="age" type="text" placeholder="Age (optional)">
           </label>
           <label class="item item-input item-select">
             <select id="gender" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="genderColor()">
-              <option value="0">Gender</option>
-              <option value="1">Male</option>
-              <option value="2">Female</option>
+              <option value="0">Subject Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
           </label>
           <label class="item item-input">
@@ -96,115 +198,86 @@
         </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="updateWindow('secondScreen','thirdScreen')">
-        Next
-      </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" onclick="updateWindow('secondScreen','startScreen')">
-        Back
-      </a>
+          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('thirdScreen','fourthScreen');addToStore();" onclick="updateWindow('thirdScreen','fourthScreen');addToStore();">
+            Next
+          </a>
+          <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('thirdScreen','secondScreen')" onclick="updateWindow('thirdScreen','secondScreen')">
+            Back
+          </a>
     </div>
 
-
-    <div id="thirdScreen" class="screen" style="display: none">
-      <div class="bar bar-header bar-royal">
-        <h1 class="title">Game settings</h1>
-      </div>
-
-      <div class="list list-inset inscreen">
-        <center style="width: 60%" class="vcenter">
-          <div class="item item-toggle">
-            <div align="left">
-              Show timer
-            </div>
-            <label class="toggle toggle-royal">
-              <input id="showTimer" name="time" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
-              <div class="track">
-                <div class="handle"></div>
-              </div>
-            </label>
-          </div>
-          <div class="item item-toggle">
-            <div align="left">
-              Recording
-            </div>
-            <label class="toggle toggle-royal">
-              <input id="recorder" name="record" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
-              <div class="track">
-                <div class="handle"></div>
-              </div>
-            </label>
-          </div>
-          <div class="item block" style="padding: 0">
-            <div class="range range-royal chooseTime" style="padding-left: 16px">
-              Time
-              <input type="range" name="time" min="1" max="15" value="10" oninput="updateSlideText(this.value);">
-              <div style="width: 80px">
-              	<center id="timevalue">10 minutes</center>
-              </div>
-            </div>
-          </div>
-          <label class="item item-input item-select" style="height:50px">
-            <select id="picture" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
-              <option value="empty">Select a picture</option>
-              <option value="img/beach1">Beach 1</option>
-              <option value="img/beach2">Beach 2</option>
-              <option value="img/beach4">Beach 4</option>
-              <option value="img/farm1">Farm 1</option>
-              <option value="img/farm2">Farm 2</option>
-              <option value="img/farm4">Farm 4</option>
-              <option value="img/street2">Street 2</option>
-              <option value="img/street3">Street 3</option>
-            </select>
-          </label>
-        </center>
-      </div>
-
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="addToStore(); updateWindow('thirdScreen','fourthScreen');">
-        Next
-      </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('thirdScreen','secondScreen')">
-        Back
-      </a>
-    </div>
 
     <div id="fourthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Instructions: Spot the difference!</h1>
+        <h1 class="title">Welcome to Diapix!</h1>
       </div>
 
-        <center class="vcenter royal" align="justify" style="width: 80%; font-size: 20px">
-            <ul>
-                <li>Find the 12 differences between the two pictures.</li>
-                <li>Each time you spot a difference, just tap on the screen.</li>
-                <li>Try to find all 12 differences before your time is up.</li>
-                <li>Start your picture description from the top left-hand corner and carry on clockwise.</li>
-            </ul>
+      <div class="list list-inset inscreen">
+          <center class="vcenter royal instructions" align="justify">
+              <!-- <ul> -->
+                  <h5 class="royal">You and your partner have been given two different versions of the same scene.</h5>
+                  <h5 class="royal">You are both given <span id="userTime">10 minutes</span> to find 12 differences between the two pictures.</h5>
+                  <h5 class="royal">Each time you spot a difference, just tap on the screen and a circle will be drawn on the difference.</h5>
+                  <h5 class="royal">An example is below:</h5>
+              <!-- </ul> -->
+              <div class="row examples">
+                  <center class="col"><img src="img/egdiff1.png"></center>
+                  <center class="col"><img src="img/egdiff2.jpg"></center>
+              </div>
+          </center>
+      </div>
+
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('fourthScreen','fifthScreen');" onclick="updateWindow('fourthScreen','fifthScreen');">
+        Next
+      </a>
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fourthScreen','thirdScreen');" onclick="updateWindow('fourthScreen','thirdScreen');">
+        Back
+      </a>
+    </div>
+
+    <div id="fifthScreen" class="screen" style="display: none">
+      <div class="bar bar-header bar-royal">
+        <h1 class="title">More Instructions</h1>
+      </div>
+
+        <center class="vcenter royal instructions" align="justify">
+            <!-- <ul> -->
+                <h5 class="royal">Try to find all 12 differences before your time is up.</h5>
+                <h5 class="royal">Start your picture description from the top left-hand corner and carry on clockwise.</h5>
+                <h5 class="royal">You can remove differences by tapping them again. The circle will turn orange and you will be asked to confirm your choice, like below:</h5>
+            <!-- </ul> -->
+            <div class="row examples">
+                <center class="col"><img src="img/diff.png"></center>
+            </div>
+            <h4 class="royal" align="center">
+                    When you're ready to play, press start!
+            <h4 align="center">
         </center>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="startTimer(); updateWindow('fourthScreen','fifthScreen'); canv();">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();" onclick="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();">
       <!-- <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer();recordAudio(); updateWindow('fourthScreen','fifthScreen'); canv();"> -->
         Start
       </a>
-      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fourthScreen','thirdScreen');">
+      <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fifthScreen','fourthScreen');" onclick="updateWindow('fifthScreen','fourthScreen');">
         Back
       </a>
     </div>
 
 
-    <div id="fifthScreen" class="screen row" style="display: none; padding: 0px; setKeepScreenOn(true)">
+    <div id="sixthScreen" class="screen row" style="display: none; padding: 0px; setKeepScreenOn(true)">
       <div class="outsideWrapper">
         <div class="insideWrapper">
             <img id="img" src="" class="coveredImage">
-            <canvas id="imgCanvas" class="coveringCanvas" onclick="handleEvent(event);"></canvas>
+            <canvas id="imgCanvas" class="coveringCanvas" on-click="handleEvent(event);" onclick="handleEvent(event);"></canvas>
         </div>
       </div>
       <div id="timerDiv" class="rightTimer">
           <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
           <center>
-          <a id="pauseButton" class="button button-large button-energized" onclick="pauseTimer(); showResume();" on-tap="pauseTimer(); showResume();">
+          <a id="pauseButton" class="button button-large button-energized" on-tap="pauseTimer(); showResume();" onclick="pauseTimer(); showResume();">
               Pause
           </a>
-          <a id="resumeButton" class="button button-large button-energized" style="display: none" onclick="resumeTimer(); showPause();" on-tap="resumeTimer(); showPause();">
+          <a id="resumeButton" class="button button-large button-energized" style="display: none" on-tap="resumeTimer(); showPause();" onclick="resumeTimer(); showPause();">
               Resume
           </a>
         </center>
@@ -212,20 +285,20 @@
       <div id="resultDiv" class="rightTimer" style="display: none">
       	<center id="result" class="royal" style="font-size: 2vw; font-weight: bold; width: 20vw"></center>
       </div>
-      <a class="button icon-left ion-chevron-left button-assertive buttonQuit" on-tap="updateWindow('fifthScreen','fourthScreen'); pauseTimer();">
+      <a class="button icon-left ion-chevron-left button-assertive buttonQuit" on-tap="updateWindow('sixthScreen','fifthScreen'); pauseTimer();" onclick="updateWindow('sixthScreen','fifthScreen'); pauseTimer();">
             Quit
         </a>
-        <a id="finishButton" class="button icon-right ion-chevron-right button-royal buttonFinish" on-tap="confirmFinish();">
+        <a id="finishButton" class="button icon-right ion-chevron-right button-royal buttonFinish" on-tap="confirmFinish();" onclick="confirmFinish();">
 <!-- addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('conditions').value,document.getElementById('recorder').value,document.getElementById('timeValue').value,document.getElementById('showTimer').value,document.getElementById('picture').value) -->
             Finish
         </a>
-        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" on-tap="updateWindow('fifthScreen', 'sixthScreen');">
+        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" on-tap="updateWindow('sixthScreen', 'seventhScreen');" onclick="updateWindow('sixthScreen', 'seventhScreen');">
             Submit
         </a>
     </div>
 
 
-    <div id="sixthScreen" class="screen" style="display: none">
+    <div id="seventhScreen" class="screen" style="display: none">
 
       <center class="startVCenter">
         <h1 class="royal" style="font-size: 5vw;">Thanks for playing Diapix!</h1>
@@ -238,23 +311,23 @@
 
 
 	<div id="popup" class="modal">
-	  <div class="modal-content vcenter">
+	  <div class="modal-content modcenter">
 	 	<center>
 	    	<p id="err" class="royal"></p>
-	    	<a id="closeModal" class="button button-royal" onclick="closeModal();">
+	    	<a id="closeModal" class="button button-royal" on-tap="closeModal();" onclick="closeModal();">
 	    		Close
 	    	</a>
 	    	<div id="confirmButtons" class="row" style="width: 70%; display: none">
 			   	<div style="width: 50%">
 			   		<center>
-						<a class="button button-royal" onclick="confirmPopup();">
+						<a class="button button-royal" on-tap="confirmPopup();" onclick="confirmPopup();">
 							Confirm
 						</a>
 					</center>
 				</div>
 				<div style="width: 50%">
 					<center>
-						<a class="button button-royal" onclick="closeModal(); popupCloseEvent = 0;">
+						<a class="button button-royal" on-tap="closeModal(); popupCloseEvent = 0;" onclick="closeModal(); popupCloseEvent = 0;">
 							Cancel
 						</a>
 					</center>
@@ -271,14 +344,14 @@
 		    <div class="row" style="width: 80%">
 			   	<div style="width: 50%">
 			   		<center>
-						<a class="button button-royal" onclick="confirmPopup();">
+						<a class="button button-royal" on-tap="confirmPopup();" onclick="confirmPopup();">
 							Confirm
 						</a>
 					</center>
 				</div>
 				<div style="width: 50%">
 					<center>
-						<a class="button button-royal" onclick="closeModal(); popupCloseEvent = 0; draw()">
+						<a class="button button-royal" on-tap="closeModal(); popupCloseEvent = 0; draw();" onclick="closeModal(); popupCloseEvent = 0; draw();">
 							Cancel
 						</a>
 					</center>
@@ -287,8 +360,5 @@
 		</center>
 	  </div>
 	</div>
-
-    <script src="js/socket.js"></script>
-    <!-- <script src="js/canvas.js"></script> -->
   </body>
 </html>
