@@ -108,7 +108,7 @@ body, html {
   transform-style: preserve-3d;
   -webkit-font-smoothing: subpixel-antialiased; }
 
-#gender option {
+#gender, #subjCode option {
   color: #111111; }
 
 div.item {
