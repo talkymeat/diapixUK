@@ -39,6 +39,7 @@ function keep() {
         console.log('created: ',data);
         var pairID = data.id;
         console.log(pairID);
+        $('#rooms').attr('value',pairID);
         $('#rooms #testOption').attr('value',pairID);
         console.log($('#rooms').val());
       });
@@ -62,6 +63,7 @@ function keep() {
         var value = 'img/'+str +'B.jpg';
         var src = $("#img").attr("src").replace(value, ".jpg");
         $("#img").attr("src", value);
+        $('#picture').attr('value','img/'+str);
         socket.emit('pair taken', arrayRoom[0]);
     }
 }
