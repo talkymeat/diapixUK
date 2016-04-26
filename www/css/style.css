@@ -56,7 +56,6 @@ body, html {
   h1.special {
     font-size: 12vh; }
   .instructions {
-    font-size: 1em;
     line-height: 1.2em; }
   .startVCenter, .vcenter {
     /* right: 25vw; */
