@@ -64,7 +64,7 @@ body, html {
 }
 
 .vcenter {
-	top: 30vh;
+	top: 25vh;
 }
 
 @media screen
@@ -73,6 +73,15 @@ body, html {
    and (device-height: 906px)
    and (-webkit-min-device-pixel-ratio: 1.331)
    and (-webkit-max-device-pixel-ratio: 1.332) {
+       h1.special {
+           font-size: 12vh;
+       }
+
+       p.instructions {
+           font-size: 1em;
+           line-height: 1.2em;
+       }
+
 	   .startVCenter, .vcenter{
 	   	/* right: 25vw; */
 	      top: 12vh;

@@ -58,15 +58,15 @@
     <div id="startScreen" class="screen">
       <center class="startVCenter">
         <h1 class="royal special">diapixUK</h1>
-        <p class="royal" align="justify">
-            The diapixUK is a dialogue elicitation technique and set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
+        <p class="royal instructions" align="justify">
+            The diapixUK is a dialogue elicitation technique for research, and a set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
             <br>
-            It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants.
+            It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants who are not able to see each other.
             <br>
             For more information, please visit <a href="https://github.com/diapixUK/diapixUK" target="_blank">github.com/diapixUK</a>.
         </p>
             <br>
-            <a class="button button-large button-royal" style="width:500px;height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
+            <a class="button button-full button-royal" style="height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
               start
             </a>
         </center>
@@ -74,15 +74,16 @@
 
     <div id="secondScreen" class="screen" style="display: none;">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Pair Details</h1>
+        <h1 class="title">Researchers: Pair Details</h1>
       </div>
       <div class="list list-inset inscreen">
         <center class="vcenter">
+            <p class="royal instructions" align="justify">For researchers, set up the leader tablet below, then pair another table to the same room.</p>
           <div class="item item-toggle">
                 <div align="left">
-                  Is this the host tablet?
+                  Is this the host (leader) tablet?
                 </div>
-                <label class="toggle toggle-royal" onclick="sortPairing();">
+                <label class="toggle toggle-royal" on-tap="sortPairing();" onclick="sortPairing();">
                   <input id="host" name="host" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
                   <div class="track">
                     <div class="handle"></div>
@@ -91,15 +92,15 @@
             </div>
         <div class="pairCodes option1">
           <label class="item item-input">
-            <input id="subjCode1" type="text" placeholder="Subject 1">
+            <input id="subjCode1" type="text" placeholder="Please input subject 1 code">
           </label>
           <label class="item item-input">
-            <input id="subjCode2" type="text" placeholder="Subject 2">
+            <input id="subjCode2" type="text" placeholder="Please input subject 2 code">
           </label>
         </div>
         <div class="item item-toggle option1">
           <div align="left">
-            Show timer
+            Show timer?
           </div>
           <label class="toggle toggle-royal">
             <input id="showTimer" name="time" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
@@ -142,7 +143,7 @@
           </select>
         </label>
         <label class="item item-input item-select chooseRoom" style="height:50px">
-            <select id="rooms" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
+            <select id="rooms" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68); max-width:100%;">
                 <option id="testOption" value="null">Loading Available Rooms. Please hold...</option>
             </select>
         </label>
@@ -159,14 +160,14 @@
 
     <div id="thirdScreen" class="screen" style="display: none;">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Player Details</h1>
+        <h1 class="title">Researchers: Player Details</h1>
       </div>
 
       <div class="list list-inset inscreen">
         <center class="vcenter">
           <label class="item item-select">
               <select id="subjCode" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="subColor()">
-                <option value="0">Subject Code</option>
+                <option value="0">Choose the Subject Code for this tablet</option>
                 <option id="reflect1">Subject 1</option>
                 <option id="reflect2">Subject 2</option>
               </select>
@@ -176,7 +177,7 @@
           </label>
           <label class="item item-input item-select">
             <select id="gender" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="genderColor()">
-              <option value="0">Gender</option>
+              <option value="0">Subject Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
@@ -184,6 +185,8 @@
           <label class="item item-input">
             <input id="conditions" type="text" placeholder="Conditions (optional)">
           </label>
+          <br>
+          <p class="royal instructions" align="justify">Pass the tablets to the subjects after moving on to the next page.</p>
         </center>
       </div>
 
@@ -198,7 +201,7 @@
 
     <div id="fourthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Instructions</h1>
+        <h1 class="title">Player Instructions</h1>
       </div>
 
       <div class="list list-inset inscreen">
@@ -250,7 +253,7 @@
       <div id="timerDiv" class="rightTimer">
           <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
           <center>
-          <a id="pauseButton" class="button button-large button-energized" on-tap="pauseTimer(); showResume();" onclick="pauseTimer(); showResume();">
+          <a id="pauseButton" class="button button-large button-energized" style="width:100%;" on-tap="pauseTimer(); showResume();" onclick="pauseTimer(); showResume();">
               Pause
           </a>
           <a id="resumeButton" class="button button-large button-energized" style="display: none" on-tap="resumeTimer(); showPause();" onclick="resumeTimer(); showPause();">
