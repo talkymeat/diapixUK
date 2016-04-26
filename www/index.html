@@ -138,12 +138,17 @@
             <option value="empty">Select a picture</option>
             <option value="img/beach1">Beach 1</option>
             <option value="img/beach2">Beach 2</option>
+            <option value="img/beach3">Beach 3</option>
             <option value="img/beach4">Beach 4</option>
             <option value="img/farm1">Farm 1</option>
             <option value="img/farm2">Farm 2</option>
+            <option value="img/farm3">Farm 3</option>
             <option value="img/farm4">Farm 4</option>
+            <option value="img/park">Park</option>
+            <option value="img/street1">Street 1</option>
             <option value="img/street2">Street 2</option>
             <option value="img/street3">Street 3</option>
+            <option value="img/street4">Street 4</option>
           </select>
         </label>
         <label class="item item-input item-select chooseRoom" style="height:50px">
@@ -154,7 +159,7 @@
         </center>
       </div>
 
-          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');keep();" onclick="updateWindow('secondScreen','thirdScreen');keep();">
+          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');" onclick="updateWindow('secondScreen','thirdScreen')">
             Next
           </a>
           <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('secondScreen','startScreen')" onclick="updateWindow('secondScreen','startScreen')">
@@ -346,7 +351,7 @@
 				</div>
 				<div style="width: 50%">
 					<center>
-						<a class="button button-royal"" on-tap="closeModal(); popupCloseEvent = 0; draw();" onclick="closeModal(); popupCloseEvent = 0; draw();">
+						<a class="button button-royal" on-tap="closeModal(); popupCloseEvent = 0; draw();" onclick="closeModal(); popupCloseEvent = 0; draw();">
 							Cancel
 						</a>
 					</center>
