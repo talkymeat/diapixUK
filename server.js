@@ -6,7 +6,7 @@ pg.defaults.ssl = true; // comment this out during local development
 var port = process.env.PORT || 9000
 var conString = process.env.DATABASE_URL;
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize(conString);
+var sequelize = new Sequelize(conString, {native:true});
 var validator = require('validator');
 // var pg_client = new pg.Client(conString);
 // pg_client.connect();
