@@ -123,6 +123,16 @@ var SubjectInfo = sequelize.define('report', {
             not: [";"],
             notContains: 'DROP TABLE'
         }
+    },
+    correctDifferences: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: null
+    },
+    results: {
+        type: Sequelize.JSON,
+        allowNull: true,
+        defaultValue: null
     }
 }, {
     freezeTableName: true // Model tableName will be the same as the model name
@@ -196,37 +206,16 @@ io.sockets.on('connection', function (socket) {
                 }
             })
     );
-        // var insertNew = data;
-        // SubjectInfo.sync().then(function (insertNew) {
-        // //     console.log(data);
-        // //     // Table created if it doesn't already exist
-        //     SubjectInfo.create(insertNew). then(function(subject){
-        //     console.dir(subject.get())
-        //     })
-        // }, function(insertNew) {
-        //     SubjectInfo.find({ where: {subjectNumber: data.subjectNumber} }).then(function(subject) {
-        //         if (subject) { // if the record exists in the db
-        //             subject.updateAttributes(insertNew).success(function() {});
-        //             console.dir(subject.get())
-        //         }
-        //     })
-        // })
-        // console.log(data,function(key,values){
-        //     console.log(values.subjectNumber);
-        // });
-        // SubjectInfo.find({where})
-        // SubjectInfo.sync().then(function (data) {
-        //     console.log(data);
-        //     // Table created if it doesn't already exist
-        //     try {
-        //         return SubjectInfo.create(data). then(function(subject){
-        //             console.dir(subject.get())
-        //         })
-        //     } catch (e) {
-        //         console.log("PROBLEM!!!!!!");
-        //         console.log(data);
-        //         console.log(e);
-        //     }
-        // });
+    });
+
+    socket.on('results', function(data) {
+        subjID = data.subjectNumber;
+        console.log(subjID);
+        SubjectInfo.findById(subjID).then(function(subject) {
+            if (subject) { // if the record exists in the db
+                return subject.update(data);
+                console.dir(subject.get())
+            }
+        });
     });
 });

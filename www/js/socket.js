@@ -1,6 +1,6 @@
 WEB_SOCKET_SWF_LOCATION = 'inc/WebSocketMain.swf';
 var socket = io.connect();
-// for local development
+// for local development comment above and uncomment below
 // var socket = io.connect('http://localhost:5000');
 socket.on('connected', function (data) {
     socket.emit('ready for data', {data});
@@ -35,15 +35,6 @@ function keep() {
       var src = $("#img").attr("src").replace(value, ".jpg");
       $("#img").attr("src", value);
       socket.emit('new pair', pair);
-      socket.on('return created pair',function(data) {
-        console.log('created: ',data);
-        var pairID = data.id;
-        console.log(pairID);
-        $('#rooms').attr('value',pairID);
-        $('#rooms #testOption').attr('value',pairID);
-        document.getElementById('rooms').value = pairID;
-        console.log($('#rooms').val());
-      });
     //   console.log(pair);
     //   console.log(subj1, "+", subj2);
     //   console.log($('#reflect2').val());
@@ -106,4 +97,26 @@ function addToStore() {
     }
     socket.emit('new user', user);
     // console.log(user);
+}
+
+socket.on('return created pair',function(data) {
+  console.log('created: ',data);
+  var pairID = data.id;
+  console.log(pairID);
+  // $('#rooms').attr('value',pairID);
+  // $('#rooms #testOption').attr('value',pairID);
+  $('#rooms').data("value",pairID);
+  document.getElementById('testOption').value = pairID;
+  console.log(document.getElementById('rooms').value);
+  // console.log();
+});
+
+function addResults() {
+    resultData = $('#result').data();
+    var data = {
+        subjectNumber: document.getElementById('subjCode').value,
+        correctDifferences: resultData.result,
+        results: resultData
+    }
+    socket.emit('results', data);
 }
