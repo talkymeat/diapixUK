@@ -5,8 +5,19 @@
 window.scrollTo(0,1);
 
 $(document).ready(function(){
-    $(".chooseRoom").hide();
+    $('.chooseRoom').hide();
+    $('.readLess').hide();
+    $('#readMore').click(function() {
+        $(this).hide();
+        $('.readLess').show();
+    });
+    $('.readLess').click(function() {
+        $('.readLess').hide();
+        $('#readMore').show();
+    });
 })
+
+
 function sortPairing() {
     if(document.getElementById('host').checked){
         document.getElementById('host').value="on";
@@ -148,7 +159,7 @@ function updateSlideText(val) {
   }
   else {
       document.getElementById('timevalue').innerHTML = val + " minutes";
-      document.getElementById('userTime').innerHTML = val + " minutes";  
+      document.getElementById('userTime').innerHTML = val + " minutes";
   }
 }
 
