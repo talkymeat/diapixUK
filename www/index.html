@@ -89,7 +89,7 @@
                   </div>
                 </label>
             </div>
-        <div class="pairCodes">
+        <div class="pairCodes option1">
           <label class="item item-input">
             <input id="subjCode1" type="text" placeholder="Subject 1">
           </label>
@@ -97,11 +97,55 @@
             <input id="subjCode2" type="text" placeholder="Subject 2">
           </label>
         </div>
-          <label class="item item-input item-select chooseRoom" style="height:50px">
-            <select id="rooms" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
-              <option id="testOption" value="null">Loading Available Rooms. Please hold...</option>
-            </select>
+        <div class="item item-toggle option1">
+          <div align="left">
+            Show timer
+          </div>
+          <label class="toggle toggle-royal">
+            <input id="showTimer" name="time" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
           </label>
+        </div>
+        <!-- <div class="item item-toggle">
+          <div align="left">
+            Recording (N/A)
+          </div>
+          <label class="toggle toggle-royal">
+            <input id="recorder" name="record" type="checkbox" style="-webkit-filter: blur(0.000001px)">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </div> -->
+        <div class="item block option1" style="padding: 0">
+          <div class="range range-royal chooseTime" style="padding-left: 16px">
+            Time
+            <input id="timeVal" type="range" name="time" min="1" max="15" value="10" oninput="updateSlideText(this.value);">
+            <div style="width: 80px">
+              <center id="timevalue">10 minutes</center>
+            </div>
+          </div>
+        </div>
+        <label class="item item-input item-select option1" style="height:50px">
+          <select id="picture" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
+            <option value="empty">Select a picture</option>
+            <option value="img/beach1">Beach 1</option>
+            <option value="img/beach2">Beach 2</option>
+            <option value="img/beach4">Beach 4</option>
+            <option value="img/farm1">Farm 1</option>
+            <option value="img/farm2">Farm 2</option>
+            <option value="img/farm4">Farm 4</option>
+            <option value="img/street2">Street 2</option>
+            <option value="img/street3">Street 3</option>
+          </select>
+        </label>
+        <label class="item item-input item-select chooseRoom" style="height:50px">
+            <select id="rooms" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
+                <option id="testOption" value="null">Loading Available Rooms. Please hold...</option>
+            </select>
+        </label>
         </center>
       </div>
 
@@ -154,56 +198,16 @@
 
     <div id="fourthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Game Settings</h1>
+        <h1 class="title">Instructions</h1>
       </div>
 
       <div class="list list-inset inscreen">
-        <center class="vcenter">
-          <div class="item item-toggle">
-            <div align="left">
-              Show timer
-            </div>
-            <label class="toggle toggle-royal">
-              <input id="showTimer" name="time" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
-              <div class="track">
-                <div class="handle"></div>
-              </div>
-            </label>
-          </div>
-          <!-- <div class="item item-toggle">
-            <div align="left">
-              Recording (N/A)
-            </div>
-            <label class="toggle toggle-royal">
-              <input id="recorder" name="record" type="checkbox" style="-webkit-filter: blur(0.000001px)">
-              <div class="track">
-                <div class="handle"></div>
-              </div>
-            </label>
-          </div> -->
-          <div class="item block" style="padding: 0">
-            <div class="range range-royal chooseTime" style="padding-left: 16px">
-              Time
-              <input id="timeVal" type="range" name="time" min="1" max="15" value="10" oninput="updateSlideText(this.value);">
-              <div style="width: 80px">
-              	<center id="timevalue">10 minutes</center>
-              </div>
-            </div>
-          </div>
-          <label class="item item-input item-select" style="height:50px">
-            <select id="picture" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
-              <option value="empty">Select a picture</option>
-              <option value="img/beach1">Beach 1</option>
-              <option value="img/beach2">Beach 2</option>
-              <option value="img/beach4">Beach 4</option>
-              <option value="img/farm1">Farm 1</option>
-              <option value="img/farm2">Farm 2</option>
-              <option value="img/farm4">Farm 4</option>
-              <option value="img/street2">Street 2</option>
-              <option value="img/street3">Street 3</option>
-            </select>
-          </label>
-        </center>
+          <center class="vcenter royal" align="justify" style="font-size: 20px">
+              <ul>
+                  <li>Find the 12 differences between the two pictures.</li>
+                  <li>Each time you spot a difference, just tap on the screen.</li>
+              </ul>
+          </center>
       </div>
 
       <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('fourthScreen','fifthScreen');addToStore();" onclick="updateWindow('fourthScreen','fifthScreen');addToStore();">
@@ -221,8 +225,6 @@
 
         <center class="vcenter royal" align="justify" style="font-size: 20px">
             <ul>
-                <li>Find the 12 differences between the two pictures.</li>
-                <li>Each time you spot a difference, just tap on the screen.</li>
                 <li>Try to find all 12 differences before your time is up.</li>
                 <li>Start your picture description from the top left-hand corner and carry on clockwise.</li>
             </ul>

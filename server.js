@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var pg = require('pg');
-pg.defaults.ssl = true; // comment this out during local development
+// pg.defaults.ssl = true; // comment this out during local development
 var port = process.env.PORT || 9000
 var conString = process.env.DATABASE_URL;
 var Sequelize = require('sequelize');
@@ -41,6 +41,15 @@ var Pairs = sequelize.define('subject_pairs', {
             not: [";"],
             notContains: 'DROP TABLE'
         }
+    },
+    time: {
+        type: Sequelize.INTEGER
+    },
+    timerONOFF: {
+        type: Sequelize.STRING
+    },
+    picture: {
+        type: Sequelize.STRING
     },
     inuse: {
         type: Sequelize.INTEGER
@@ -105,16 +114,7 @@ var SubjectInfo = sequelize.define('report', {
     //     validate: {
     //         isAlpha: true
     //     }
-    // },
-    time: {
-        type: Sequelize.INTEGER
-    },
-    timerONOFF: {
-        type: Sequelize.STRING
-    },
-    picture: {
-        type: Sequelize.STRING
-    },
+    // }
     conditions: {
         type: Sequelize.STRING,
         allowNull: true,

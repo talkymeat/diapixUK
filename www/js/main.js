@@ -10,12 +10,12 @@ $(document).ready(function(){
 function sortPairing() {
     if(document.getElementById('host').checked){
         document.getElementById('host').value="on";
-        $(".pairCodes").show();
+        $(".option1").show();
         $(".chooseRoom").hide();
     } else {
         document.getElementById('host').value="off";
-        console.log("works");
-        $(".pairCodes").hide();
+        // console.log("works");
+        $(".option1").hide();
         socket.emit('get rooms');
         $(".chooseRoom").show();
     }
@@ -30,38 +30,38 @@ function updateWindow(prev, next){
 }
 
 function correctData(screen, next){
-  if(screen === "thirdScreen" && next === "fourthScreen"){
-    if(document.getElementById("subjCode").value === "0"){
-      document.getElementById('err').innerHTML = "Please select your subject code";
-      showAlertPopup();
-      return false;
+    if(screen === "secondScreen" && next === "thirdScreen"){
+      if(document.getElementById('showTimer').checked){
+          document.getElementById('showTimer').value="on";
+      } else {
+          document.getElementById('showTimer').value="off";
+          // console.log("works");
+      }
+    //   if(document.getElementById("picture").value === "empty"){
+    //     document.getElementById('err').innerHTML = "Please select a picture";
+    //     showAlertPopup();
+    //     return false;
+    //   }
     }
-    if(document.getElementById("gender").value === "0"){
-      document.getElementById('err').innerHTML = "Please select your gender";
-      showAlertPopup();
-      return false;
+    if(screen === "thirdScreen" && next === "fourthScreen"){
+        if(document.getElementById("subjCode").value === "0"){
+          document.getElementById('err').innerHTML = "Please select your subject code";
+          showAlertPopup();
+          return false;
+        }
+        if(document.getElementById("gender").value === "0"){
+          document.getElementById('err').innerHTML = "Please select your gender";
+          showAlertPopup();
+          return false;
+        }
     }
-  }
-  if(screen === "fourthScreen" && next === "fifthScreen"){
-    if(document.getElementById('showTimer').checked){
-        document.getElementById('showTimer').value="on";
-    } else {
-        document.getElementById('showTimer').value="off";
-        // console.log("works");
+    if(screen === "sixthScreen" && next === "fifthScreen" && popupCloseEvent != -1){
+        document.getElementById('err').innerHTML = "Are you sure you want to exit the game?\n Your progress will be lost.";
+        showConfirmPopup();
+        popupCloseEvent = -1;
+        return false;
     }
-    if(document.getElementById("picture").value === "empty"){
-      document.getElementById('err').innerHTML = "Please select a picture";
-      showAlertPopup();
-      return false;
-    }
-  }
-  if(screen === "sixthScreen" && next === "fifthScreen" && popupCloseEvent != -1){
-    document.getElementById('err').innerHTML = "Are you sure you want to exit the game?\n Your progress will be lost.";
-    showConfirmPopup();
-    popupCloseEvent = -1;
-    return false;
-  }
-  return true;
+    return true;
 }
 
 function showAlertPopup() {
@@ -148,14 +148,18 @@ function updateSlideText(val) {
   	document.getElementById('timevalue').innerHTML = val + " minutes";
 }
 
-$(function() {
-    $("#picture")
-        .change(function() {
-            var value = this.value +'A.jpg';
-            var src = $("img").attr("src").replace(value, ".jpg");
-            $("img").attr("src", value);
-        });
-});
+// $(function() {
+//     $("#picture")
+//         .change(function() {
+//             if(document.getElementById('host').value === "on"){
+//                 var value = this.value +'A.jpg';
+//             } else {
+//                 var value = this.value + 'B.jpg';
+//             }
+//             var src = $("img").attr("src").replace(value, ".jpg");
+//             $("img").attr("src", value);
+//         });
+// });
 
 var foundDiff, numDiff, circleRadius, totalTaps, timeLog, totalDiff;
 
@@ -189,11 +193,11 @@ function handleEvent(e) {
   var i;
   for(i=1; i<=numDiff; i++)
     if(dist(foundDiff[i].pos, pos) <= circleRadius){
-      timeLog[totalTaps].action = "difference cancelled";
+      timeLog[totalTaps].action = "attempted to cancel difference";
       timeLog[totalTaps].difference = foundDiff[i];
       confirmRemoval(i);
       draw();
-      //console.log(timeLog[totalTaps]);
+      console.log(timeLog[totalTaps]);
       return;
     }
 
@@ -213,7 +217,7 @@ function handleEvent(e) {
   timeLog[totalTaps].action = "difference spotted";
   timeLog[totalTaps].difference = foundDiff[numDiff];
 
-  //console.log(timeLog[totalTaps]);
+  console.log(timeLog[totalTaps]);
 }
 
 function getMousePos(canvas, evt) {
@@ -416,6 +420,8 @@ function finalCheck(){
         spottedDiffs++;
         ok = true;
         correctDiffs[img][j].x = -10000;
+        console.log("found:");
+        console.log(foundDiff[i].pos);
         break;
       }
     /*if(ok)
