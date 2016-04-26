@@ -32,8 +32,8 @@ function keep() {
           inuse: '0'
       };
       var value =str +'A.jpg';
-      var src = $("img").attr("src").replace(value, ".jpg");
-      $("img").attr("src", value);
+      var src = $("#img").attr("src").replace(value, ".jpg");
+      $("#img").attr("src", value);
       socket.emit('new pair', pair);
       socket.on('return created pair',function(data) {
         console.log('created: ',data);
@@ -56,11 +56,12 @@ function keep() {
         var time = arrayRoom[3];
         var showTime = arrayRoom[4];
         $('#timeVal').attr('value',time);
+        updateSlideText(time);
         $('#showTimer').attr('value',showTime);
         var str = arrayRoom[5];
         var value = 'img/'+str +'B.jpg';
-        var src = $("img").attr("src").replace(value, ".jpg");
-        $("img").attr("src", value);
+        var src = $("#img").attr("src").replace(value, ".jpg");
+        $("#img").attr("src", value);
         socket.emit('pair taken', arrayRoom[0]);
     }
 }

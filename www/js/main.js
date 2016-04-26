@@ -142,10 +142,14 @@ function showPause(){
 }
 
 function updateSlideText(val) {
-  if(val == 1)
-  	document.getElementById('timevalue').innerHTML = val + " minute ";
-  else
-  	document.getElementById('timevalue').innerHTML = val + " minutes";
+  if(val == 1){
+      document.getElementById('timevalue').innerHTML = val + " minute ";
+      document.getElementById('userTime').innerHTML = val + " minute ";
+  }
+  else {
+      document.getElementById('timevalue').innerHTML = val + " minutes";
+      document.getElementById('userTime').innerHTML = val + " minutes";  
+  }
 }
 
 // $(function() {

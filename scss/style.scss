@@ -19,6 +19,10 @@ body, html {
 	width: 100%;
     font-family: $body-font, sans-serif;
 
+    .screen {
+        height: 100vh;
+    }
+
     h1, .h1 {
         font-family: $title-font, fantasy, cursive, sans-serif;
         font-size: 1.3em;
@@ -28,7 +32,11 @@ body, html {
         font-size: 20vh;
     }
 
-    p {
+    h2, h3, h4, h5, h6 {
+        font-family: $title-font, fantasy, cursive, sans-serif;
+    }
+
+    .instructions {
         font-size: 1.2em;
         line-height: 1.5em;
     }
@@ -50,7 +58,17 @@ body, html {
     }
 
     ul li {
-        padding: 1em 0;
+        padding: 0.5em 0;
+    }
+
+    .examples {
+        img {
+            height: 28vh;
+        }
+    }
+
+    #pauseButton, #resumeButton {
+        width: 100%;
     }
 }
 
@@ -64,7 +82,7 @@ body, html {
 }
 
 .vcenter {
-	top: 25vh;
+	top: 20vh;
 }
 
 @media screen
@@ -77,7 +95,7 @@ body, html {
            font-size: 12vh;
        }
 
-       p.instructions {
+       .instructions {
            font-size: 1em;
            line-height: 1.2em;
        }

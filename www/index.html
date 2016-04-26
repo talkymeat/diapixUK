@@ -165,6 +165,7 @@
 
       <div class="list list-inset inscreen">
         <center class="vcenter">
+            <p class="royal instructions" align="justify">Input subject details and pass tablet to player after clicking 'Next'.</p>
           <label class="item item-select">
               <select id="subjCode" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="subColor()">
                 <option value="0">Choose the Subject Code for this tablet</option>
@@ -185,12 +186,10 @@
           <label class="item item-input">
             <input id="conditions" type="text" placeholder="Conditions (optional)">
           </label>
-          <br>
-          <p class="royal instructions" align="justify">Pass the tablets to the subjects after moving on to the next page.</p>
         </center>
       </div>
 
-          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('thirdScreen','fourthScreen');" onclick="updateWindow('thirdScreen','fourthScreen');">
+          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('thirdScreen','fourthScreen');addToStore();" onclick="updateWindow('thirdScreen','fourthScreen');addToStore();">
             Next
           </a>
           <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('thirdScreen','secondScreen')" onclick="updateWindow('thirdScreen','secondScreen')">
@@ -201,19 +200,25 @@
 
     <div id="fourthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Player Instructions</h1>
+        <h1 class="title">Welcome to Diapix!</h1>
       </div>
 
       <div class="list list-inset inscreen">
-          <center class="vcenter royal" align="justify" style="font-size: 20px">
+          <center class="vcenter royal instructions" align="justify">
               <ul>
-                  <li>Find the 12 differences between the two pictures.</li>
-                  <li>Each time you spot a difference, just tap on the screen.</li>
+                  <li>You and your partner have been given two different versions of the same scene.</li>
+                  <li>You are both given <span id="userTime">10 minutes</span> to find 12 differences between the two pictures.</li>
+                  <li>Each time you spot a difference, just tap on the screen and a circle will be drawn on the difference.</li>
+                  <li>An example is below:</li>
               </ul>
+              <div class="row examples">
+                  <center class="col"><img src="img/egdiff1.png"></center>
+                  <center class="col"><img src="img/egdiff2.jpg"></center>
+              </div>
           </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('fourthScreen','fifthScreen');addToStore();" onclick="updateWindow('fourthScreen','fifthScreen');addToStore();">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('fourthScreen','fifthScreen');" onclick="updateWindow('fourthScreen','fifthScreen');">
         Next
       </a>
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fourthScreen','thirdScreen');" onclick="updateWindow('fourthScreen','thirdScreen');">
@@ -223,14 +228,21 @@
 
     <div id="fifthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Instructions: Spot the difference!</h1>
+        <h1 class="title">More Instructions</h1>
       </div>
 
-        <center class="vcenter royal" align="justify" style="font-size: 20px">
+        <center class="vcenter royal instructions" align="justify">
             <ul>
                 <li>Try to find all 12 differences before your time is up.</li>
                 <li>Start your picture description from the top left-hand corner and carry on clockwise.</li>
+                <li>You can remove differences by tapping them again. The circle will turn orange and you will be asked to confirm your choice, like below:</li>
             </ul>
+            <div class="row examples">
+                <center class="col"><img src="img/diff.png"></center>
+            </div>
+            <h4 class="royal" align="center">
+                    When you're ready to play, press start!
+            <h4 align="center">
         </center>
 
       <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();" onclick="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();">
@@ -253,7 +265,7 @@
       <div id="timerDiv" class="rightTimer">
           <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
           <center>
-          <a id="pauseButton" class="button button-large button-energized" style="width:100%;" on-tap="pauseTimer(); showResume();" onclick="pauseTimer(); showResume();">
+          <a id="pauseButton" class="button button-large button-energized" on-tap="pauseTimer(); showResume();" onclick="pauseTimer(); showResume();">
               Pause
           </a>
           <a id="resumeButton" class="button button-large button-energized" style="display: none" on-tap="resumeTimer(); showPause();" onclick="resumeTimer(); showPause();">
