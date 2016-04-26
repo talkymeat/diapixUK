@@ -58,15 +58,19 @@
     <div id="startScreen" class="screen">
       <center class="startVCenter">
         <h1 class="royal special">diapixUK</h1>
-        <p class="royal" align="justify">
-            The diapixUK is a dialogue elicitation technique and set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
-            <br>
-            It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants.
-            <br>
-            For more information, please visit <a href="https://github.com/diapixUK/diapixUK" target="_blank">github.com/diapixUK</a>.
+        <p class="royal instructions" align="justify">
+            The diapixUK is a dialogue elicitation technique for research, and a set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
+            <span class="readLess royal">
+                <br>
+                It consists of 12 ‘spot the difference’ picture tasks that have to be solved cooperatively by pairs of participants who are not able to see each other.
+                <br>
+                For more information, please visit <a href="https://github.com/diapixUK/diapixUK" target="_blank">github.com/diapixUK</a>.
+                <p class="readLess royal"><strong>Hide this text.</strong></p>
+            </span>
+            <p id="readMore" class="royal"><strong>Read More</strong></p>
         </p>
             <br>
-            <a class="button button-large button-royal" style="width:500px;height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
+            <a class="button button-full button-royal" style="height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
               start
             </a>
         </center>
@@ -74,15 +78,16 @@
 
     <div id="secondScreen" class="screen" style="display: none;">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Pair Details</h1>
+        <h1 class="title">Researchers: Pair Details</h1>
       </div>
       <div class="list list-inset inscreen">
         <center class="vcenter">
+            <h5 class="royal" align="justify">For researchers, set up the leader tablet below, then pair another tablet to the same room.</h5>
           <div class="item item-toggle">
                 <div align="left">
-                  Is this the host tablet?
+                  Is this the host (leader) tablet?
                 </div>
-                <label class="toggle toggle-royal" onclick="sortPairing();">
+                <label class="toggle toggle-royal" on-tap="sortPairing();" onclick="sortPairing();">
                   <input id="host" name="host" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
                   <div class="track">
                     <div class="handle"></div>
@@ -91,15 +96,15 @@
             </div>
         <div class="pairCodes option1">
           <label class="item item-input">
-            <input id="subjCode1" type="text" placeholder="Subject 1">
+            <input id="subjCode1" type="text" placeholder="Please input subject 1 code">
           </label>
           <label class="item item-input">
-            <input id="subjCode2" type="text" placeholder="Subject 2">
+            <input id="subjCode2" type="text" placeholder="Please input subject 2 code">
           </label>
         </div>
         <div class="item item-toggle option1">
           <div align="left">
-            Show timer
+            Show timer?
           </div>
           <label class="toggle toggle-royal">
             <input id="showTimer" name="time" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
@@ -147,7 +152,7 @@
           </select>
         </label>
         <label class="item item-input item-select chooseRoom" style="height:50px">
-            <select id="rooms" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68)">
+            <select id="rooms" style="left: 0%; direction: ltr; font-size: 16px; color: rgb(68, 68, 68); max-width:100%;">
                 <option id="testOption" value="null">Loading Available Rooms. Please hold...</option>
             </select>
         </label>
@@ -164,14 +169,15 @@
 
     <div id="thirdScreen" class="screen" style="display: none;">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Player Details</h1>
+        <h1 class="title">Researchers: Player Details</h1>
       </div>
 
       <div class="list list-inset inscreen">
         <center class="vcenter">
+            <h5 class="royal" align="justify">Input subject details and pass tablet to player after clicking 'Next'.</h5>
           <label class="item item-select">
               <select id="subjCode" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="subColor()">
-                <option value="0">Subject Code</option>
+                <option value="0">Choose the Subject Code for this tablet</option>
                 <option id="reflect1">Subject 1</option>
                 <option id="reflect2">Subject 2</option>
               </select>
@@ -181,7 +187,7 @@
           </label>
           <label class="item item-input item-select">
             <select id="gender" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="genderColor()">
-              <option value="0">Gender</option>
+              <option value="0">Subject Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
@@ -192,7 +198,7 @@
         </center>
       </div>
 
-          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('thirdScreen','fourthScreen');" onclick="updateWindow('thirdScreen','fourthScreen');">
+          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('thirdScreen','fourthScreen');addToStore();" onclick="updateWindow('thirdScreen','fourthScreen');addToStore();">
             Next
           </a>
           <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('thirdScreen','secondScreen')" onclick="updateWindow('thirdScreen','secondScreen')">
@@ -203,19 +209,25 @@
 
     <div id="fourthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Instructions</h1>
+        <h1 class="title">Welcome to Diapix!</h1>
       </div>
 
       <div class="list list-inset inscreen">
-          <center class="vcenter royal" align="justify" style="font-size: 20px">
-              <ul>
-                  <li>Find the 12 differences between the two pictures.</li>
-                  <li>Each time you spot a difference, just tap on the screen.</li>
-              </ul>
+          <center class="vcenter royal instructions" align="justify">
+              <!-- <ul> -->
+                  <h5 class="royal">You and your partner have been given two different versions of the same scene.</h5>
+                  <h5 class="royal">You are both given <span id="userTime">10 minutes</span> to find 12 differences between the two pictures.</h5>
+                  <h5 class="royal">Each time you spot a difference, just tap on the screen and a circle will be drawn on the difference.</h5>
+                  <h5 class="royal">An example is below:</h5>
+              <!-- </ul> -->
+              <div class="row examples">
+                  <center class="col"><img src="img/egdiff1.png"></center>
+                  <center class="col"><img src="img/egdiff2.jpg"></center>
+              </div>
           </center>
       </div>
 
-      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('fourthScreen','fifthScreen');addToStore();" onclick="updateWindow('fourthScreen','fifthScreen');addToStore();">
+      <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('fourthScreen','fifthScreen');" onclick="updateWindow('fourthScreen','fifthScreen');">
         Next
       </a>
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fourthScreen','thirdScreen');" onclick="updateWindow('fourthScreen','thirdScreen');">
@@ -225,14 +237,21 @@
 
     <div id="fifthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
-        <h1 class="title">Instructions: Spot the difference!</h1>
+        <h1 class="title">More Instructions</h1>
       </div>
 
-        <center class="vcenter royal" align="justify" style="font-size: 20px">
-            <ul>
-                <li>Try to find all 12 differences before your time is up.</li>
-                <li>Start your picture description from the top left-hand corner and carry on clockwise.</li>
-            </ul>
+        <center class="vcenter royal instructions" align="justify">
+            <!-- <ul> -->
+                <h5 class="royal">Try to find all 12 differences before your time is up.</h5>
+                <h5 class="royal">Start your picture description from the top left-hand corner and carry on clockwise.</h5>
+                <h5 class="royal">You can remove differences by tapping them again. The circle will turn orange and you will be asked to confirm your choice, like below:</h5>
+            <!-- </ul> -->
+            <div class="row examples">
+                <center class="col"><img src="img/diff.png"></center>
+            </div>
+            <h4 class="royal" align="center">
+                    When you're ready to play, press start!
+            <h4 align="center">
         </center>
 
       <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();" onclick="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();">

@@ -5,8 +5,19 @@
 window.scrollTo(0,1);
 
 $(document).ready(function(){
-    $(".chooseRoom").hide();
+    $('.chooseRoom').hide();
+    $('.readLess').hide();
+    $('#readMore').click(function() {
+        $(this).hide();
+        $('.readLess').show();
+    });
+    $('.readLess').click(function() {
+        $('.readLess').hide();
+        $('#readMore').show();
+    });
 })
+
+
 function sortPairing() {
     if(document.getElementById('host').checked){
         document.getElementById('host').value="on";
@@ -161,10 +172,14 @@ function showPause(){
 }
 
 function updateSlideText(val) {
-  if(val == 1)
-  	document.getElementById('timevalue').innerHTML = val + " minute ";
-  else
-  	document.getElementById('timevalue').innerHTML = val + " minutes";
+  if(val == 1){
+      document.getElementById('timevalue').innerHTML = val + " minute ";
+      document.getElementById('userTime').innerHTML = val + " minute ";
+  }
+  else {
+      document.getElementById('timevalue').innerHTML = val + " minutes";
+      document.getElementById('userTime').innerHTML = val + " minutes";
+  }
 }
 
 // $(function() {

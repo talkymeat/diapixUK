@@ -1,7 +1,7 @@
 WEB_SOCKET_SWF_LOCATION = 'inc/WebSocketMain.swf';
-// var socket = io.connect();
+var socket = io.connect();
 // for local development
-var socket = io.connect('http://localhost:5000');
+// var socket = io.connect('http://localhost:5000');
 socket.on('connected', function (data) {
     socket.emit('ready for data', {data});
     console.log("Why hello there! 😄 Nice to meet you.");
@@ -32,14 +32,16 @@ function keep() {
           inuse: '0'
       };
       var value =str +'A.jpg';
-      var src = $("img").attr("src").replace(value, ".jpg");
-      $("img").attr("src", value);
+      var src = $("#img").attr("src").replace(value, ".jpg");
+      $("#img").attr("src", value);
       socket.emit('new pair', pair);
       socket.on('return created pair',function(data) {
         console.log('created: ',data);
         var pairID = data.id;
         console.log(pairID);
+        $('#rooms').attr('value',pairID);
         $('#rooms #testOption').attr('value',pairID);
+        document.getElementById('rooms').value = pairID;
         console.log($('#rooms').val());
       });
     //   console.log(pair);
@@ -56,11 +58,14 @@ function keep() {
         var time = arrayRoom[3];
         var showTime = arrayRoom[4];
         $('#timeVal').attr('value',time);
+        updateSlideText(time);
         $('#showTimer').attr('value',showTime);
         var str = arrayRoom[5];
         var value = 'img/'+str +'B.jpg';
-        var src = $("img").attr("src").replace(value, ".jpg");
-        $("img").attr("src", value);
+        var src = $("#img").attr("src").replace(value, ".jpg");
+        $("#img").attr("src", value);
+        document.getElementById('picture').value = 'img/'+str;
+        // $('#picture').attr('value','img/'+str);
         socket.emit('pair taken', arrayRoom[0]);
     }
 }
@@ -71,7 +76,7 @@ socket.on('load pairs', function (pairs) {
     $("#rooms #testOption").remove();
     // http://stackoverflow.com/questions/22652860/how-to-display-jquery-array-key-value-pair
     $.each(pairs,function(key,vals) {
-        var serveOne="Room: "+vals.id+", Subject 1: "+vals.subject1+", Subject 2: "+vals.subject2+", Time allotted: "+vals.time+", Picture: "+vals.picture;
+        var serveOne="Room: "+vals.id+", Subject 1: "+vals.subject1+", Subject 2: "+vals.subject2+", Picture: "+vals.picture;
         var pairInfo = [vals.id, vals.subject1, vals.subject2, vals.time, vals.timerONOFF, vals.picture];
         // console.log(serveOne);
         // http://stackoverflow.com/a/171007
