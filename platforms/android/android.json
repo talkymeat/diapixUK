@@ -56,9 +56,6 @@
         }
     },
     "installed_plugins": {
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.first803007"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.first803007"
         },
@@ -72,6 +69,9 @@
             "PACKAGE_NAME": "com.ionicframework.first803007"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.first803007"
+        },
+        "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.first803007"
         }
     },
@@ -263,11 +263,11 @@
         }
     ],
     "plugin_metadata": {
-        "cordova-plugin-console": "1.0.2",
         "cordova-plugin-device": "1.1.1",
         "cordova-plugin-file": "4.1.1",
         "cordova-plugin-media": "2.2.0",
         "cordova-plugin-splashscreen": "3.1.0",
-        "cordova-plugin-whitelist": "1.2.1"
+        "cordova-plugin-whitelist": "1.2.1",
+        "cordova-plugin-console": "1.0.3"
     }
 }

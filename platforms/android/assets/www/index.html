@@ -53,7 +53,7 @@
 
   </head>
 
-  <body class="platform-android platform-cordova platform-webview">
+  <body>
 
     <div id="startScreen" class="screen">
       <center class="startVCenter">
@@ -82,7 +82,7 @@
       </div>
       <div class="list list-inset inscreen">
         <center class="vcenter">
-            <h5 class="royal" align="justify">For researchers, set up the leader tablet below, then pair another tablet to the same room.</h5>
+            <h4 class="royal" align="justify">For researchers, set up the leader tablet below, then pair another tablet to the same room.</h4>
           <div class="item item-toggle">
                 <div align="left">
                   Is this the host (leader) tablet?
@@ -159,7 +159,7 @@
         </center>
       </div>
 
-          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');" onclick="updateWindow('secondScreen','thirdScreen')">
+          <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');keep();" onclick="updateWindow('secondScreen','thirdScreen'); keep();">
             Next
           </a>
           <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('secondScreen','startScreen')" onclick="updateWindow('secondScreen','startScreen')">
@@ -174,7 +174,7 @@
 
       <div class="list list-inset inscreen">
         <center class="vcenter">
-            <h5 class="royal" align="justify">Input subject details and pass tablet to player after clicking 'Next'.</h5>
+            <h4 class="royal" align="justify">Input subject details and pass tablet to player after clicking 'Next'.</h4>
           <label class="item item-select">
               <select id="subjCode" style="left: 0%; direction: ltr; font-size: 16px; color: #aaaaaa" onchange="subColor()">
                 <option value="0">Choose the Subject Code for this tablet</option>
@@ -215,10 +215,10 @@
       <div class="list list-inset inscreen">
           <center class="vcenter royal instructions" align="justify">
               <!-- <ul> -->
-                  <h5 class="royal">You and your partner have been given two different versions of the same scene.</h5>
-                  <h5 class="royal">You are both given <span id="userTime">10 minutes</span> to find 12 differences between the two pictures.</h5>
-                  <h5 class="royal">Each time you spot a difference, just tap on the screen and a circle will be drawn on the difference.</h5>
-                  <h5 class="royal">An example is below:</h5>
+                  <h4 class="royal">You and your partner have been given two different versions of the same scene.</h4>
+                  <h4 class="royal">You are both given <span id="userTime">10 minutes</span> to find 12 differences between the two pictures.</h4>
+                  <h4 class="royal">Each time you spot a difference, just tap on the screen and a circle will be drawn on the difference.</h4>
+                  <h4 class="royal">An example is below:</h4>
               <!-- </ul> -->
               <div class="row examples">
                   <center class="col"><img src="img/egdiff1.png"></center>
@@ -242,16 +242,16 @@
 
         <center class="vcenter royal instructions" align="justify">
             <!-- <ul> -->
-                <h5 class="royal">Try to find all 12 differences before your time is up.</h5>
-                <h5 class="royal">Start your picture description from the top left-hand corner and carry on clockwise.</h5>
-                <h5 class="royal">You can remove differences by tapping them again. The circle will turn orange and you will be asked to confirm your choice, like below:</h5>
+                <h4 class="royal">Try to find all 12 differences before your time is up.</h4>
+                <h4 class="royal">Start your picture description from the top left-hand corner and carry on clockwise.</h4>
+                <h4 class="royal">You can remove differences by tapping them again. The circle will turn orange and you will be asked to confirm your choice, like below:</h4>
             <!-- </ul> -->
             <div class="row examples">
                 <center class="col"><img src="img/diff.png"></center>
             </div>
-            <h4 class="royal" align="center">
+            <h3 class="royal" align="center">
                     When you're ready to play, press start!
-            <h4 align="center">
+            <h3 align="center">
         </center>
 
       <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();" onclick="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();">
@@ -292,7 +292,7 @@
 <!-- addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('conditions').value,document.getElementById('recorder').value,document.getElementById('timeValue').value,document.getElementById('showTimer').value,document.getElementById('picture').value) -->
             Finish
         </a>
-        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" on-tap="updateWindow('sixthScreen', 'seventhScreen');" onclick="updateWindow('sixthScreen', 'seventhScreen');">
+        <a id="submitButton" class="button icon-right ion-chevron-right button-royal buttonFinish" style="display: none;" on-tap="updateWindow('sixthScreen', 'seventhScreen'); addResults();" onclick="updateWindow('sixthScreen', 'seventhScreen'); addResults();">
             Submit
         </a>
     </div>

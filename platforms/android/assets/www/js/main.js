@@ -63,7 +63,7 @@ function correctData(screen, next){
           showAlertPopup();
           return false;
         }
-        keep();
+        // keep();
       }
     }
     if(screen === "thirdScreen" && next === "fourthScreen"){
@@ -460,6 +460,8 @@ function finalCheck(){
         correctDiffs[img][j].x = -10000;
         console.log("found:");
         console.log(foundDiff[i].pos);
+        $('#result').attr('data-x'+i,foundDiff[i].pos.x);
+        $('#result').attr('data-y'+i,foundDiff[i].pos.y);
         break;
       }
     /*if(ok)
@@ -500,4 +502,6 @@ function finalCheck(){
     document.getElementById("result").innerHTML = "You got " + spottedDiffs.toString() + " difference right!";
   else
     document.getElementById("result").innerHTML = "You got " + spottedDiffs.toString() + " differences right!";
+
+  $('#result').attr('data-result',spottedDiffs);
 }
