@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.ionicframework.first803007;
+package com.ionicframework.diapixuk;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

@@ -8,24 +8,24 @@
     },
     "installed_plugins": {
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.first803007"
+            "PACKAGE_NAME": "com.ionicframework.diapixuk"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.first803007"
+            "PACKAGE_NAME": "com.ionicframework.diapixuk"
         },
         "cordova-plugin-media": {
-            "PACKAGE_NAME": "com.ionicframework.first803007"
+            "PACKAGE_NAME": "com.ionicframework.diapixuk"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.first803007"
+            "PACKAGE_NAME": "com.ionicframework.diapixuk"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.first803007"
+            "PACKAGE_NAME": "com.ionicframework.diapixuk"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.ionicframework.first803007"
+            "PACKAGE_NAME": "com.ionicframework.diapixuk"
         }
     }
 }
