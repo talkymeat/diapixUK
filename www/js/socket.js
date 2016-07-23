@@ -1,7 +1,7 @@
 WEB_SOCKET_SWF_LOCATION = 'inc/WebSocketMain.swf';
-var socket = io.connect();
+var socket = io.connect('https://diapixuk.herokuapp.com');
 // for local development comment above and uncomment below
-// var socket = io.connect('http://localhost:5000');
+// var socket = io.connect('http://localhost:3000');
 socket.on('connected', function (data) {
     socket.emit('ready for data', {data});
     console.log("Why hello there! 😄 Nice to meet you.");
