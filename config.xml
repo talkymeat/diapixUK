@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.first803007" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>first</name>
+<widget id="com.ionicframework.first803007" version="0.1.1" android-versionCode="17" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>diapixUK</name>
     <description>
-        An Ionic Framework and Cordova project.
+        A speech research app built in ionic.
     </description>
-    <author email="you@example.com" href="http://example.com.com/">
-      Tudor Nica
+    <author email="diana@diana.click" href="http://diana.click/">
+      Diana L
     </author>
     <content src="index.html" />
     <access origin="https://diapixuk.herokuapp.com*" />
