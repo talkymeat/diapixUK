@@ -8,7 +8,7 @@
       Tudor Nica
     </author>
     <content src="index.html" />
-    <access origin="*" />
+    <access origin="https://diapixuk.herokuapp.com*" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />

@@ -21,6 +21,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src *;
+style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval'"> -->
     <title>diapixUK</title>
 
     <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
@@ -43,8 +45,9 @@
     <!-- <script src="lib/fastclick.js"></script> -->
     <script src="js/jquery-1.12.1.min.js"></script>
     <!-- <script src="js/ng-cordova.js"></script> -->
-    <script src="js/pouchdb-5.3.1.min.js"></script>
-    <script src="js/socket.io.js"></script>
+    <!-- <script src="js/pouchdb-5.3.1.min.js"></script> -->
+    <!-- <script src="js/socket.io.js"></script> -->
+    <script src="https://diapixuk.herokuapp.com/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="js/validator.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
@@ -70,7 +73,7 @@
             <p id="readMore" class="royal"><strong>Read More</strong></p>
         </p>
             <br>
-            <a class="button button-full button-royal" style="height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
+            <a id="deviceready" class="button button-full button-royal" style="height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
               start
             </a>
         </center>
