@@ -3,14 +3,15 @@
   "version": "1.1.2",
   "description": "Diapix UK: A research app",
   "dependencies": {
+    "express": "^4.13.4",
     "gulp": "^3.5.6",
     "gulp-clean-css": "^2.0.6",
     "gulp-concat": "^2.6.0",
     "gulp-sass": "^2.3.1",
     "gulp-util": "^3.0.7",
     "ng-cordova": "^0.1.26-alpha",
-    "pouchdb": "^5.3.2",
     "shelljs": "^0.7.0",
+    "socket.io": "^1.4.5",
     "ws": "^1.1.0"
   },
   "devDependencies": {
