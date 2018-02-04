@@ -4,7 +4,7 @@
 
 window.scrollTo(0,1);
 
-$(document).ready(function(){
+$(document).ready(function(){ //'document' refers to index.html
     $('.chooseRoom').hide();
     $('.readLess').hide();
     $('#readMore').click(function() {
@@ -18,8 +18,8 @@ $(document).ready(function(){
 })
 
 
-function sortPairing() {
-    if(document.getElementById('host').checked){
+function sortPairing() { //displays controls for lead or subordinate tablet
+    if(document.getElementById('host').checked){ //Returns a reference to the element by its ID; the ID is a string which can be used to uniquely identify the element, found in the HTML id attribute.
         document.getElementById('host').value="on";
         $(".option1").show();
         $(".chooseRoom").hide();
@@ -27,20 +27,20 @@ function sortPairing() {
         document.getElementById('host').value="off";
         // console.log("works");
         $(".option1").hide();
-        socket.emit('get rooms');
+        socket.emit('get rooms'); //How does this work? How does the rooms list end up in the menu? XXX
         $(".chooseRoom").show();
     }
 }
 
 
 function updateWindow(prev, next){
-  if(correctData(prev, next)) {
+  if(correctData(prev, next)) { //checks data on screen makes sense, of so allows the app to move on to the next screen
     $("#" + prev).hide();
     $("#" + next).show();
   }
 }
 
-function correctData(screen, next){
+function correctData(screen, next){//a bunch of checks of interface elements for each screen, does stuff accordingly. Uses a bunch of if's but I'm pretty sure there's some better approach with switch cases or elifs
     if(screen === "secondScreen" && next === "thirdScreen"){
       if(document.getElementById('showTimer').checked){
           document.getElementById('showTimer').value="on";
@@ -49,8 +49,8 @@ function correctData(screen, next){
       }
       if(document.getElementById('host').checked){
         if(document.getElementById('subjCode1').value == ""){
-          document.getElementById('err').innerHTML = "Please insert the first subject code";
-          showAlertPopup();
+          document.getElementById('err').innerHTML = "Please insert the first subject code"; //this shows
+          showAlertPopup(); //why Javascript is bullshit
           return false;
         }
         if(document.getElementById('subjCode2').value == ""){
@@ -88,9 +88,9 @@ function correctData(screen, next){
 }
 
 function showAlertPopup() {
-  $("#" + "closeModal").show();
+  $("#" + "closeModal").show(); //I am not completely convinced this line does anything
   $("#" + "popup").show();
-  $("#" + "confirmButtons").hide();
+  $("#" + "confirmButtons").hide(); //Or this one
 }
 function showConfirmPopup(){
   $("#" + "closeModal").hide();
@@ -144,7 +144,7 @@ function confirmPopup(){
   closeModal();
 }
 
-function genderColor(){
+function genderColor(){ //greys out gender selector is no selection made
   if(document.getElementById("gender").value === "0")
     document.getElementById("gender").style.color = "#aaaaaa";
   else
@@ -197,6 +197,8 @@ function updateSlideText(val) {
 
 var foundDiff, numDiff, circleRadius, totalTaps, timeLog, totalDiff;
 
+//This does some important work - setting up variables for recording differences,
+//
 function canv() {
   document.getElementById("imgCanvas").width = document.getElementById("imgCanvas").offsetWidth;
   document.getElementById("imgCanvas").height = document.getElementById("imgCanvas").offsetHeight;
@@ -204,7 +206,7 @@ function canv() {
   foundDiff = [];
   var i;
   for(i=1; i<=12; i++)
-    foundDiff[i] = new Object;
+    foundDiff[i] = new Object; //object? srsly?
   totalTaps = 0;
   timeLog = [];
   totalDiff = 0;
@@ -219,11 +221,11 @@ function handleEvent(e) {
 
   var canvas = document.getElementById("imgCanvas");
   var pos = getMousePos(canvas, e);
-
-  totalTaps++;
+  totalTaps++; //yep, javascript is total bullshit
+  line = totalTaps+1
+  range = "Experiment!A"+line+":E"+line;
   timeLog[totalTaps] = new Object;
   timeLog[totalTaps].time = document.getElementById("timer").innerHTML;
-
   var i;
   for(i=1; i<=numDiff; i++)
     if(dist(foundDiff[i].pos, pos) <= circleRadius){
@@ -232,6 +234,7 @@ function handleEvent(e) {
       confirmRemoval(i);
       draw();
       console.log(timeLog[totalTaps]);
+      gRecordEvent(range, timeLog[totalTaps])
       return;
     }
 
@@ -241,7 +244,9 @@ function handleEvent(e) {
     timeLog[totalTaps].action = "exceeded 12 differences";
     timeLog[totalTaps].difference = new Object;
     timeLog[totalTaps].difference.pos = pos;
+    gRecordEvent(range, timeLog[totalTaps])
     //console.log(timeLog[totalTaps]);
+
     return;
   }
 
@@ -250,8 +255,20 @@ function handleEvent(e) {
 
   timeLog[totalTaps].action = "difference spotted";
   timeLog[totalTaps].difference = foundDiff[numDiff];
-
+  gRecordEvent(range, timeLog[totalTaps])
   console.log(timeLog[totalTaps]);
+}
+
+function gRecordEvent(range, timeLog) {
+  deets = [[
+    timeLog.time,
+    timeLog.action,
+    timeLog.difference.no,
+    timeLog.difference.pos.x,
+    timeLog.difference.pos.y
+  ]];
+  console.log(range);
+  gKeep(range, deets);
 }
 
 function getMousePos(canvas, evt) {
@@ -339,22 +356,21 @@ var paused = true;
 
 function startTimer(){
     if(document.getElementById('showTimer').checked)
-        $("#timer").show();
+        $("#timer").show(); // actual running of tier done by call to setInterval
+        // below, which calls updateTimer every 1000ms
     else
         $("#timer").hide();
-
+  //sets up initial timer string
   minutes = parseInt(document.getElementById('timevalue').innerHTML);
   seconds = 0;
-
   document.getElementById('timer').innerHTML = "";
   if(minutes < 10)
     document.getElementById('timer').innerHTML += "0";
   document.getElementById('timer').innerHTML += minutes.toString() + ":00";
-
   paused = false;
   timeIsUp = false;
   time = setInterval(updateTimer, 1000);
-}
+} // setInterval causes updateTimer to be called every 1000ms
 
 function pauseTimer(){
 	paused = true;
@@ -371,6 +387,7 @@ var timeIsUp;
 
 function updateTimer(){
     if(document.getElementById('timer').innerHTML === "00:00"){
+      //conditional stops timer when time up, does stuff
       timeIsUp = true;
     	paused = true;
       clearInterval(time);
@@ -382,7 +399,7 @@ function updateTimer(){
       return;
     }
 
-    seconds--;
+    seconds--; //decrements timer, one second per second
     if(seconds<0){
         minutes--;
         seconds+=60;
@@ -420,7 +437,7 @@ window.onclick = function(event) {
 
 function finalCheck(){
   var correctDiffs = [], i, j;
-
+  console.log(correctDiffs);
   correctDiffs["img/beach1"] = [{x: -1, y: -1}, {x: 0.926, y: 0.639}, {x: 0.925, y: 0.420}, {x: 0.795, y: 0.414}, {x: 0.698, y: 0.328}, {x: 0.563, y: 0.593}, {x: 0.583, y: 0.868}, {x: 0.101, y: 0.846}, {x: 0.113, y: 0.498}, {x: 0.049, y: 0.358}, {x: 0.126, y: 0.132}, {x: 0.223, y: 0.208}, {x: 0.476, y: 0.437}];
   correctDiffs["img/beach2"] = [{x: -1, y: -1}, {x: 0.908, y: 0.433}, {x: 0.809, y: 0.193}, {x: 0.936, y: 0.214}, {x: 0.750, y: 0.171}, {x: 0.893, y: 0.658}, {x: 0.389, y: 0.095}, {x: 0.136, y: 0.182}, {x: 0.065, y: 0.214}, {x: 0.180, y: 0.353}, {x: 0.047, y: 0.823}, {x: 0.417, y: 0.710}, {x: 0.910, y: 0.862}];
   correctDiffs["img/beach3"] = [{x: -1, y: -1}, {x: 0.972, y: 0.541}, {x: 0.931, y: 0.345}, {x: 0.821, y: 0.424}, {x: 0.375, y: 0.499}, {x: 0.235, y: 0.289}, {x: 0.268, y: 0.202}, {x: 0.134, y: 0.292}, {x: 0.166, y: 0.621}, {x: 0.180, y: 0.922}, {x: 0.667, y: 0.565}, {x: 0.844, y: 0.115}, {x: 0.765, y: 0.685}];

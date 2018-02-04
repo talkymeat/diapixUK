@@ -44,23 +44,33 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <!-- <script src="lib/fastclick.js"></script> -->
     <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
     <!-- <script src="js/ng-cordova.js"></script> -->
     <!-- <script src="js/pouchdb-5.3.1.min.js"></script> -->
     <!-- <script src="js/socket.io.js"></script> -->
-    <script src="https://diapixuk.herokuapp.com/socket.io/socket.io.js"></script>
+    <script src="https://diapixuk.herokuapp.com/socket.io/socket.io.js"></script> <!--ATTN - I think this concerns getting the data out-->
     <script type="text/javascript" src="js/validator.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/socket.js"></script>
+    <script src="js/main.js"></script> <!--where the session code is at -->
+    <script src="js/app.js"></script> <!--look here too-->
+    <script src="js/socket.js"></script> <!--and here this actually transmits data to a log
+    maybe I should incorporate my bit in here - or replace my this with my bit-->
+    <script src="js/googlesheets.js"></script>
   </head>
 
   </head>
 
   <body>
-
+<!--NEW SCREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN-->
     <div id="startScreen" class="screen">
+      <script type="text/javascript">
+        handleClientLoad();
+      </script>
       <center class="startVCenter">
         <h1 class="royal special">diapixUK</h1>
+        <p class="royal instructions" align="justify">
+            To store a record of this session with Google Sheets, please login:</p>
+        <button id="authorize-button" class="button button-full button-royal" style="height:50px;display: none;">Authorize</button>
+        <button id="signout-button" class="button button-full button-royal" style="height:50px;display: none;">Sign Out</button>
         <p class="royal instructions" align="justify">
             The diapixUK is a dialogue elicitation technique for research, and a set of materials developed by Baker and Hazan (2011) and based on the Diapix task of van Engen et al (2010).
             <span class="readLess royal">
@@ -73,9 +83,15 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
             <p id="readMore" class="royal"><strong>Read More</strong></p>
         </p>
             <br>
-            <a id="deviceready" class="button button-full button-royal" style="height:50px;" on-tap="updateWindow('startScreen','secondScreen');" onclick="updateWindow('startScreen','secondScreen');" >
-              start
+            <!-- call to main.js follows; updateWindow() moves on to the next
+          screen, subject to some if-checks, making sure that required fields are
+          filled, etc-->
+            <a id="makesheet" class="button button-full button-royal" style="height:50px;" on-tap="createSpreadsheet();"  onclick="createSpreadsheet();" >
+              Create spreadsheet
             </a>
+              <a id="deviceready" class="button button-full button-royal" style="height:50px;" on-tap="updateWindow('startScreen','secondScreen');"  onclick="updateWindow('startScreen','secondScreen');" >
+                start
+              </a>
         </center>
     </div>
 
@@ -90,6 +106,9 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
                 <div align="left">
                   Is this the host (leader) tablet?
                 </div>
+                <!-- call to main.js follows; sortPairing(); this determines whether the tablet
+              to hand is the lead or subordinate tablet, which affects the
+              subsequent behaviour of the JS-->
                 <label class="toggle toggle-royal" on-tap="sortPairing();" onclick="sortPairing();">
                   <input id="host" name="host" checked="checked" type="checkbox" style="-webkit-filter: blur(0.000001px)">
                   <div class="track">
@@ -130,6 +149,9 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
         <div class="item block option1" style="padding: 0">
           <div class="range range-royal chooseTime" style="padding-left: 16px">
             Time
+            <!-- call to main.js follows; updateSlideText();  This just changes
+          the text next to the slider for the duration of the task to reflect
+        how long the task will be for that slider position-->
             <input id="timeVal" type="range" name="time" min="1" max="15" value="10" oninput="updateSlideText(this.value);">
             <div style="width: 80px">
               <center id="timevalue">10 minutes</center>
@@ -161,7 +183,8 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
         </label>
         </center>
       </div>
-
+      <!-- call to main.js follows - move on with updateWindow-->
+      <!-- call to socket.js, keep(), which collects data and sends it to socket-->
           <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('secondScreen','thirdScreen');keep();" onclick="updateWindow('secondScreen','thirdScreen'); keep();">
             Next
           </a>
@@ -169,7 +192,7 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
             Back
           </a>
     </div>
-
+<!--NEW SCREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN-->
     <div id="thirdScreen" class="screen" style="display: none;">
       <div class="bar bar-header bar-royal">
         <h1 class="title">Researchers: Player Details</h1>
@@ -193,6 +216,7 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
               <option value="0">Subject Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
+              <option value="other">Other</option> <!--Extra option for trans inclusivity, added by Dave C-->
             </select>
           </label>
           <label class="item item-input">
@@ -200,7 +224,7 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
           </label>
         </center>
       </div>
-
+      <!-- call to main.js follows, updateWindow-->
           <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('thirdScreen','fourthScreen');addToStore();" onclick="updateWindow('thirdScreen','fourthScreen');addToStore();">
             Next
           </a>
@@ -209,7 +233,7 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
           </a>
     </div>
 
-
+<!--NEW SCREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN-->
     <div id="fourthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
         <h1 class="title">Welcome to Diapix!</h1>
@@ -229,15 +253,16 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
               </div>
           </center>
       </div>
-
+      <!-- call to main.js follows, updateWindow-->
       <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="updateWindow('fourthScreen','fifthScreen');" onclick="updateWindow('fourthScreen','fifthScreen');">
         Next
       </a>
+      <!-- call to main.js follows, updateWindow-->
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fourthScreen','thirdScreen');" onclick="updateWindow('fourthScreen','thirdScreen');">
         Back
       </a>
     </div>
-
+<!--NEW SCREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN-->
     <div id="fifthScreen" class="screen" style="display: none">
       <div class="bar bar-header bar-royal">
         <h1 class="title">More Instructions</h1>
@@ -256,30 +281,39 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
                     When you're ready to play, press start!
             <h3 align="center">
         </center>
-
+        <!-- call to main.js follows:
+      startTimer(); shows timer if showTimer element is checked - then sets timer
+        and starts setInterval call running, which calls updateTimer once per second
+      updateWindow(); You know...
+      canv(); Sets up varibles needed for recording Diapix task-->
       <a class="button icon-right ion-chevron-right button-royal buttonPosRight" on-tap="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();" onclick="startTimer(); updateWindow('fifthScreen','sixthScreen'); canv();">
       <!-- <a class="button icon-right ion-chevron-right button-royal buttonPosRight" onclick="startTimer();recordAudio(); updateWindow('fourthScreen','fifthScreen'); canv();"> -->
         Start
       </a>
+      <!-- call to main.js follows - uses updateWindow to go back one-->
       <a class="button icon-left ion-chevron-left button-royal buttonPosLeft" on-tap="updateWindow('fifthScreen','fourthScreen');" onclick="updateWindow('fifthScreen','fourthScreen');">
         Back
       </a>
     </div>
-
-
+<!--NEW SCREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN-->
+<!-- This screen here is the actual diapix task -->
     <div id="sixthScreen" class="screen row" style="display: none; padding: 0px; setKeepScreenOn(true)">
       <div class="outsideWrapper">
         <div class="insideWrapper">
             <img id="img" src="" class="coveredImage">
+            <!-- call to main.js follows-->
             <canvas id="imgCanvas" class="coveringCanvas" on-click="handleEvent(event);" onclick="handleEvent(event);"></canvas>
         </div>
       </div>
       <div id="timerDiv" class="rightTimer">
           <div id="timer" class="royal" style="padding-bottom: 5vh; font-size: 5vw"></div>
           <center>
+            <!-- call to main.js follows
+              pauseTimer(); does what it says, by -->
           <a id="pauseButton" class="button button-large button-energized" on-tap="pauseTimer(); showResume();" onclick="pauseTimer(); showResume();">
               Pause
           </a>
+          <!-- call to main.js follows-->
           <a id="resumeButton" class="button button-large button-energized" style="display: none" on-tap="resumeTimer(); showPause();" onclick="resumeTimer(); showPause();">
               Resume
           </a>
@@ -288,9 +322,11 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
       <div id="resultDiv" class="rightTimer" style="display: none">
       	<center id="result" class="royal" style="font-size: 2vw; font-weight: bold; width: 20vw"></center>
       </div>
+      <!-- call to main.js follows-->
       <a class="button icon-left ion-chevron-left button-assertive buttonQuit" on-tap="updateWindow('sixthScreen','fifthScreen'); pauseTimer();" onclick="updateWindow('sixthScreen','fifthScreen'); pauseTimer();">
             Quit
         </a>
+        <!-- call to main.js follows-->
         <a id="finishButton" class="button icon-right ion-chevron-right button-royal buttonFinish" on-tap="confirmFinish();" onclick="confirmFinish();">
 <!-- addToDo(document.getElementById('subjCode').value,document.getElementById('age').value,document.getElementById('gender').value,document.getElementById('conditions').value,document.getElementById('recorder').value,document.getElementById('timeValue').value,document.getElementById('showTimer').value,document.getElementById('picture').value) -->
             Finish
@@ -300,7 +336,7 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
         </a>
     </div>
 
-
+<!--NEW SCREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN-->
     <div id="seventhScreen" class="screen" style="display: none">
 
       <center class="startVCenter">
@@ -363,5 +399,9 @@ style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe eval
 		</center>
 	  </div>
 	</div>
+  <script async defer src="https://apis.google.com/js/api.js"
+    onload="this.onload=function(){};handleClientLoad()"
+    onreadystatechange="if (this.readyState === 'complete') this.onload()">
+  </script>
   </body>
 </html>

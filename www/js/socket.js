@@ -1,10 +1,10 @@
 WEB_SOCKET_SWF_LOCATION = 'inc/WebSocketMain.swf';
 var socket = io.connect('https://diapixuk.herokuapp.com');
 // for local development comment above and uncomment below
-// var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://localhost:3000');
 socket.on('connected', function (data) {
     socket.emit('ready for data', {data});
-    console.log("Why hello there! 😄 Nice to meet you.");
+    console.log("Why hello there! 💩 Nice to meet you.");
     // console.log(data);
 });
 
@@ -12,10 +12,15 @@ socket.on('update', function (data) {
     console.log(data.message.payload);
 });
 
-
+function keeep() {
+  console.log("zomg wtf");
+}
 
 function keep() {
-    if(document.getElementById('host').value === "on"){
+    var host = document.getElementById('host').value === "on";
+    var time = document.getElementById('timeVal').value;
+    var onoff = document.getElementById('showTimer').value;
+    if(host){
       var subj1 = $('#subjCode1').val();
       var subj2 = $('#subjCode2').val();
       $('#reflect1').text(subj1);
@@ -27,14 +32,24 @@ function keep() {
       var pair = {
           subject1: subj1,
           subject2: subj2,
-          time:document.getElementById('timeVal').value,
-          timerONOFF:document.getElementById('showTimer').value,
+          time: time,
+          timerONOFF: onoff,
           picture: clean,
           inuse: '0'
       };
       var value =str +'A.jpg';
       var src = $("#img").attr("src").replace(value, ".jpg");
       $("#img").attr("src", value);
+
+      deets = [
+        [host],
+        [subj1],
+        [subj2],
+        [onoff == 'on'],
+        [time],
+        [clean]
+      ];
+      gKeep("Participant!B1:B6", deets);
       socket.emit('new pair', pair);
     //   console.log(pair);
     //   console.log(subj1, "+", subj2);
@@ -58,6 +73,16 @@ function keep() {
         $("#img").attr("src", value);
         document.getElementById('picture').value = 'img/'+str;
         // $('#picture').attr('value','img/'+str);
+        console.log(arrayRoom);
+        deets = [
+          [host],
+          [arrayRoom[1]],
+          [arrayRoom[2]],
+          [showTime == 'on'],
+          [time],
+          [str]
+        ];
+        gKeep("Participant!B1:B6", deets);
         socket.emit('pair taken', arrayRoom[0]);
     }
 }
@@ -96,6 +121,15 @@ function addToStore() {
         // recording:document.getElementById('recorder').value,,
         conditions: document.getElementById('conditions').value
     }
+    var deets = [
+      [user.timestamp],
+      [user.subjectNumber],
+      [user.subjectPairId],
+      [user.age],
+      [user.gender],
+      [user.conditions]
+    ];
+    gKeep("Participant!B7:B12", deets);
     socket.emit('new user', user);
     // console.log(user);
 }
@@ -119,5 +153,6 @@ function addResults() {
         correctdifferences: resultData.result,
         results: resultData
     }
+    console.log(data);
     socket.emit('results', data);
 }
